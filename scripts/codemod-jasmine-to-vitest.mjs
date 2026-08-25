@@ -52,7 +52,7 @@
  * diff is boring, and a boring diff is only verifiable if the suite it produces is green.
  */
 
-import { readdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DRY = process.argv.includes('--dry');
@@ -64,9 +64,9 @@ const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
  */
 const MANUAL = [
   [/\bfakeAsync\b/, 'fakeAsync'],
-  [/\btick\(/, 'tick()'],
-  [/\bflush\(/, 'flush()'],
-  [/\bflushMicrotasks\(/, 'flushMicrotasks()'],
+  [/(?<!\.)\btick\(/, 'tick()'],
+  [/(?<!\.)\bflush\(/, 'flush()'],
+  [/(?<!\.)\bflushMicrotasks\(/, 'flushMicrotasks()'],
   [/\bwaitForAsync\b/, 'waitForAsync'],
   [/\bjasmine\.addMatchers\b/, 'jasmine.addMatchers'],
   [/\bjasmine\.clock\b/, 'jasmine.clock'],
@@ -75,6 +75,14 @@ const MANUAL = [
   // statement body (`.mockImplementation(() => { throw new Error('x'); })`), and generating a
   // brace-balanced one by regex is how the first version of this script produced specs that
   // no longer parsed. One site in the repo; it is not worth the machinery.
+  // Jasmine's `fail` and `expect().nothing()` have no Vitest equivalent. They were previously
+  // masked: every file using them also tripped the unanchored `flush(`/`tick(` patterns above,
+  // so anchoring those would have started emitting specs that do not compile.
+  // `fail` is matched in call and reference position only, never as a bare word: two specs use
+  // "fail" in prose comments and must still convert.
+  [/(?<!\.)\bfail\(/, 'fail()'],
+  [/:\s*fail\s*[,}]/, 'fail reference'],
+  [/expect\(\s*\)\.nothing\(\)/, 'expect().nothing()'],
   [/\.and\.throwError\(/, '.and.throwError()'],
 ];
 
@@ -133,7 +141,7 @@ const RULES = [
   // `lastCall` as possibly undefined. Asserting preserves the original spec's meaning — a test
   // that reads the last call has already established there was one — without turning the
   // migration into a strict-null audit of 50 sites.
-  [/\.calls\.mostRecent\(\)\.args/g, '.mock.lastCall!'],
+  [/\.calls\.mostRecent\(\)\s*\.args/g, '.mock.lastCall!'],
   [/\.calls\.first\(\)\.args/g, '.mock.calls[0]!'],
   [/\.calls\.reset\(\)/g, '.mockClear()'],
   [/\.calls\.any\(\)/g, '.mock.calls.length > 0'],
@@ -229,6 +237,7 @@ const targets = args.length > 0 ? args : [...specs('src'), ...specs('projects')]
 
 let converted = 0;
 let skipped = 0;
+const renames = [];
 const skipReasons = new Map();
 
 for (const file of targets) {
@@ -261,14 +270,47 @@ for (const file of targets) {
   } else {
     if (next === source && file === renamed) continue;
     writeFileSync(file, next);
-    if (file !== renamed) renameSync(file, renamed);
+    if (file !== renamed) {
+      renameSync(file, renamed);
+      renames.push([file, renamed]);
+    }
   }
   converted++;
 }
 
+/**
+ * `eslint-suppressions.json` is keyed by file path, so renaming a spec orphans its entries and
+ * the next `lint:prune` deletes them. The rule violations are still in the file, so they come
+ * back as errors in a batch that changed nothing but the filename. Move the keys with the file.
+ */
+function carrySuppressions(pairs) {
+  const path = 'eslint-suppressions.json';
+  if (pairs.length === 0 || !existsSync(path)) return 0;
+  const raw = readFileSync(path, 'utf8');
+  const data = JSON.parse(raw);
+  let moved = 0;
+  // Rebuild in the original key order so the diff shows only the renamed entries.
+  const out = {};
+  const map = new Map(pairs.map(([from, to]) => [from, to]));
+  for (const [key, value] of Object.entries(data)) {
+    const to = map.get(key);
+    if (to) {
+      out[to] = value;
+      moved++;
+    } else {
+      out[key] = value;
+    }
+  }
+  if (moved > 0) writeFileSync(path, `${JSON.stringify(out, undefined, 2)}\n`);
+  return moved;
+}
+
+const moved = DRY ? 0 : carrySuppressions(renames);
+
 console.log(
   `\n${DRY ? '[dry run] ' : ''}${converted} spec(s) converted, ${skipped} left for a human.`,
 );
+if (moved > 0) console.log(`Moved ${moved} eslint-suppressions.json entr(y|ies) to the new paths.`);
 
 if (skipReasons.size > 0) {
   console.log('\nSkipped — these need a semantic decision, not a rename:\n');

@@ -119,7 +119,12 @@
     "frequentPostings": "자주 쓰는 분개",
     "openingBalances": "기초 잔액",
     "reportDefinitions": "보고서 정의",
-    "workQueues": "승인 대기열"
+    "workQueues": "승인 대기열",
+    "opensInNewTab": "새 탭에서 열림",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "toggleSidebar": "사이드바 전환",
+    "moreActions": "추가 작업"
   },
   "DASHBOARD": {
     "SYSTEM_STATUS": "시스템 운영 상태",
@@ -524,5 +529,12 @@
     "CONFIRM": "{{count}}건에 대해 한 번의 요청으로 처리합니다.",
     "ALL_SUCCEEDED": "{{count}}건이 성공적으로 처리되었습니다.",
     "PARTIAL": "{{total}}건 중 {{succeeded}}건 성공. 거부된 항목: {{names}}"
+  },
+  "SECURITY": {
+    "AUDIT_LOGS": "감사 로그"
+  },
+  "USERS": {
+    "CREATE_USER": "사용자 생성",
+    "EDIT_USER": "사용자 편집"
   }
 }

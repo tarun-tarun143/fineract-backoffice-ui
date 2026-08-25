@@ -26,6 +26,8 @@ import { map } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ConfigService } from '../../core/services/config.service';
+import { BrandingService } from '../../core/services/branding.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { SESSION_EXPIRED_REASON } from '../../core/interceptors/error.interceptor';
 import { TwoFactorStepComponent } from './two-factor/two-factor-step.component';
 import { HelpIconComponent } from '../../shared/components/help-icon/help-icon.component';
@@ -61,8 +63,12 @@ import { HelpIconComponent } from '../../shared/components/help-icon/help-icon.c
           </select>
         </div>
         <div class="login-header">
-          <img src="favicon.png" alt="Fineract Logo" class="login-logo" />
-          <h1>{{ 'app.title' | translate }}</h1>
+          <img
+            [src]="logoSrc()"
+            [alt]="(brandName() || ('app.title' | translate)) + ' logo'"
+            class="login-logo"
+          />
+          <h1>{{ brandName() || ('app.title' | translate) }}</h1>
           <p class="subtitle">{{ 'login.welcome' | translate }}</p>
         </div>
 
@@ -178,7 +184,9 @@ import { HelpIconComponent } from '../../shared/components/help-icon/help-icon.c
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        /* dvh: on a phone, 100vh is measured against the retracted URL bar, so the card
+           ends up centred against a viewport taller than the screen. */
+        min-height: 100dvh;
         background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
         padding: 1rem;
       }
@@ -319,6 +327,27 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   protected readonly authService = inject(AuthService);
   protected readonly configService = inject(ConfigService);
+  private readonly branding = inject(BrandingService);
+  private readonly themeService = inject(ThemeService);
+
+  /**
+   * The deployment's product name, or `null` when it sets none.
+   *
+   * The sign-in screen is the first thing anyone sees, so leaving it on the Fineract wordmark
+   * while the rest of the application carries the institution's makes the branding look broken
+   * rather than absent.
+   *
+   * Null rather than a resolved fallback, so the template can fall back through the `translate`
+   * pipe. `translate.instant` inside a computed would not do: it is not reactive, and this screen
+   * can render before the catalogue has loaded — which would pin the heading to the raw key.
+   */
+  protected readonly brandName = computed(() => this.branding.appName());
+  protected readonly logoSrc = computed(() => {
+    const configured = this.themeService.isDarkMode()
+      ? this.branding.logoDarkUrl()
+      : this.branding.logoUrl();
+    return this.branding.resolveLogo(configured) ?? 'favicon.png';
+  });
 
   /** Absolute endpoints this deployment permits, offered alongside the default and the proxy. */
   protected readonly allowedOrigins = computed(

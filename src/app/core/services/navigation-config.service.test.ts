@@ -264,9 +264,9 @@ describe('NavigationConfigService', () => {
   });
 
   describe('deployment navigation overrides', () => {
-    it('hides the entries config.json names, leaving the rest alone', () => {
+    it('hides the entries the deployment names by id, leaving the rest alone', () => {
       TestBed.resetTestingModule();
-      configure({ nav: { hidden: ['nav.groups', 'nav.centers'] } });
+      configure({ nav: { hidden: ['groups', 'centers'] } });
       setPermissions(['ALL_FUNCTIONS']);
 
       const items = service.filteredNavItems();
@@ -279,12 +279,33 @@ describe('NavigationConfigService', () => {
       // What a deployment offers is a different question from what a user may reach, so the
       // switch that answers the second one must not answer the first.
       TestBed.resetTestingModule();
-      configure({ rbacEnabled: false, nav: { hidden: ['nav.groups'] } });
+      configure({ rbacEnabled: false, nav: { hidden: ['groups'] } });
       setPermissions([]);
 
       const items = service.filteredNavItems();
       expect(findRoute(items, '/groups')).toBe(false);
       expect(findRoute(items, '/clients')).toBe(true);
+    });
+
+    it('ignores a labelKey where an id is required', () => {
+      // `hidden` used to match on labelKey, which upstream renames freely — so an override
+      // silently stopped matching and the hidden entry reappeared in production. Only the stable
+      // id works now, and the old key has to be inert rather than quietly half-supported.
+      TestBed.resetTestingModule();
+      configure({ nav: { hidden: ['nav.groups'] } });
+      setPermissions(['ALL_FUNCTIONS']);
+
+      expect(findRoute(service.filteredNavItems(), '/groups')).toBe(true);
+    });
+
+    it('reports an override naming an id that does not exist', () => {
+      TestBed.resetTestingModule();
+      configure({ nav: { overrides: { 'nav.groups': { labelKey: 'Teams' } } } });
+      setPermissions(['ALL_FUNCTIONS']);
+
+      expect(service.navConfigDefects()).toEqual([
+        expect.objectContaining({ code: 'unknown-id', id: 'nav.groups' }),
+      ]);
     });
   });
 

@@ -233,16 +233,32 @@ test.describe('rbacEnabled = false', () => {
 });
 
 test.describe('deployment navigation overrides', () => {
-  test('removes the entries config.json names, leaving the rest alone', async ({ page }) => {
+  test('removes the entries the deployment names by id, leaving the rest alone', async ({
+    page,
+  }) => {
     await login(page, {
       permissions: ['ALL_FUNCTIONS'],
       institutionType: 'universal',
-      config: { nav: { hidden: ['nav.groups', 'SIDEBAR.SEARCH'] } },
+      config: { nav: { hidden: ['groups', 'search'] } },
     });
 
     await expect(link(page, 'Groups')).toHaveCount(0);
     await expect(link(page, 'Centers')).toBeVisible();
     await expect(link(page, 'Clients')).toBeVisible();
+  });
+
+  test('ignores a labelKey where an id is required', async ({ page }) => {
+    // `hidden` matched on labelKey until stable ids landed. A label is upstream's to rewrite, so
+    // an override keyed on one stopped matching after a rename and the entry the deployment meant
+    // to suppress came back, silently, in production. The old key has to be inert rather than
+    // quietly half-supported.
+    await login(page, {
+      permissions: ['ALL_FUNCTIONS'],
+      institutionType: 'universal',
+      config: { nav: { hidden: ['nav.groups'] } },
+    });
+
+    await expect(link(page, 'Groups')).toBeVisible();
   });
 
   test('removes them even where RBAC is off', async ({ page }) => {
@@ -251,7 +267,7 @@ test.describe('deployment navigation overrides', () => {
     await login(page, {
       permissions: ['ALL_FUNCTIONS'],
       institutionType: 'universal',
-      config: { rbacEnabled: false, nav: { hidden: ['nav.groups'] } },
+      config: { rbacEnabled: false, nav: { hidden: ['groups'] } },
     });
 
     await expect(link(page, 'Groups')).toHaveCount(0);

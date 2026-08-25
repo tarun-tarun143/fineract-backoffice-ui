@@ -57,9 +57,19 @@ export const routes: Routes = [
           import('./features/errors/access-denied.component').then((m) => m.AccessDeniedComponent),
       },
       {
+        // The remote is a development-only demo and is not built into the released image, so the
+        // map `main.ts` hands to `initFederation` is empty there and this import throws. Falling
+        // back keeps that a redirect to the dashboard rather than a blank screen behind a router
+        // error — the route is not in `NAV_CONFIG`, so anyone here typed the URL.
         path: 'fineract-mfe',
         loadComponent: () =>
-          loadRemoteModule('fineract-mfe', './Component').then((m) => m.FineractMfeComponent),
+          loadRemoteModule('fineract-mfe', './Component')
+            .then((m) => m.FineractMfeComponent)
+            .catch(() =>
+              import('./features/dashboard/system-status.component').then(
+                (m) => m.SystemStatusComponent,
+              ),
+            ),
       },
       {
         path: 'clients',

@@ -17,13 +17,26 @@
  * under the License.
  */
 
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  HostListener,
+  Injector,
+  afterNextRender,
+  effect,
+  inject,
+  viewChild,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 import { NgTemplateOutlet } from '@angular/common';
 
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { SidebarService } from '../core/services/sidebar.service';
+import { ViewportService } from '../core/services/viewport.service';
 import { AuthService } from '../core/services/auth.service';
 import { summarisePermissions } from '../shared/pipes/permission-summary.pipe';
 import { NavItemConfig, NavigationConfigService } from '../core/services/navigation-config.service';
@@ -46,12 +59,34 @@ function entityOf(code: string): string | null {
   standalone: true,
   imports: [RouterModule, TranslateModule, IonIcon, NgTemplateOutlet],
   template: `
+    <!--
+      One element, two components. Wide: a permanent navigation landmark. Narrow: a modal drawer,
+      which is why it takes dialog semantics and a focus trap below the breakpoint — a panel that
+      covers the page while the reading order still runs through what is behind it is a trap of
+      the other kind.
+    -->
     <nav
+      #panel
+      id="app-navigation"
       class="sidebar"
-      [class.collapsed]="sidebarService.isCollapsed()"
-      role="navigation"
+      [class.collapsed]="!viewport.isMobile() && sidebarService.isCollapsed()"
+      [class.drawer]="viewport.isMobile()"
+      [class.open]="sidebarService.isDrawerOpen()"
+      [attr.role]="viewport.isMobile() ? 'dialog' : 'navigation'"
+      [attr.aria-modal]="viewport.isMobile() ? 'true' : null"
+      [attr.inert]="viewport.isMobile() && !sidebarService.isDrawerOpen() ? '' : null"
       [attr.aria-label]="'nav.main' | translate"
     >
+      @if (viewport.isMobile()) {
+        <button
+          type="button"
+          class="drawer-close"
+          (click)="sidebarService.closeDrawer()"
+          [attr.aria-label]="'nav.closeMenu' | translate"
+        >
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      }
       <ul class="nav-list">
         <ng-container
           *ngTemplateOutlet="
@@ -63,7 +98,7 @@ function entityOf(code: string): string | null {
     </nav>
 
     <ng-template #itemList let-items="items" let-depth="depth">
-      @for (item of items; track item.route ?? item.labelKey) {
+      @for (item of items; track item.id ?? item.route ?? item.labelKey) {
         @if (item.divider) {
           <li class="nav-divider"></li>
         } @else if (item.children) {
@@ -76,6 +111,29 @@ function entityOf(code: string): string | null {
                 ></ng-container>
               </ul>
             </div>
+          </li>
+        } @else if (item.kind === 'external') {
+          <li>
+            <!--
+              A deployment's link to a system that sits beside Fineract. 'rel' is not optional:
+              'noopener' denies the opened page a handle on this one via window.opener, and
+              'noreferrer' keeps the back-office URL — which carries entity ids — out of the
+              third party's referrer log.
+            -->
+            <a
+              [href]="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="nav-item"
+              [class.sub-item]="depth > 0"
+            >
+              @if (item.icon) {
+                <ion-icon class="nav-icon" [name]="item.icon"></ion-icon>
+              }
+              <span class="nav-text">{{ item.labelKey | translate }}</span>
+              <ion-icon class="nav-external" name="open-outline" aria-hidden="true"></ion-icon>
+              <span class="sr-only">{{ 'nav.opensInNewTab' | translate }}</span>
+            </a>
           </li>
         } @else {
           <li>
@@ -135,9 +193,62 @@ function entityOf(code: string): string | null {
         padding: 0;
         margin: 0;
       }
+
+      /* ---- narrow viewport: the same panel as an off-canvas drawer ---- */
+      .sidebar.drawer {
+        position: fixed;
+        top: var(--header-height);
+        bottom: 0;
+        left: 0;
+        width: min(86vw, 320px);
+        z-index: 950;
+        transform: translateX(-100%);
+        /* Width is fixed here, so the collapse transition would fight the slide. */
+        transition: transform 0.2s ease-out;
+        box-shadow: var(--shadow-md);
+      }
+      .sidebar.drawer.open {
+        transform: translateX(0);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .sidebar.drawer {
+          transition: none;
+        }
+      }
+      .drawer-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* 44px is the smallest reliable touch target; anything under it is a mis-tap waiting
+           to happen and is what scripts/check-tap-targets.mjs enforces. */
+        min-width: 44px;
+        min-height: 44px;
+        margin: 0 0.5rem 0.25rem auto;
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 22px;
+        cursor: pointer;
+        border-radius: var(--border-radius);
+      }
+      .drawer-close:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+      .nav-external {
+        margin-left: auto;
+        font-size: 0.85rem;
+        opacity: 0.6;
+        flex-shrink: 0;
+      }
+      .sidebar.collapsed .nav-external {
+        display: none;
+      }
       .nav-item {
         display: flex;
         align-items: center;
+        /* Comfortably over the 44px floor once padding and line-height are counted; stated
+           explicitly so a future padding change cannot quietly drop under it. */
+        min-height: 44px;
         padding: 0.75rem 1.5rem;
         color: #bdc3c7;
         text-decoration: none;
@@ -239,7 +350,53 @@ function entityOf(code: string): string | null {
 export class SidebarComponent {
   protected readonly sidebarService = inject(SidebarService);
   protected readonly navigationConfig = inject(NavigationConfigService);
+  protected readonly viewport = inject(ViewportService);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly panel = viewChild<ElementRef<HTMLElement>>('panel');
+  private readonly injector = inject(Injector);
+
+  /**
+   * Escape closes the drawer.
+   *
+   * Bound on the document rather than on the panel, because a modal should close on Escape
+   * wherever focus happens to be — including on the header button that opened it, which is
+   * outside the panel. Ignored entirely when the drawer is not showing, so this never competes
+   * with a dialog or a select that is handling its own Escape.
+   */
+  @HostListener('document:keydown.escape')
+  protected onEscape(): void {
+    if (this.sidebarService.isDrawerOpen()) {
+      this.sidebarService.closeDrawer();
+    }
+  }
+
+  constructor() {
+    // Following a link has to dismiss the drawer, or the destination renders underneath it and
+    // the user has to close the menu to see what they chose.
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => this.sidebarService.closeDrawer());
+
+    // Focus moves into the drawer when it opens, because it is a dialog: without this the next
+    // Tab continues from the header button, through content the drawer is covering.
+    //
+    // Deferred to after the render, not done in the effect body. The panel carries `inert` while
+    // closed and the binding that removes it is applied during change detection, so focusing
+    // from inside the effect targets a subtree that is still inert — and focusing an inert
+    // element is silently a no-op, which is the worst way for this to fail.
+    effect(() => {
+      if (!this.sidebarService.isDrawerOpen()) return;
+      afterNextRender(
+        () => this.panel()?.nativeElement.querySelector<HTMLElement>('button, a')?.focus(),
+        { injector: this.injector },
+      );
+    });
+  }
 
   /**
    * What the signed-in user can do in the module a nav entry leads to, as a hover hint.

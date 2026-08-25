@@ -24,7 +24,7 @@
       "count": 3
     }
   },
-  "src/app/core/services/auth.service.spec.ts": {
+  "src/app/core/services/auth.service.test.ts": {
     "no-restricted-globals": {
       "count": 4
     }
@@ -44,17 +44,7 @@
       "count": 2
     }
   },
-  "src/app/features/accounting/accounting-closure-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/accounting/accounting-closure-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/accounting/accounting-closures-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -84,17 +74,7 @@
       "count": 1
     }
   },
-  "src/app/features/accounting/journal-entries-list.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/accounting/journal-entries-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/accounting/journal-entry-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -104,17 +84,7 @@
       "count": 1
     }
   },
-  "src/app/features/accounting/provisioning-categories/provisioning-categories-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/accounting/provisioning-categories/provisioning-categories-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/accounting/provisioning-categories/provisioning-categories-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -124,17 +94,7 @@
       "count": 1
     }
   },
-  "src/app/features/accounting/provisioning-criteria/provisioning-criteria-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/accounting/provisioning-criteria/provisioning-criteria-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/accounting/provisioning-criteria/provisioning-criteria-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -144,27 +104,12 @@
       "count": 1
     }
   },
-  "src/app/features/accounting/provisioning-entries/provisioning-entries-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/accounting/provisioning-entries/provisioning-entries-form.component.ts": {
     "no-restricted-imports": {
       "count": 1
     }
   },
-  "src/app/features/accounting/provisioning-entries/provisioning-entries-list.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/accounting/provisioning-entries/provisioning-entries-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/accounting/run-accruals/run-accruals.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -209,17 +154,7 @@
       "count": 1
     }
   },
-  "src/app/features/calendars/calendar-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/calendars/calendar-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/calendars/calendars-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -250,11 +185,6 @@
     }
   },
   "src/app/features/campaigns/sms-campaigns/sms-campaigns-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/centers/center-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -425,11 +355,6 @@
     }
   },
   "src/app/features/collection-sheet/collection-sheet.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/dashboard/system-status.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -662,17 +587,7 @@
       "count": 1
     }
   },
-  "src/app/features/meetings/meeting-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/meetings/meeting-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/meetings/meetings-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -702,27 +617,12 @@
       "count": 1
     }
   },
-  "src/app/features/organization/funds/fund-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/organization/funds/fund-form.component.ts": {
     "no-restricted-imports": {
       "count": 1
     }
   },
-  "src/app/features/organization/funds/funds-list.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/organization/funds/funds-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/organization/group-levels/group-levels-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -742,17 +642,7 @@
       "count": 1
     }
   },
-  "src/app/features/organization/offices/office-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/organization/offices/office-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/organization/offices/offices-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -762,17 +652,7 @@
       "count": 1
     }
   },
-  "src/app/features/organization/payment-types/payment-type-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/organization/payment-types/payment-type-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/organization/payment-types/payment-types-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -782,17 +662,7 @@
       "count": 1
     }
   },
-  "src/app/features/organization/staff/staff-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/organization/staff/staff-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/organization/staff/staff-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -832,7 +702,7 @@
       "count": 1
     }
   },
-  "src/app/features/products/deposit-account-view.component.spec.ts": {
+  "src/app/features/products/deposit-account-view.component.test.ts": {
     "unicorn/no-object-as-default-parameter": {
       "count": 1
     }
@@ -1182,11 +1052,6 @@
       "count": 1
     }
   },
-  "src/app/features/profile/user-profile.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/profile/user-profile.component.ts": {
     "no-restricted-imports": {
       "count": 1
@@ -1202,10 +1067,7 @@
       "count": 1
     }
   },
-  "src/app/features/reporting/run-report.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    },
+  "src/app/features/reporting/run-report.component.test.ts": {
     "unicorn/no-object-as-default-parameter": {
       "count": 1
     }
@@ -1216,11 +1078,6 @@
     }
   },
   "src/app/features/search/global-search.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/security/audit-logs/audit-logs-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1237,11 +1094,6 @@
     }
   },
   "src/app/features/security/roles/role-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/security/roles/roles-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1271,17 +1123,7 @@
       "count": 1
     }
   },
-  "src/app/features/settings/holiday-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/settings/holiday-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/settings/holidays-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1296,17 +1138,7 @@
       "count": 1
     }
   },
-  "src/app/features/settings/working-days.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/settings/working-days.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/spm/likelihood/likelihood.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1316,17 +1148,7 @@
       "count": 1
     }
   },
-  "src/app/features/spm/poverty-line/poverty-line.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/spm/poverty-line/poverty-line.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/spm/scorecards/scorecards.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1341,27 +1163,12 @@
       "count": 1
     }
   },
-  "src/app/features/spm/surveys/spm-surveys-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/spm/surveys/spm-surveys-form.component.ts": {
     "no-restricted-imports": {
       "count": 1
     }
   },
-  "src/app/features/spm/surveys/spm-surveys-list.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/spm/surveys/spm-surveys-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/adhoc-query/adhoc-query-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1376,11 +1183,6 @@
       "count": 1
     }
   },
-  "src/app/features/system/bulk-import/bulk-import.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/bulk-import/bulk-import.component.ts": {
     "no-restricted-imports": {
       "count": 1
@@ -1391,21 +1193,11 @@
       "count": 1
     }
   },
-  "src/app/features/system/business-steps/business-steps.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/business-steps/business-steps.component.ts": {
     "no-restricted-imports": {
       "count": 1
     },
     "unicorn/no-array-sort": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/cache/cache.component.spec.ts": {
-    "no-restricted-imports": {
       "count": 1
     }
   },
@@ -1434,11 +1226,6 @@
       "count": 1
     }
   },
-  "src/app/features/system/credit-bureau-config/credit-bureau-config.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/credit-bureau-config/credit-bureau-config.component.ts": {
     "no-restricted-imports": {
       "count": 1
@@ -1454,17 +1241,7 @@
       "count": 1
     }
   },
-  "src/app/features/system/delinquency/delinquency-management.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/delinquency/delinquency-management.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/entity-data-table-checks/entity-data-table-checks-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1479,11 +1256,6 @@
       "count": 1
     }
   },
-  "src/app/features/system/entity-mapping/entity-mapping-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/entity-mapping/entity-mapping-form.component.ts": {
     "no-restricted-imports": {
       "count": 1
@@ -1494,17 +1266,7 @@
       "count": 1
     }
   },
-  "src/app/features/system/external-events/external-events.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/external-events/external-events.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/external-services/external-services.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1514,17 +1276,7 @@
       "count": 1
     }
   },
-  "src/app/features/system/field-configuration/field-configuration.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/field-configuration/field-configuration.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/hooks/hooks-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1539,17 +1291,7 @@
       "count": 1
     }
   },
-  "src/app/features/system/instance-mode/instance-mode.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/instance-mode/instance-mode.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/loan-product-details/loan-product-details.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1559,17 +1301,7 @@
       "count": 1
     }
   },
-  "src/app/features/system/notifications-config/notifications-config.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/notifications-config/notifications-config.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/oidc-config/oidc-config.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1579,27 +1311,12 @@
       "count": 1
     }
   },
-  "src/app/features/system/password-preferences/password-preferences.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/password-preferences/password-preferences.component.ts": {
     "no-restricted-imports": {
       "count": 1
     }
   },
-  "src/app/features/system/permissions/permissions.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/permissions/permissions.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/report-mailing-jobs/report-mailing-jobs-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1614,27 +1331,12 @@
       "count": 1
     }
   },
-  "src/app/features/system/scheduler-jobs/scheduler-job-history.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/scheduler-jobs/scheduler-job-history.component.ts": {
     "no-restricted-imports": {
       "count": 1
     }
   },
-  "src/app/features/system/scheduler-jobs/scheduler-jobs-list.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/system/scheduler-jobs/scheduler-jobs-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/system/sms/sms-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1659,11 +1361,6 @@
       "count": 1
     }
   },
-  "src/app/features/tasks/checker-inbox/view-payload-dialog.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/tasks/checker-inbox/view-payload-dialog.component.ts": {
     "no-restricted-imports": {
       "count": 1
@@ -1679,11 +1376,6 @@
       "count": 1
     }
   },
-  "src/app/features/tellers/teller-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/tellers/teller-form.component.ts": {
     "no-restricted-imports": {
       "count": 1
@@ -1694,22 +1386,12 @@
       "count": 1
     }
   },
-  "src/app/features/transfers/account-transfer-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/transfers/account-transfer-form.component.ts": {
     "no-restricted-imports": {
       "count": 1
     }
   },
   "src/app/features/transfers/account-transfers-list.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/transfers/standing-instruction-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1729,17 +1411,7 @@
       "count": 1
     }
   },
-  "src/app/features/working-capital/breach/wc-breach-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/working-capital/breach/wc-breach-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/working-capital/breach/wc-breach-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1749,17 +1421,7 @@
       "count": 1
     }
   },
-  "src/app/features/working-capital/loan-products/wc-loan-product-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/working-capital/loan-products/wc-loan-product-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/working-capital/loan-products/wc-loan-products-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1779,17 +1441,7 @@
       "count": 1
     }
   },
-  "src/app/features/working-capital/loans/wc-loan-action-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/working-capital/loans/wc-loan-action-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/working-capital/loans/wc-loan-form.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1799,17 +1451,7 @@
       "count": 1
     }
   },
-  "src/app/features/working-capital/loans/wc-loan-view.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/working-capital/loans/wc-loan-view.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/working-capital/loans/wc-loans-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }
@@ -1819,17 +1461,7 @@
       "count": 1
     }
   },
-  "src/app/features/working-capital/near-breach/wc-near-breach-form.component.spec.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
   "src/app/features/working-capital/near-breach/wc-near-breach-form.component.ts": {
-    "no-restricted-imports": {
-      "count": 1
-    }
-  },
-  "src/app/features/working-capital/near-breach/wc-near-breach-list.component.spec.ts": {
     "no-restricted-imports": {
       "count": 1
     }

@@ -186,7 +186,13 @@ const NEXT_DIRECTION: Record<SortDirection, SortDirection> = {
                       {{ col.label | translate }}
                     }
                   </th>
-                  <td cdk-cell *cdkCellDef="let row">
+                  <!--
+                    data-label is what makes the card layout possible without a second
+                    template: below the breakpoint the header row is hidden and each cell
+                    renders its own label from this attribute. One source of truth for the
+                    columns, so a column added to columns() appears in both layouts.
+                  -->
+                  <td cdk-cell *cdkCellDef="let row" [attr.data-label]="col.label | translate">
                     @if (columnTemplates()[col.key]) {
                       <ng-container
                         *ngTemplateOutlet="columnTemplates()[col.key]; context: { $implicit: row }"
@@ -224,47 +230,12 @@ const NEXT_DIRECTION: Record<SortDirection, SortDirection> = {
   `,
   styles: [
     `
-      .data-table-card {
-        margin: 24px;
-        position: relative;
-      }
-      /* ion-card-header stacks its children in a column by default. The title and its
-         actions belong on one line — the action is a response to the title, not a
-         separate thought. */
-      ion-card-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-4);
-        padding-bottom: var(--space-3);
-        border-bottom: 1px solid var(--border-color);
-      }
-      ion-card-title {
-        display: flex;
-        align-items: center;
-        margin: 0;
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: var(--secondary-color);
-      }
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: var(--space-2);
-        flex-shrink: 0;
-      }
-      .table-header {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: var(--space-4);
-        margin: var(--space-4) 0 var(--space-2);
-      }
-      .search-container {
-        display: flex;
-        align-items: center;
-      }
+      /* The narrow-viewport card layout lives in styles/_common.scss, not here. Angular scopes
+         these rules with an _ngcontent attribute, and the <tbody> cdk-table renders into is
+         created by the HTML parser rather than by this template — so it never carries that
+         attribute and a scoped tbody selector silently does not match it. It stayed
+         display: table-row-group, shrank to its content, and the cards came out narrower than
+         the page. */
       .table-container {
         overflow: auto;
       }

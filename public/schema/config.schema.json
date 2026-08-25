@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fineract.apache.org/backoffice-ui/schema/config.schema.json",
+  "title": "Fineract Back-Office UI deployment configuration",
+  "description": "The deployment-owned overlay, mounted at branding/config.json. Every key is optional; whatever is present is merged over the values the image ships with. Upstream never writes this file.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+
+    "defaultTenant": {
+      "type": "string",
+      "description": "Tenant used when the user has not chosen one.",
+      "default": "default"
+    },
+    "rbacEnabled": {
+      "type": "boolean",
+      "description": "When false, the sidebar shows every entry and the permission directives render everything. A UI-visibility control only — authorization is always enforced server-side by Fineract.",
+      "default": true
+    },
+    "institutionType": {
+      "type": "string",
+      "enum": ["mfis", "cb", "cu", "universal"],
+      "description": "Which group-lending features this institution exposes.",
+      "default": "universal"
+    },
+    "developerToolsEnabled": {
+      "type": "boolean",
+      "description": "Exposes screens driving Fineract's /v1/internal/** endpoints, which are served only under the backend's `test` Spring profile. Leave off anywhere real.",
+      "default": false
+    },
+    "allowedApiOrigins": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "Absolute API origins this deployment permits beyond its own. Whatever is named here receives the user's credentials, so keep the list short."
+    },
+
+    "branding": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "How this deployment looks. All asset paths are same-origin: the deployed CSP is img-src 'self' data:, so an off-origin logo would not render. Mount files beside this one.",
+      "properties": {
+        "appName": {
+          "type": "string",
+          "description": "Product name in the header and the browser title. Plain text, not a translation key.",
+          "examples": ["Any Community Bank"]
+        },
+        "logoUrl": {
+          "$ref": "#/$defs/assetPath",
+          "description": "Header logo, e.g. branding/logo.svg"
+        },
+        "logoDarkUrl": {
+          "$ref": "#/$defs/assetPath",
+          "description": "Header logo for dark mode. Falls back to logoUrl."
+        },
+        "faviconUrl": {
+          "$ref": "#/$defs/assetPath",
+          "description": "Browser tab icon, e.g. branding/favicon.svg"
+        },
+        "tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Design-token overrides, applied as CSS custom properties. Only the names below are honoured; anything else is reported at startup and ignored.",
+          "properties": {
+            "light": { "$ref": "#/$defs/tokenSet" },
+            "dark": {
+              "$ref": "#/$defs/tokenSet",
+              "description": "Applied under [data-theme='dark']. Names omitted here inherit the light value."
+            }
+          }
+        }
+      }
+    },
+
+    "nav": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Navigation adjustments. Everything here is keyed on an entry's stable id — never its label or route, both of which upstream changes freely.",
+      "properties": {
+        "hidden": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ids to hide, group headers included. Hiding a group hides its children. Presentational only: the route stays reachable by URL and authorization remains server-side.",
+          "examples": [["nav.spm", "working-capital"]]
+        },
+        "overrides": {
+          "type": "object",
+          "description": "Per-entry patches, keyed by id.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "labelKey": { "type": "string", "description": "Replacement label." },
+              "icon": {
+                "type": "string",
+                "description": "Replacement ionicon name. Must be one the application registers."
+              },
+              "order": { "type": "number", "description": "Sort key among siblings, ascending." },
+              "parent": {
+                "type": ["string", "null"],
+                "description": "Id of the group to move this entry into, or null for the top level."
+              }
+            }
+          }
+        },
+        "items": {
+          "type": "array",
+          "description": "Entries this deployment adds. Use a vendor prefix so ids cannot collide with upstream's.",
+          "items": { "$ref": "#/$defs/navItem" }
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "assetPath": {
+      "type": "string",
+      "pattern": "^[\\w][\\w./-]*$",
+      "description": "A same-origin, relative path. Absolute URLs are rejected."
+    },
+    "hexColor": {
+      "type": "string",
+      "pattern": "^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+    },
+    "cssLength": {
+      "type": "string",
+      "pattern": "^-?\\d+(?:\\.\\d+)?(?:px|rem|em|%)?$"
+    },
+    "tokenSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary-color": {
+          "$ref": "#/$defs/hexColor",
+          "description": "Accent and fill. Any colour is accepted: Ionic's label colour is derived from it, so a pale accent gets dark text. Useful for a lighter accent in dark mode."
+        },
+        "primary-dark": { "$ref": "#/$defs/hexColor" },
+        "primary-strong": { "$ref": "#/$defs/hexColor" },
+        "secondary-color": {
+          "$ref": "#/$defs/hexColor",
+          "description": "Sidebar ground. Must clear 4.5:1 against white specifically: the sidebar pairs it with a literal white in CSS, so there is no label variable to flip."
+        },
+        "bg-color": { "$ref": "#/$defs/hexColor", "description": "Page ground." },
+        "card-bg": { "$ref": "#/$defs/hexColor" },
+        "text-color": { "$ref": "#/$defs/hexColor" },
+        "text-muted": { "$ref": "#/$defs/hexColor" },
+        "error-color": { "$ref": "#/$defs/hexColor" },
+        "success-color": { "$ref": "#/$defs/hexColor" },
+        "warning-color": { "$ref": "#/$defs/hexColor" },
+        "border-color": { "$ref": "#/$defs/hexColor" },
+        "border-radius": { "$ref": "#/$defs/cssLength" },
+        "header-height": { "$ref": "#/$defs/cssLength" },
+        "sidebar-width": { "$ref": "#/$defs/cssLength" },
+        "content-padding": { "$ref": "#/$defs/cssLength" }
+      }
+    },
+    "navItem": {
+      "type": "object",
+      "required": ["id", "labelKey"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique, and must not collide with an upstream id. Prefix it: \"acme.crm\"."
+        },
+        "labelKey": { "type": "string" },
+        "icon": { "type": "string" },
+        "order": { "type": "number" },
+        "parent": { "type": "string", "description": "Id of the group to nest under." },
+        "kind": {
+          "type": "string",
+          "enum": ["route", "external"],
+          "default": "route",
+          "description": "'external' opens url in a new tab. Embedding in a frame is not supported: it would require widening the deployed CSP."
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://",
+          "description": "Destination for an external entry."
+        },
+        "route": { "type": "string", "description": "In-application path, for kind 'route'." },
+        "requiredPermissions": {
+          "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }],
+          "description": "Fineract permission code(s) needed to see this entry. Gated exactly as upstream entries are."
+        },
+        "requiredAllPermissions": {
+          "type": "boolean",
+          "description": "Require all of requiredPermissions rather than any."
+        },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/navItem" } }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "external" } }, "required": ["kind"] },
+          "then": { "required": ["url"] }
+        }
+      ]
+    }
+  }
+}

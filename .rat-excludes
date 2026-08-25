@@ -44,6 +44,12 @@ eslint.config.js
 sonar-project.properties
 public/favicon.png
 src/assets/i18n/*.json
+# JSON admits no comments, so these carry no ASF header. All three are data rather than
+# creative work: a published JSON Schema, a worked configuration example, and a generated
+# snapshot of navigation ids.
+public/schema/*.json
+DOCS/examples/*.json
+scripts/nav-ids.json
 *.bak
 Agents.MD
 Gemini.MD

@@ -24,7 +24,9 @@ import { AuthService } from '../core/services/auth.service';
 import { NavigationConfigService } from '../core/services/navigation-config.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { signal } from '@angular/core';
+import { ViewportService } from '../core/services/viewport.service';
+import { EMPTY } from 'rxjs';
+import { WritableSignal, signal } from '@angular/core';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -33,6 +35,7 @@ describe('HeaderComponent', () => {
   let navigationConfigSpy: jasmine.SpyObj<NavigationConfigService>;
   let translateService: TranslateService;
   let routerSpy: jasmine.SpyObj<Router>;
+  let isMobile: WritableSignal<boolean>;
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['logout'], {
@@ -41,7 +44,20 @@ describe('HeaderComponent', () => {
     });
     navigationConfigSpy = jasmine.createSpyObj('NavigationConfigService', ['searchRoutes']);
     navigationConfigSpy.searchRoutes.and.returnValue([]);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate', 'navigateByUrl']);
+    // `routerState` and `events` are properties, not methods, so createSpyObj needs them in the
+    // property bag. The header reads the route tree for the phone header's page title, the same
+    // way BreadcrumbComponent does; without them it throws in ngOnInit.
+    routerSpy = jasmine.createSpyObj('Router', ['navigate', 'navigateByUrl'], {
+      routerState: { snapshot: { root: { url: [], routeConfig: null, firstChild: null } } },
+      events: EMPTY,
+    });
+
+    // Pinned, not inherited from the harness. The header renders a different set of controls
+    // either side of the breakpoint, and Karma runs specs in an iframe narrower than the
+    // browser window — so the real ViewportService reports "mobile" under ChromeHeadless and
+    // "desktop" under a headed run, and these assertions passed or failed on which browser CI
+    // happened to use.
+    isMobile = signal(false);
 
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), HeaderComponent],
@@ -49,6 +65,7 @@ describe('HeaderComponent', () => {
         { provide: AuthService, useValue: authServiceSpy },
         { provide: NavigationConfigService, useValue: navigationConfigSpy },
         { provide: Router, useValue: routerSpy },
+        { provide: ViewportService, useValue: { isMobile } },
       ],
     }).compileComponents();
 
@@ -66,6 +83,18 @@ describe('HeaderComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.username')?.textContent).toContain('mifos');
     expect(compiled.querySelector('.office')?.textContent).toContain('Head Office');
+  });
+
+  it('moves the actions into an overflow menu on a narrow viewport', () => {
+    // The counterpart to the case above: below the breakpoint those same controls are not in
+    // the bar at all, and reaching them is what the overflow trigger is for.
+    isMobile.set(true);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.username')).toBeNull();
+    expect(compiled.querySelector('#header-overflow')).not.toBeNull();
+    expect(compiled.querySelector('.page-title')).not.toBeNull();
   });
 
   it('should call logout and navigate', () => {

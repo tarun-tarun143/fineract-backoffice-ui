@@ -17,17 +17,34 @@
  * under the License.
  */
 
+import { TestBed } from '@angular/core/testing';
 import { initializeApp, appConfig } from './app.config';
 import { BASE_PATH } from './api/variables';
+import { ConfigService } from './core/services/config.service';
+import { BrandingService } from './core/services/branding.service';
 
 describe('AppConfig', () => {
   const API_URL = 'http://localhost/fineract-provider/api';
 
-  it('should initialize app config by calling loadConfig', () => {
+  it('loads the config and applies branding before the app starts', async () => {
+    // `initializeApp` resolves its own dependencies with `inject`, so it has to run inside an
+    // injection context rather than being handed them as arguments.
     const configServiceSpy = jasmine.createSpyObj('ConfigService', ['loadConfig']);
-    const initFn = initializeApp(configServiceSpy);
-    initFn();
+    configServiceSpy.loadConfig.and.returnValue(Promise.resolve());
+    const brandingSpy = jasmine.createSpyObj('BrandingService', ['apply']);
+
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ConfigService, useValue: configServiceSpy },
+        { provide: BrandingService, useValue: brandingSpy },
+      ],
+    });
+
+    await TestBed.runInInjectionContext(() => initializeApp());
+
     expect(configServiceSpy.loadConfig).toHaveBeenCalled();
+    // Branding must land after the config it reads from, and before the first paint.
+    expect(brandingSpy.apply).toHaveBeenCalled();
   });
 
   it('should provide BASE_PATH from ConfigService', () => {

@@ -125,6 +125,32 @@ server {
         proxy_buffering off;
     }
 
+    # ---------------------------------------------------------------------------------------
+    # Configuration and deployment assets — real 404s, never the SPA shell.
+    #
+    # `try_files ... /index.html` below is right for routes and wrong for everything the
+    # application fetches as data. A deployment that has not mounted `branding/` would otherwise
+    # receive index.html with a 200 where it asked for JSON, and the parse failure that follows
+    # reads as a corrupt config rather than an absent one.
+    #
+    # This is the same defect that made the federation host noisy: `/remoteEntry.json` resolved
+    # to the SPA shell, so `initFederation` parsed HTML as JSON on every page load. Anything
+    # fetched rather than navigated to belongs here.
+    #
+    # `^~` stops nginx falling through to the static-asset regex location below.
+    # ---------------------------------------------------------------------------------------
+    location ^~ /branding/ {
+        try_files $uri =404;
+    }
+
+    location = /config.json {
+        try_files $uri =404;
+    }
+
+    location = /remoteEntry.json {
+        try_files $uri =404;
+    }
+
     location / {
         try_files $uri $uri/ /index.html;
     }

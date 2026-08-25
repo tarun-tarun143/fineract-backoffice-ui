@@ -67,10 +67,70 @@ permissions: {}
 # one: the specs create and mutate real records, and `backend.setup.ts` seeds reference data, so
 # a shared instance would make them order-dependent across shards.
 #
-# Branch protection must require all four `E2E (mocked backend, shard n/4)` checks and all three
-# `E2E (real Fineract, shard n/3)` checks. Do not require either `... report` job instead:
+# Branch protection must require all four `E2E (mocked backend, shard n/4)` checks, all three
+# `E2E (real Fineract, shard n/3)` checks, and `E2E (mobile viewport)`. Do not require either `... report` job instead:
 # merging reports can succeed when a shard fails, so only the shard jobs enforce the result.
 jobs:
+  mobile:
+    # The narrow layout, on Pixel 7 emulation. Unsharded: it is one spec of eleven cases and the
+    # fixed cost of a runner dwarfs the run itself. Needs no Fineract — the spec mocks its own
+    # backend — so it sits beside `mocked` rather than behind the stack.
+    name: E2E (mobile viewport)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # checkout
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Generate Local SSL Certificates for Dev Server
+        run: |
+          mkdir -p ssl
+          openssl req -new -x509 -keyout ssl/localhost.key -out ssl/localhost.crt -days 365 -nodes -subj "/CN=localhost"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache Playwright Browsers
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Cache Angular build output
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .angular/cache
+          key: ${{ runner.os }}-angular-e2e-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-angular-e2e-
+
+      - name: Run mobile E2E tests
+        env:
+          PLAYWRIGHT_OUTPUT_DIR: ${{ runner.temp }}/e2e-output
+        run: npx playwright test --project=mobile --reporter=list
+
+      - name: Upload report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-mobile
+          path: playwright-report/
+          if-no-files-found: warn
+          retention-days: 3
+
   mocked:
     name: E2E (mocked backend, shard ${{ matrix.shard }}/${{ matrix.total }})
     runs-on: ubuntu-latest

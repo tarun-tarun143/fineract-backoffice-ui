@@ -38,6 +38,10 @@
   --border-radius: 8px;
   --header-height: 64px;
   --sidebar-width: 240px;
+  /* Gutter around the routed content. A token rather than a literal because it is the one
+     spacing value that has to shrink on a narrow viewport — 32px of a 360px screen is a tenth
+     of the width gone before any content — and because a deployment may set it. */
+  --content-padding: 2rem;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 
@@ -62,6 +66,16 @@
   --space-6: 32px;
 }
 
+/* The narrow layout. Only values that must change with width live here; everything else is the
+   same shell. See ViewportService for the matching breakpoint in TypeScript, and DOCS/MOBILE.md
+   for why the two have to agree. */
+@media (max-width: 768px) {
+  :root {
+    --content-padding: var(--space-3);
+    --header-height: 56px;
+  }
+}
+
 [data-theme='dark'] {
   --primary-color: #3498db;
   --primary-dark: #2980b9;
@@ -81,6 +95,86 @@
 
   /* Ionic components take their colours from the variables above via
      _ionic-theme.scss, so dark mode needs no per-component overrides. */
+}
+
+/* ---- narrow viewport: one card per row -------------------------------------------------
+   A data table below 768px is a horizontal scroll with everything but the first column out of
+   sight. Each row becomes a stacked card of label/value pairs instead, driven by the
+   `data-label` attribute DataTableComponent puts on every cell — so there is one column
+   definition rather than a second template, and a new column cannot appear in one layout only.
+
+   Global rather than component-scoped on purpose: the <tbody> is created by the HTML parser,
+   not by the component's template, so it carries no _ngcontent attribute and a scoped selector
+   cannot reach it. Left as table-row-group it shrinks to its content and the cards come out
+   narrower than the page.
+
+   Breakpoint matches ViewportService.MOBILE_BREAKPOINT_PX. See DOCS/MOBILE.md. */
+@media (max-width: 768px) {
+  table[cdk-table],
+  table[cdk-table] tbody,
+  table[cdk-table] tr,
+  table[cdk-table] td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* The header row carried the labels; each cell renders its own now. */
+  table[cdk-table] tr[cdk-header-row] {
+    display: none;
+  }
+
+  table[cdk-table] tr[cdk-row] {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  table[cdk-table] tr:hover td {
+    background-color: transparent;
+  }
+
+  table[cdk-table] td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--space-2) 0;
+    /* Laid out for a fixed column on a wide viewport; in a card it should wrap. */
+    white-space: normal;
+  }
+
+  table[cdk-table] tr[cdk-row] td:last-child {
+    border-bottom: none;
+  }
+
+  table[cdk-table] td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+    flex: 0 0 auto;
+    max-width: 45%;
+  }
+
+  /* An action column has no label worth repeating. */
+  table[cdk-table] td[data-label='']::before {
+    content: none;
+  }
+  table[cdk-table] td[data-label=''] {
+    justify-content: flex-end;
+  }
+
+  /* Truncation is a column-width device and means nothing once the cell is its own row. */
+  table[cdk-table] td .truncate-text {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    text-align: right;
+  }
 }
 
 /* Base styling for CDK tables.

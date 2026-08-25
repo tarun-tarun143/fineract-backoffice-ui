@@ -156,6 +156,26 @@ jobs:
       # missing from the menu that the URL still opens. This compares them.
       - name: Verify route permissions agree with navigation
         run: npm run check:route-permissions
+      # Navigation ids are the handle a deployment's config names, in a file this repository
+      # never sees. A renamed or removed id silently stops matching there, so the menu a
+      # deployment meant to change comes back on upgrade with no error anywhere.
+      - name: Verify navigation ids are present, unique and stable
+        run: npm run check:nav-ids
+      # public/branding/ is reserved for deployments. Anything committed there becomes a merge
+      # conflict for every downstream that mounts its own overlay.
+      - name: Verify the deployment overlay path is unused upstream
+        run: npm run check:branding-path
+      # Resolves a maximally-customized reference deployment against the current tree. The unit
+      # tests use a three-entry fixture and the e2e suite mocks its own overlay, so both keep
+      # passing while an id or token a real deployment names disappears.
+      - name: Verify the reference downstream config still resolves
+        run: npm run check:reference-downstream
+      # The narrow layout rests on three invariants a diff cannot show: one breakpoint shared
+      # between the CSS and ViewportService, no 100vh (which overflows under mobile browser
+      # chrome), and no unbounded fixed width. The e2e `mobile` project covers behaviour; this
+      # covers the rules that are about to break it.
+      - name: Verify responsive layout invariants
+        run: npm run check:responsive
       # Nothing else type-checks e2e/: `npm run lint` covers src, and tsconfig.app.json excludes
       # the suite. A helper referencing an identifier that no longer exists therefore compiled
       # fine and failed only when CI ran the browser — which is a slow, expensive way to find a

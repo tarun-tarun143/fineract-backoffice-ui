@@ -24,23 +24,73 @@ import { environment } from '../../../environments/environment';
 import { skipErrorToast, skipLoading } from '../http/http-context';
 import { STORAGE } from '../adapters';
 import type { InstitutionFeature, InstitutionType } from './institution-config.service';
+import type { NavItemConfig } from './navigation-config.service';
+
+/**
+ * A patch applied to one upstream navigation entry, named by its `id`.
+ *
+ * Every field is optional; whatever is present replaces the upstream value and the rest is left
+ * alone. Deliberately cannot change `id` — that is the handle the patch is addressed by — and
+ * cannot grant permissions, because loosening a gate from a config file is not something a
+ * presentation layer should be able to do.
+ */
+export interface NavItemOverride {
+  /** Replacement label. A literal string is fine; a missing i18n key renders as the key. */
+  labelKey?: string;
+  /** Replacement ionicon name. Must be registered in `core/icons.ts` or it renders blank. */
+  icon?: string;
+  /** Sort key among siblings. See {@link NavItemConfig.order}. */
+  order?: number;
+  /**
+   * `id` of the group to move this entry into, or `null` to lift it to the top level.
+   * Naming a group that does not exist is reported as a config defect and ignored.
+   */
+  parent?: string | null;
+}
 
 /**
  * Adjustments a deployment makes to the navigation tree without editing it.
  *
- * `navigation-config.service.ts` is a single 600-line file every feature adds to, so a
- * downstream that removes an entry there conflicts with every upstream release that touches
- * it. Naming the entry here instead keeps the deployment's decision out of the shared file.
+ * `navigation-config.service.ts` is a single file every feature adds to, so a downstream that
+ * edits the tree there conflicts with every upstream release that touches it. Naming entries
+ * here instead keeps the deployment's decisions out of the shared file entirely.
+ *
+ * Everything below is keyed on {@link NavItemConfig.id} — never on `labelKey` or `route`, both
+ * of which upstream changes freely. See the note on `id` for why that distinction matters.
  */
 export interface NavOverrides {
   /**
-   * `labelKey`s of navigation entries to hide, headers included. `labelKey` is the identifier
-   * because it is the only field every entry carries — group headers have no `route`.
+   * `id`s of navigation entries to hide, group headers included. Hiding a group hides its
+   * children with it.
    *
-   * Hiding is presentational only. The route stays reachable by URL, so this is a way to
-   * narrow what a deployment offers, not a way to deny access to it.
+   * Hiding is presentational only. The route stays reachable by URL, so this narrows what a
+   * deployment offers; it does not deny access to it. Authorization is enforced server-side by
+   * Fineract — see `security.md` §5a.
    */
   hidden?: string[];
+
+  /** Per-entry patches, keyed by `id`. See {@link NavItemOverride}. */
+  overrides?: Record<string, NavItemOverride>;
+
+  /**
+   * Entries this deployment adds, which upstream has never heard of.
+   *
+   * Each needs an `id` that no upstream entry uses; a collision is reported and the entry
+   * dropped, rather than silently shadowing something built in. Use a vendor prefix
+   * (`acme.crm`). Items appear at the top level unless `parent` names an existing group.
+   *
+   * Added entries pass through exactly the same gates as built-in ones, so
+   * `requiredPermissions` works here as it does upstream.
+   */
+  items?: DeploymentNavItem[];
+}
+
+/** A navigation entry contributed by a deployment rather than by upstream. */
+export interface DeploymentNavItem extends NavItemConfig {
+  /** Required — an entry with no id cannot be addressed, patched or de-duplicated. */
+  id: string;
+  /** `id` of the group to nest under. Omitted means top level. */
+  parent?: string;
 }
 
 /**
@@ -90,6 +140,42 @@ export interface AppConfig {
   institutionFeatures?: Record<InstitutionType, InstitutionFeature[]>;
   /** Deployment-specific navigation adjustments. */
   nav?: NavOverrides;
+  /** Deployment-specific appearance. See {@link BrandingConfig}. */
+  branding?: BrandingConfig;
+}
+
+/**
+ * How this deployment looks: its name, its marks, and its colours.
+ *
+ * Every asset path here is resolved relative to the application's own origin, and there is
+ * deliberately no way to name an external one. The deployed Content-Security-Policy is
+ * `img-src 'self' data:`, so an off-origin logo would be blocked at render time — and widening
+ * that policy is a security decision, not a branding one. Mount assets into the image beside the
+ * overlay that names them.
+ */
+export interface BrandingConfig {
+  /** Product name in the header and the browser title. Plain text; a literal, not an i18n key. */
+  appName?: string;
+  /** Same-origin path to the header logo, e.g. `branding/logo.svg`. */
+  logoUrl?: string;
+  /** Same-origin path to a logo for dark mode. Falls back to {@link logoUrl}. */
+  logoDarkUrl?: string;
+  /** Same-origin path to the favicon. */
+  faviconUrl?: string;
+  /**
+   * Design-token overrides, applied as CSS custom properties.
+   *
+   * Only the names in `BRANDABLE_TOKENS` are honoured; anything else is reported as a config
+   * defect and ignored. That list is a published contract this project owes compatibility on,
+   * so it is deliberately the small subset a deployment actually needs rather than every token
+   * the stylesheet happens to declare.
+   */
+  tokens?: {
+    /** Applied to `:root`. */
+    light?: Record<string, string>;
+    /** Applied under `[data-theme='dark']`. Omitted names inherit the light value. */
+    dark?: Record<string, string>;
+  };
 }
 
 /**
@@ -98,6 +184,49 @@ export interface AppConfig {
  * `fineractApiUrl` comes from the build because it is the one value needed before any
  * request can be made — including the request that fetches `config.json`.
  */
+/** Upstream's shipped defaults, and what `deploy/entrypoint.sh` renders from the environment. */
+const CONFIG_URL = 'config.json';
+
+/**
+ * The deployment's own layer, and the only file in this chain a downstream owns.
+ *
+ * A second file because `config.json` already has two writers: this repository tracks it, and
+ * `deploy/entrypoint.sh` rewrites it whole at container start. Anything a deployment put there
+ * was therefore a merge conflict on the next release or discarded on the next restart — which
+ * is what happened to `nav`, `allowedApiOrigins` and `institutionFeatures`, none of which the
+ * entrypoint's heredoc emits.
+ *
+ * Gitignored, never written by upstream, and expected to be absent.
+ */
+const DEPLOYMENT_OVERLAY_URL = 'branding/config.json';
+
+/** Plain objects are merged key-by-key; everything else, arrays included, is replaced. */
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Recursively merges `patch` over `base`.
+ *
+ * Arrays are replaced rather than concatenated. A deployment writing `nav.hidden` means "hide
+ * exactly these", and a concatenating merge would make it impossible to *un*-hide anything an
+ * upstream default had hidden — the layer below would always win by addition.
+ */
+function deepMerge<T>(base: T, patch: unknown): T {
+  if (!isPlainObject(patch)) {
+    return (patch === undefined ? base : patch) as T;
+  }
+  if (!isPlainObject(base)) {
+    return patch as T;
+  }
+  const out: Record<string, unknown> = { ...base };
+  for (const [key, value] of Object.entries(patch)) {
+    if (value === undefined) continue;
+    out[key] = isPlainObject(value) ? deepMerge(out[key], value) : value;
+  }
+  return out as T;
+}
+
 const DEFAULT_CONFIG: AppConfig = {
   fineractApiUrl: environment.fineractApiUrl,
   defaultTenant: 'default',
@@ -185,26 +314,48 @@ export class ConfigService {
    * deployment turning RBAC off never reached anyone who had ever changed their endpoint.
    */
   async loadConfig(): Promise<void> {
+    const base = await this.fetchLayer(CONFIG_URL, { required: true });
+    // The overlay is expected to be absent on most deployments, so a 404 is a normal outcome and
+    // not worth a console error. See DEPLOYMENT_OVERLAY_URL for why it is a second file at all.
+    const overlay = await this.fetchLayer(DEPLOYMENT_OVERLAY_URL, { required: false });
+
+    // Merged, not assigned: a config.json listing only the keys a deployment cares about must not
+    // blank out the rest, and an overlay naming one key must not discard the layer beneath it.
+    const merged = deepMerge(deepMerge(DEFAULT_CONFIG, base), overlay) as AppConfig;
+
+    // The allow-list comes from the config just merged, not from the signal: this runs before the
+    // set lands, so reading it back would apply the previous deployment's rules.
+    this._config.set({
+      ...merged,
+      ...this.getStoredOverride(merged.allowedApiOrigins ?? []),
+    });
+  }
+
+  /**
+   * Reads one configuration layer.
+   *
+   * @returns the parsed layer, or `{}` when it is absent or unreadable — a missing layer means
+   * "this deployment said nothing here", which is exactly what an empty object merges as.
+   */
+  private async fetchLayer(
+    url: string,
+    { required }: { required: boolean },
+  ): Promise<Partial<AppConfig>> {
     try {
-      const loaded = await firstValueFrom(
-        this.http.get<Partial<AppConfig>>(`config.json?cb=${Date.now()}`, {
-          // This runs before the app renders: there is no progress bar to drive yet, and no
-          // route on which to show a toast. The catch below is the reporting.
-          context: skipLoading(skipErrorToast()),
-        }),
+      return (
+        (await firstValueFrom(
+          this.http.get<Partial<AppConfig>>(`${url}?cb=${Date.now()}`, {
+            // This runs before the app renders: there is no progress bar to drive yet, and no
+            // route on which to show a toast. The catch below is the reporting.
+            context: skipLoading(skipErrorToast()),
+          }),
+        )) ?? {}
       );
-      // Merged, not assigned: a config.json listing only the keys a deployment cares about
-      // must not blank out the rest.
-      // The allow-list comes from the config just loaded, not from the signal: this runs before
-      // the merge lands, so reading it back would apply the previous deployment's rules.
-      const allowedOrigins = loaded.allowedApiOrigins ?? DEFAULT_CONFIG.allowedApiOrigins ?? [];
-      this._config.set({
-        ...DEFAULT_CONFIG,
-        ...loaded,
-        ...this.getStoredOverride(allowedOrigins),
-      });
     } catch (error) {
-      console.error('❌ Could not load config.json, using environment defaults.', error);
+      if (required) {
+        console.error(`❌ Could not load ${url}, using defaults.`, error);
+      }
+      return {};
     }
   }
 

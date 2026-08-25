@@ -119,7 +119,12 @@
     "frequentPostings": "बार-बार की जाने वाली प्रविष्टियाँ",
     "openingBalances": "प्रारंभिक शेष",
     "reportDefinitions": "रिपोर्ट परिभाषाएँ",
-    "workQueues": "अनुमोदन कतारें"
+    "workQueues": "अनुमोदन कतारें",
+    "opensInNewTab": "नए टैब में खुलता है",
+    "openMenu": "मेन्यू खोलें",
+    "closeMenu": "मेन्यू बंद करें",
+    "toggleSidebar": "साइडबार टॉगल करें",
+    "moreActions": "अधिक क्रियाएँ"
   },
   "DASHBOARD": {
     "SYSTEM_STATUS": "सिस्टम परिचालन स्थिति",
@@ -524,5 +529,12 @@
     "CONFIRM": "यह क्रिया एक ही अनुरोध में {{count}} रिकॉर्ड पर लागू होगी।",
     "ALL_SUCCEEDED": "{{count}} रिकॉर्ड सफलतापूर्वक संसाधित हुए।",
     "PARTIAL": "{{total}} में से {{succeeded}} सफल। ये अस्वीकृत हुए: {{names}}"
+  },
+  "SECURITY": {
+    "AUDIT_LOGS": "ऑडिट लॉग"
+  },
+  "USERS": {
+    "CREATE_USER": "उपयोगकर्ता बनाएँ",
+    "EDIT_USER": "उपयोगकर्ता संपादित करें"
   }
 }

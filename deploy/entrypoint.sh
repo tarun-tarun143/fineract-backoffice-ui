@@ -20,18 +20,28 @@
 # Renders both pieces of runtime configuration — the nginx server block and the application's
 # config.json — from the environment, then hands off to nginx.
 #
-# ## Why config.json is written whole rather than patched
+# ## config.json belongs to this script. Deployments must not edit it.
 #
-# This script used to write only the two keys it had values for, which silently dropped every
-# other key the shipped file carried: `rbacEnabled`, `institutionType`, `developerToolsEnabled`,
-# and `allowedApiOrigins`. `ConfigService` merges what it loads over its own defaults, so RBAC
-# stayed on and nothing was insecure — but `allowedApiOrigins` backs a release gate and became
-# unsettable in a container, and a deployment that had edited config.json into the image lost
-# those edits the moment it set an environment variable.
+# This file is written whole on every container start, from the environment and nothing else.
+# Any key it does not emit is therefore *erased* at startup, whatever the image contained.
 #
-# Every key now has a default here, so the file is complete by construction and no key can go
-# missing. That is deliberately not a merge: a merge needs a JSON parser, and adding one to the
-# image to solve a problem that a full default table solves is the wrong trade.
+# That used to be a trap. An earlier revision of this comment claimed "every key now has a
+# default here, so the file is complete by construction and no key can go missing" — but the
+# heredoc below emits five keys, and `allowedApiOrigins`, `institutionFeatures` and `nav` were
+# added to `AppConfig` afterwards. A deployment that baked any of those into the image lost them
+# silently on the next restart, `allowedApiOrigins` included, which backs a security control.
+#
+# The fix is not to keep this table in step with `AppConfig` forever — that is a race this script
+# will keep losing. It is that a deployment has its own file now:
+#
+#     branding/config.json
+#
+# read by `ConfigService` after this one and merged over it, never written by this script or by
+# upstream, and absent by default. Everything a deployment wants to set goes there. See
+# DOCS/CUSTOMIZATION.md.
+#
+# So the rule for this heredoc is narrow: it carries only what the *container environment* is the
+# right source for. Adding an `AppConfig` key here is almost always the wrong move.
 
 set -eu
 

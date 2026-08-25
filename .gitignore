@@ -76,3 +76,13 @@ ssl/
 
 # Submodules
 /fineract/
+
+# Deployment-owned customization overlay.
+#
+# Reserved for downstreams: branding, navigation adjustments and string overrides are mounted
+# here at deploy time and read by ConfigService after config.json. Upstream never writes to this
+# path — that is the whole point of it, and scripts/check-branding-path.mjs enforces it — so a
+# deployment can take every upstream release as a version bump instead of a rebase.
+#
+# See DOCS/CUSTOMIZATION.md.
+/public/branding/

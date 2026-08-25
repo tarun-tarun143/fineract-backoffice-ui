@@ -54,6 +54,18 @@ import { isTypingTarget, matchShortcut } from './keyboard-shortcuts';
       }
       <app-header />
       <div class="main-wrapper">
+        @if (sidebarService.isDrawerOpen()) {
+          <!--
+            Dismisses the drawer on a press outside it. Not focusable and hidden from assistive
+            technology: Escape and the drawer's own close control are the accessible routes out,
+            and a backdrop in the tab order is a stop that announces nothing.
+          -->
+          <div
+            class="drawer-backdrop"
+            (click)="sidebarService.closeDrawer()"
+            aria-hidden="true"
+          ></div>
+        }
         <app-sidebar />
         <main class="content-area" role="main">
           <app-breadcrumb />
@@ -68,7 +80,10 @@ import { isTypingTarget, matchShortcut } from './keyboard-shortcuts';
       .app-container {
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        /* dvh, not vh. Mobile browsers report vh against the viewport with the URL bar hidden,
+           so 100vh is taller than what is actually on screen and the bottom of every page sits
+           under the browser chrome. */
+        height: 100dvh;
         overflow: hidden;
         position: relative;
       }
@@ -90,9 +105,31 @@ import { isTypingTarget, matchShortcut } from './keyboard-shortcuts';
       }
       .content-area {
         flex: 1;
-        padding: 2rem;
+        padding: var(--content-padding);
         background-color: var(--bg-color);
         overflow-y: auto;
+        /* The drawer overlays this rather than displacing it, so the content keeps the full
+           width and does not reflow when the drawer opens. */
+        width: 100%;
+      }
+      .drawer-backdrop {
+        position: fixed;
+        inset: var(--header-height) 0 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 900;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .drawer-backdrop {
+          animation: backdrop-in 0.15s ease-out;
+        }
+      }
+      @keyframes backdrop-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
     `,
   ],

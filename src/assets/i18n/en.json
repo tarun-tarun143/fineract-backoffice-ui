@@ -120,7 +120,12 @@
     "frequentPostings": "Frequent Postings",
     "openingBalances": "Opening Balances",
     "reportDefinitions": "Report Definitions",
-    "workQueues": "Approval Queues"
+    "workQueues": "Approval Queues",
+    "opensInNewTab": "Opens in a new tab",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "toggleSidebar": "Toggle sidebar",
+    "moreActions": "More actions"
   },
   "SIDEBAR": {
     "SEARCH": "Search",
@@ -1413,6 +1418,7 @@
     "ADD_LEDGER_ACCOUNT": "Add Ledger Account",
     "EDIT_ACCOUNT": "Edit Account",
     "DEFINE_MAPPING": "Define Mapping",
+    "EDIT_MAPPING": "Edit Financial Activity Mapping",
     "GL_CODE": "GL Code",
     "ACCOUNT_TYPE": "Account Type",
     "ACCOUNT_USAGE": "Account Usage",

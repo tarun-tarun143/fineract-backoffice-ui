@@ -34,6 +34,13 @@ import { defineConfig, devices } from '@playwright/test';
 /** Runs only against the dedicated two-factor stack; see the `two-factor` project. */
 const TWO_FACTOR_SPECS = ['two-factor-backend.spec.ts'];
 
+/**
+ * Specs that only mean anything at a narrow viewport, and so run in the `mobile` project rather
+ * than `mocked`. Kept out of `mocked` because asserting a drawer on a 1280px desktop would
+ * assert the opposite of the behaviour.
+ */
+const MOBILE_SPECS = ['mobile-shell.spec.ts'];
+
 const BACKEND_SPECS = [
   'center-servicing.spec.ts',
   'parity-screens.spec.ts',
@@ -130,7 +137,20 @@ export default defineConfig({
       // with the slower half — see .github/workflows/e2e.yml.
       name: 'mocked',
       use: { ...devices['Desktop Chrome'] },
-      testIgnore: [...BACKEND_SPECS, ...TWO_FACTOR_SPECS],
+      testIgnore: [...BACKEND_SPECS, ...TWO_FACTOR_SPECS, ...MOBILE_SPECS],
+    },
+    {
+      // The narrow layout, on a real mobile emulation rather than a resized desktop: Pixel 7
+      // brings the touch flags and the device pixel ratio with it, and `hasTouch` is what makes
+      // Playwright dispatch taps instead of clicks — which is the difference between testing the
+      // drawer and testing a mouse.
+      //
+      // 412x915 sits below MOBILE_BREAKPOINT_PX (768). If that constant moves, this has to move
+      // with it or the project silently starts exercising the wide layout;
+      // scripts/check-responsive.mjs holds the CSS side of the same agreement.
+      name: 'mobile',
+      use: { ...devices['Pixel 7'] },
+      testMatch: MOBILE_SPECS,
     },
     {
       // Drives a real Fineract end to end. Slow, and the only half that needs the

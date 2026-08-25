@@ -26,6 +26,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'offices',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_OFFICE' },
+    title: 'nav.offices',
     loadComponent: () =>
       import('./offices/offices-list.component').then((m) => m.OfficesListComponent),
   },
@@ -33,6 +34,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'offices/create',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'CREATE_OFFICE' },
+    title: 'OFFICES.CREATE_OFFICE',
     loadComponent: () =>
       import('./offices/office-form.component').then((m) => m.OfficeFormComponent),
   },
@@ -40,6 +42,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'offices/edit/:id',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'UPDATE_OFFICE' },
+    title: 'OFFICES.EDIT_OFFICE',
     loadComponent: () =>
       import('./offices/office-form.component').then((m) => m.OfficeFormComponent),
   },
@@ -47,6 +50,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'offices/view/:id',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_OFFICE' },
+    title: 'nav.offices',
     loadComponent: () =>
       import('./offices/office-view.component').then((m) => m.OfficeViewComponent),
   },
@@ -54,24 +58,28 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'funds',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_FUND' },
+    title: 'nav.funds',
     loadComponent: () => import('./funds/funds-list.component').then((m) => m.FundsListComponent),
   },
   {
     path: 'funds/create',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'CREATE_FUND' },
+    title: 'FUNDS.CREATE_FUND',
     loadComponent: () => import('./funds/fund-form.component').then((m) => m.FundFormComponent),
   },
   {
     path: 'funds/edit/:id',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'UPDATE_FUND' },
+    title: 'FUNDS.EDIT_FUND',
     loadComponent: () => import('./funds/fund-form.component').then((m) => m.FundFormComponent),
   },
   {
     path: 'payment-types',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_PAYMENTTYPE' },
+    title: 'nav.paymentTypes',
     loadComponent: () =>
       import('./payment-types/payment-types-list.component').then(
         (m) => m.PaymentTypesListComponent,
@@ -81,6 +89,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'payment-types/create',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'CREATE_PAYMENTTYPE' },
+    title: 'PAYMENT_TYPES.CREATE',
     loadComponent: () =>
       import('./payment-types/payment-type-form.component').then((m) => m.PaymentTypeFormComponent),
   },
@@ -88,6 +97,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'payment-types/edit/:id',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'UPDATE_PAYMENTTYPE' },
+    title: 'PAYMENT_TYPES.EDIT',
     loadComponent: () =>
       import('./payment-types/payment-type-form.component').then((m) => m.PaymentTypeFormComponent),
   },
@@ -95,24 +105,28 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'staff',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_STAFF' },
+    title: 'ORGANIZATION.STAFF',
     loadComponent: () => import('./staff/staff-list.component').then((m) => m.StaffListComponent),
   },
   {
     path: 'staff/create',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'CREATE_STAFF' },
+    title: 'ORGANIZATION.CREATE_STAFF',
     loadComponent: () => import('./staff/staff-form.component').then((m) => m.StaffFormComponent),
   },
   {
     path: 'staff/edit/:id',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'UPDATE_STAFF' },
+    title: 'ORGANIZATION.EDIT_STAFF',
     loadComponent: () => import('./staff/staff-form.component').then((m) => m.StaffFormComponent),
   },
   {
     path: 'currencies',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_CURRENCY' },
+    title: 'CURRENCIES.TITLE',
     loadComponent: () =>
       import('./currencies/currencies.component').then((m) => m.CurrenciesComponent),
   },
@@ -120,6 +134,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'account-number-formats',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_ACCOUNTNUMBERFORMAT' },
+    title: 'ACCOUNT_NUMBER_FORMATS.TITLE',
     loadComponent: () =>
       import('./account-number-formats/account-number-formats-list.component').then(
         (m) => m.AccountNumberFormatsListComponent,
@@ -129,6 +144,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'account-number-formats/create',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'CREATE_ACCOUNTNUMBERFORMAT' },
+    title: 'ACCOUNT_NUMBER_FORMATS.CREATE_TITLE',
     loadComponent: () =>
       import('./account-number-formats/account-number-format-form.component').then(
         (m) => m.AccountNumberFormatFormComponent,
@@ -138,6 +154,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'account-number-formats/edit/:id',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'UPDATE_ACCOUNTNUMBERFORMAT' },
+    title: 'ACCOUNT_NUMBER_FORMATS.EDIT_TITLE',
     loadComponent: () =>
       import('./account-number-formats/account-number-format-form.component').then(
         (m) => m.AccountNumberFormatFormComponent,
@@ -145,6 +162,7 @@ export const ORGANIZATION_ROUTES: Routes = [
   },
   {
     path: 'group-levels',
+    title: 'nav.groupLevels',
     loadComponent: () =>
       import('./group-levels/group-levels-list.component').then((m) => m.GroupLevelsListComponent),
   },
@@ -152,6 +170,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'office-transactions',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'READ_OFFICETRANSACTION' },
+    title: 'OFFICE_TRANSACTIONS.TITLE',
     loadComponent: () =>
       import('./office-transactions/office-transactions-list.component').then(
         (m) => m.OfficeTransactionsListComponent,
@@ -161,6 +180,7 @@ export const ORGANIZATION_ROUTES: Routes = [
     path: 'office-transactions/create',
     canActivate: [authGuard, permissionGuard],
     data: { permissions: 'CREATE_OFFICETRANSACTION' },
+    title: 'OFFICE_TRANSACTIONS.CREATE',
     loadComponent: () =>
       import('./office-transactions/office-transaction-form.component').then(
         (m) => m.OfficeTransactionFormComponent,

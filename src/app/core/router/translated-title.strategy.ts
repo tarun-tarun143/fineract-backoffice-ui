@@ -21,11 +21,12 @@ import { Injectable, effect, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { I18N } from '../adapters';
+import { BrandingService } from '../services/branding.service';
 
 /** Separates the page name from the application name, as in `Groups · Fineract`. */
 const SEPARATOR = ' · ';
 
-/** Key holding the short application name used as the suffix. */
+/** Key holding the short application name used as the suffix, when the deployment sets none. */
 const APP_NAME_KEY = 'app.shortTitle';
 
 /**
@@ -49,6 +50,7 @@ const APP_NAME_KEY = 'app.shortTitle';
 export class TranslatedTitleStrategy extends TitleStrategy {
   private readonly title = inject(Title);
   private readonly i18n = inject(I18N);
+  private readonly branding = inject(BrandingService);
 
   /** The key from the current route, retained so a language change can re-resolve it. */
   private currentKey?: string;
@@ -68,7 +70,10 @@ export class TranslatedTitleStrategy extends TitleStrategy {
   }
 
   private apply(): void {
-    const appName = this.i18n.translate(APP_NAME_KEY);
+    // The deployment's own product name wins over the shipped one. Resolved here rather than by
+    // writing `document.title` at startup, because this strategy rewrites the title on every
+    // navigation — anything set outside it survives only until the first route change.
+    const appName = this.branding.appName() ?? this.i18n.translate(APP_NAME_KEY);
     this.title.setTitle(
       this.currentKey ? `${this.i18n.translate(this.currentKey)}${SEPARATOR}${appName}` : appName,
     );

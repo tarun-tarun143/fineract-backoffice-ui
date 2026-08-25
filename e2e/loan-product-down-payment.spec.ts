@@ -178,6 +178,19 @@ async function login(page: Page): Promise<Captured> {
   return captured;
 }
 
+/**
+ * Submits the loan-product form. The submit button is disabled while the
+ * reactive form settles; under parallel workers that settle window can stretch,
+ * and a bare click then burns its whole 30s timeout on 'enabled'. Waiting for
+ * the enabled state explicitly says what we are waiting for — and fails fast
+ * with a readable message if the form never becomes valid.
+ */
+async function submitLoanProduct(page: Page): Promise<void> {
+  const submit = page.getByTestId('loan-product-submit-btn');
+  await expect(submit).toBeEnabled();
+  await submit.click();
+}
+
 async function fillRequiredFields(page: Page, name: string): Promise<void> {
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill(name);
   await page.getByRole('textbox', { name: 'Short Name' }).fill('DP01');
@@ -240,7 +253,7 @@ test.describe('Loan product down payment and tranches', () => {
     await page.getByTestId('loan-product-multi-disburse').click();
     await page.getByTestId(TRANCHE_COUNT_TESTID).locator('input').fill('3');
 
-    await page.getByTestId('loan-product-submit-btn').click();
+    await submitLoanProduct(page);
 
     await expect.poll(() => captured.body).not.toBeNull();
     expect(captured.body).toMatchObject({
@@ -264,7 +277,7 @@ test.describe('Loan product down payment and tranches', () => {
     await page.getByTestId('loan-product-down-payment-percentage').locator('input').fill('20');
     await selectOption(page, SCHEDULE_TYPE_LABEL, 'Cumulative');
 
-    await page.getByTestId('loan-product-submit-btn').click();
+    await submitLoanProduct(page);
 
     await expect.poll(() => captured.body).not.toBeNull();
     const body = captured.body as Record<string, unknown>;
@@ -310,7 +323,7 @@ test.describe('Loan product down payment and tranches', () => {
     await page.getByTestId(CAPITALIZATION_TESTID).click();
     await page.getByTestId(BUY_DOWN_TESTID).click();
 
-    await page.getByTestId('loan-product-submit-btn').click();
+    await submitLoanProduct(page);
 
     await expect.poll(() => captured.body).not.toBeNull();
     expect(captured.body).toMatchObject({
@@ -334,7 +347,7 @@ test.describe('Loan product down payment and tranches', () => {
     await page.getByTestId(BUY_DOWN_TESTID).click();
     await selectOption(page, SCHEDULE_TYPE_LABEL, 'Cumulative');
 
-    await page.getByTestId('loan-product-submit-btn').click();
+    await submitLoanProduct(page);
 
     await expect.poll(() => captured.body).not.toBeNull();
     const body = captured.body as Record<string, unknown>;
@@ -387,7 +400,7 @@ test.describe('Loan product down payment and tranches', () => {
     await fillRequiredFields(page, 'E2E Recalculating Product');
 
     await page.getByTestId('loan-product-interest-recalculation').click();
-    await page.getByTestId('loan-product-submit-btn').click();
+    await submitLoanProduct(page);
 
     await expect.poll(() => captured.body).not.toBeNull();
     expect(captured.body).toMatchObject({
@@ -406,7 +419,7 @@ test.describe('Loan product down payment and tranches', () => {
     await page.getByTestId('loan-product-interest-recalculation').click();
     await page.getByTestId('loan-product-interest-recalculation').click();
 
-    await page.getByTestId('loan-product-submit-btn').click();
+    await submitLoanProduct(page);
 
     await expect.poll(() => captured.body).not.toBeNull();
     const body = captured.body as Record<string, unknown>;

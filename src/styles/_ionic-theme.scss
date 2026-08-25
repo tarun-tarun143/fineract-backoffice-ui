@@ -26,6 +26,12 @@
  * -tint and -contrast companions; all five are required for a colour to render
  * correctly across fills, ripples and contrast text.
  *
+ * The base colours below reference the app token rather than repeating its hex, so a deployment
+ * that overrides `--primary-color` recolours Ionic too. Without that indirection the two drift:
+ * the sidebar and buttons would take the deployment's colour while every ion-button kept the
+ * shipped one. The -rgb/-shade/-tint companions cannot be derived from a hex in CSS, so
+ * `BrandingService` computes and sets them alongside any colour token it applies.
+ *
  * Dark mode is driven by the existing `[data-theme='dark']` attribute set by
  * `ThemeService`, not by Ionic's own `.ion-palette-dark` class or a
  * prefers-color-scheme query — there is one switch, and this follows it.
@@ -33,7 +39,7 @@
 
 :root {
   /* Primary — #3498db */
-  --ion-color-primary: #3498db;
+  --ion-color-primary: var(--primary-color, #3498db);
   --ion-color-primary-rgb: 52, 152, 219;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -41,7 +47,7 @@
   --ion-color-primary-tint: #48a2df;
 
   /* Secondary — #2c3e50 */
-  --ion-color-secondary: #2c3e50;
+  --ion-color-secondary: var(--secondary-color, #2c3e50);
   --ion-color-secondary-rgb: 44, 62, 80;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -49,7 +55,7 @@
   --ion-color-secondary-tint: #415162;
 
   /* Success — #2ecc71 */
-  --ion-color-success: #2ecc71;
+  --ion-color-success: var(--success-color, #2ecc71);
   --ion-color-success-rgb: 46, 204, 113;
   --ion-color-success-contrast: #000000;
   --ion-color-success-contrast-rgb: 0, 0, 0;
@@ -57,7 +63,7 @@
   --ion-color-success-tint: #43d17f;
 
   /* Warning — #f39c12 */
-  --ion-color-warning: #f39c12;
+  --ion-color-warning: var(--warning-color, #f39c12);
   --ion-color-warning-rgb: 243, 156, 18;
   --ion-color-warning-contrast: #000000;
   --ion-color-warning-contrast-rgb: 0, 0, 0;
@@ -65,7 +71,7 @@
   --ion-color-warning-tint: #f4a62a;
 
   /* Danger — #e74c3c */
-  --ion-color-danger: #e74c3c;
+  --ion-color-danger: var(--error-color, #e74c3c);
   --ion-color-danger-rgb: 231, 76, 60;
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;

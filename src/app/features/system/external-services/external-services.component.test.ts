@@ -1,0 +1,71 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import { createSpyObj, SpyObj } from '../../../testing/mocks';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ExternalServicesComponent } from './external-services.component';
+import { ExternalServicesService } from '../../../api';
+import { of } from 'rxjs';
+import { provideTranslateTesting } from '../../../testing/i18n-testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+
+describe('ExternalServicesComponent', () => {
+  let component: ExternalServicesComponent;
+  let fixture: ComponentFixture<ExternalServicesComponent>;
+  let serviceSpy: SpyObj<ExternalServicesService>;
+
+  beforeEach(async () => {
+    serviceSpy = createSpyObj(['getExternalserviceServicename', 'putExternalserviceServicename']);
+    serviceSpy.getExternalserviceServicename.mockReturnValue(
+      of([
+        { name: 's3_access_key', value: 'abc' },
+        { name: 's3_bucket_name', value: 'bucket' },
+      ]) as unknown as ReturnType<ExternalServicesService['getExternalserviceServicename']>,
+    );
+
+    await TestBed.configureTestingModule({
+      imports: [ExternalServicesComponent],
+      providers: [
+        ...provideTranslateTesting(),
+        { provide: ExternalServicesService, useValue: serviceSpy },
+        provideNoopAnimations(),
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ExternalServicesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should load properties for the default service on init', () => {
+    expect(component.selectedService).toBe('S3');
+    expect(component.properties()).toHaveLength(2);
+  });
+
+  it('should put a name/value map on save', () => {
+    serviceSpy.putExternalserviceServicename.mockReturnValue(
+      of({}) as unknown as ReturnType<ExternalServicesService['putExternalserviceServicename']>,
+    );
+    component.onSave();
+    expect(serviceSpy.putExternalserviceServicename).toHaveBeenCalledWith(
+      'S3',
+      expect.objectContaining({ s3_access_key: 'abc' }) as never,
+    );
+  });
+});

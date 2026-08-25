@@ -23,15 +23,14 @@ import {
   provideBrowserGlobalErrorListeners,
   provideCheckNoChangesConfig,
   provideZoneChangeDetection,
-  APP_INITIALIZER,
+  provideAppInitializer,
   ApplicationConfig,
   ErrorHandler,
+  inject,
 } from '@angular/core';
 import { TitleStrategy, provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TranslateModule } from '@ngx-translate/core';
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
@@ -41,16 +40,29 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { retryInterceptor } from './core/interceptors/retry.interceptor';
 import { GlobalErrorHandler } from './core/errors/global-error-handler';
 import { ConfigService } from './core/services/config.service';
+import { BrandingService } from './core/services/branding.service';
+import { DeploymentTranslateLoader } from './core/adapters/i18n/deployment-translate.loader';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 
 import { BASE_PATH } from './api/variables';
 import { TranslatedTitleStrategy } from './core/router/translated-title.strategy';
 
 /**
- * Factory function to load configuration before app bootstrap
+ * Loads configuration before the application bootstraps.
+ *
+ * Branding is applied in the same step, immediately after the config resolves and before the
+ * first render, so the application never paints in the shipped colours and then repaints in the
+ * deployment's.
  */
-export function initializeApp(configService: ConfigService) {
-  return () => configService.loadConfig();
+export async function initializeApp(): Promise<void> {
+  // Both resolved before the first `await`. An injection context does not survive one, so
+  // `inject()` after the config has loaded throws NG0203 — at startup, in production, where the
+  // failure is a blank page.
+  const config = inject(ConfigService);
+  const branding = inject(BrandingService);
+
+  await config.loadConfig();
+  branding.apply();
 }
 
 export const appConfig: ApplicationConfig = {
@@ -90,13 +102,11 @@ export const appConfig: ApplicationConfig = {
         retryInterceptor,
       ]),
     ),
-    provideAnimationsAsync(),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      deps: [ConfigService],
-      multi: true,
-    },
+    // No `provideAnimationsAsync()`. It is deprecated as of Angular 20.2 in favour of the
+    // `animate.enter` / `animate.leave` template APIs, and nothing here needed it: the app
+    // declares no `@angular/animations` triggers, and Ionic drives its own transitions through
+    // the Web Animations API rather than Angular's.
+    provideAppInitializer(initializeApp),
     {
       provide: BASE_PATH,
       useFactory: (configService: ConfigService) => {
@@ -119,10 +129,10 @@ export const appConfig: ApplicationConfig = {
     // half-built chain and never resolves, so every key renders as its own name and the
     // login button reads `login.submit`. Caught by e2e/all-functions-read-shortcut.spec.ts.
     importProvidersFrom(TranslateModule.forRoot()),
-    provideTranslateHttpLoader({
-      prefix: 'assets/i18n/',
-      suffix: '.json',
-    }),
+    // Replaces provideTranslateHttpLoader so the shipped catalogue and a deployment's own
+    // string overrides arrive as one already-merged object. See DeploymentTranslateLoader for
+    // why the merge cannot be applied after the fact.
+    { provide: TranslateLoader, useClass: DeploymentTranslateLoader },
     // The adapter tokens (`OVERLAY`, `I18N`) resolve to their default implementations
     // without a provider here — see `core/adapters/`. A deployment swapping the component
     // library or the i18n library overrides them at this point in the list.

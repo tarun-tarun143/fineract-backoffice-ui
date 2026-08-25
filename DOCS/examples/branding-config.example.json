@@ -1,0 +1,57 @@
+{
+  "$schema": "/schema/config.schema.json",
+
+  "branding": {
+    "appName": "Any Community Bank",
+    "logoUrl": "branding/logo.svg",
+    "logoDarkUrl": "branding/logo-dark.svg",
+    "faviconUrl": "branding/favicon.svg",
+    "tokens": {
+      "light": {
+        "primary-color": "#0b5f8a",
+        "primary-strong": "#08496b",
+        "secondary-color": "#13303f",
+        "border-radius": "4px"
+      },
+      "dark": {
+        "primary-color": "#5fb3e0"
+      }
+    }
+  },
+
+  "nav": {
+    "hidden": ["spm", "working-capital", "interop"],
+
+    "overrides": {
+      "clients": { "labelKey": "Members", "icon": "person-outline", "order": 10 },
+      "groups": { "labelKey": "Member Groups", "order": 11 },
+      "products": { "order": 20 }
+    },
+
+    "items": [
+      {
+        "id": "acb.operations",
+        "labelKey": "Operations",
+        "icon": "briefcase-outline",
+        "order": 30,
+        "children": [
+          {
+            "id": "acb.field-crm",
+            "labelKey": "Field CRM",
+            "icon": "open-outline",
+            "kind": "external",
+            "url": "https://crm.acb.internal",
+            "requiredPermissions": "READ_CLIENT"
+          },
+          {
+            "id": "acb.bi",
+            "labelKey": "Reporting Warehouse",
+            "icon": "open-outline",
+            "kind": "external",
+            "url": "https://bi.acb.internal/dashboards"
+          }
+        ]
+      }
+    ]
+  }
+}
