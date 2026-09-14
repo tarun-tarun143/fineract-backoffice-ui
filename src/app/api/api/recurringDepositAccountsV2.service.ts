@@ -33,9 +33,7 @@ import { Observable }                                        from 'rxjs';
 import { OpenApiHttpParams, QueryParamStyle } from '../query.params';
 
 // @ts-ignore
-import { PostLoansLoanIdScheduleRequest } from '../model/postLoansLoanIdScheduleRequest';
-// @ts-ignore
-import { PostLoansLoanIdScheduleResponse } from '../model/postLoansLoanIdScheduleResponse';
+import { PageDepositAccountData } from '../model/pageDepositAccountData';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -47,40 +45,62 @@ import { BaseService } from '../api.base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LoanReschedulingService extends BaseService {
+export class RecurringDepositAccountsV2Service extends BaseService {
 
     constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string|string[], @Optional() configuration?: Configuration) {
         super(basePath, configuration);
     }
 
     /**
-     * Calculate loan repayment schedule based on Loan term variations | Updates loan repayment schedule based on Loan term variations | Updates loan repayment schedule by removing Loan term variations
-     * Calculate loan repayment schedule based on Loan term variations:  Mandatory Fields: exceptions,locale,dateFormat  Updates loan repayment schedule based on Loan term variations:  Mandatory Fields: exceptions,locale,dateFormat  Updates loan repayment schedule by removing Loan term variations:  It updates the loan repayment schedule by removing Loan term variations  Showing request/response for \&#39;Updates loan repayment schedule by removing Loan term variations\&#39;
-     * @endpoint post /v1/loans/{loanId}/schedule
-     * @param loanId loanId
-     * @param postLoansLoanIdScheduleRequest 
-     * @param command command
+     * List Recurring deposit applications/accounts
+     * Get a paged list of recurring deposit accounts. Unlike the v1 endpoint, this endpoint always returns a paged response containing totalFilteredRecords and pageItems.  Example Requests:  recurringdepositaccounts  recurringdepositaccounts?fields&#x3D;name
+     * @endpoint get /v2/recurringdepositaccounts
+     * @param offset offset
+     * @param limit limit
+     * @param orderBy orderBy
+     * @param sortOrder sortOrder
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postLoansLoanIdSchedule(loanId: number, postLoansLoanIdScheduleRequest: PostLoansLoanIdScheduleRequest, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostLoansLoanIdScheduleResponse>;
-    public postLoansLoanIdSchedule(loanId: number, postLoansLoanIdScheduleRequest: PostLoansLoanIdScheduleRequest, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostLoansLoanIdScheduleResponse>>;
-    public postLoansLoanIdSchedule(loanId: number, postLoansLoanIdScheduleRequest: PostLoansLoanIdScheduleRequest, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostLoansLoanIdScheduleResponse>>;
-    public postLoansLoanIdSchedule(loanId: number, postLoansLoanIdScheduleRequest: PostLoansLoanIdScheduleRequest, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (loanId === null || loanId === undefined) {
-            throw new Error('Required parameter loanId was null or undefined when calling postLoansLoanIdSchedule.');
-        }
-        if (postLoansLoanIdScheduleRequest === null || postLoansLoanIdScheduleRequest === undefined) {
-            throw new Error('Required parameter postLoansLoanIdScheduleRequest was null or undefined when calling postLoansLoanIdSchedule.');
-        }
+    public getRecurringdepositaccountsXed1b1b(offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PageDepositAccountData>;
+    public getRecurringdepositaccountsXed1b1b(offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PageDepositAccountData>>;
+    public getRecurringdepositaccountsXed1b1b(offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PageDepositAccountData>>;
+    public getRecurringdepositaccountsXed1b1b(offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
 
         localVarQueryParameters = this.addToHttpParams(
             localVarQueryParameters,
-            'command',
-            <any>command,
+            'offset',
+            <any>offset,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'limit',
+            <any>limit,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'orderBy',
+            <any>orderBy,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'sortOrder',
+            <any>sortOrder,
             QueryParamStyle.Form,
             true,
         );
@@ -106,15 +126,6 @@ export class LoanReschedulingService extends BaseService {
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -126,12 +137,11 @@ export class LoanReschedulingService extends BaseService {
             }
         }
 
-        let localVarPath = `/v1/loans/${this.configuration.encodeParam({name: "loanId", value: loanId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/schedule`;
+        let localVarPath = `/v2/recurringdepositaccounts`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<PostLoansLoanIdScheduleResponse>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PageDepositAccountData>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: postLoansLoanIdScheduleRequest,
                 params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),

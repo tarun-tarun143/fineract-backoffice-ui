@@ -25,10 +25,14 @@
 
 
 
-export interface PostFloatingRatesRatePeriods { 
-    dateFormat?: string;
-    fromDate?: string;
-    interestRate?: number;
-    locale?: string;
+/**
+ * Post dated check backing one repayment installment
+ */
+export interface PostLoansLoanIdPostDatedCheckData { 
+    accountNo?: number;
+    amount?: number;
+    checkNo?: number;
+    installmentId?: number;
+    name?: string;
 }
 

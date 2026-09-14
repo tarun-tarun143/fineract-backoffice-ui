@@ -52,7 +52,7 @@ export interface PostWorkingCapitalLoanTransactionsRequest {
      */
     reversalExternalId?: string;
     /**
-     * Transaction amount
+     * Transaction amount. For command=recoveryPayment it may not exceed the loan\'s writtenOffOutstanding
      */
     transactionAmount?: number;
     /**

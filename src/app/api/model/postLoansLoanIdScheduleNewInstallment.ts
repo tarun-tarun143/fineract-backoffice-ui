@@ -23,14 +23,14 @@
  * Do not edit the class manually.
  */
 
-import { PutFloatingRatesChanges } from './putFloatingRatesChanges';
 
 
 /**
- * PutFloatingRatesFloatingRateIdResponse
+ * Installments added to the schedule
  */
-export interface PutFloatingRatesFloatingRateIdResponse { 
-    changes?: PutFloatingRatesChanges;
-    resourceId?: number;
+export interface PostLoansLoanIdScheduleNewInstallment { 
+    dueDate?: string;
+    installmentAmount?: number;
+    principal?: number;
 }
 

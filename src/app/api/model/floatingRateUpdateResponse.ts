@@ -25,19 +25,8 @@
 
 
 
-/**
- * PostSavingsAccountsRequest
- */
-export interface PostSavingsAccountsRequest { 
-    clientId?: number;
-    dateFormat?: string;
-    externalId?: string;
-    /**
-     * Mandatory for a group savings account, in place of clientId
-     */
-    groupId?: number;
-    locale?: string;
-    productId?: number;
-    submittedOnDate?: string;
+export interface FloatingRateUpdateResponse { 
+    changes?: { [key: string]: object; };
+    resourceId?: number;
 }
 
