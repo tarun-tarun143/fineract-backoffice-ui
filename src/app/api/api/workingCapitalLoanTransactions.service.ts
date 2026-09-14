@@ -535,7 +535,7 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
 
     /**
      * Execute Working Capital Loan transaction by external id
-     * Supported command query parameter: repayment, creditBalanceRefund, discountFee, discountFeeAdjustment
+     * Supported command query parameter: repayment, creditBalanceRefund, payoutRefund, goodwillCredit, discountFee, discountFeeAdjustment, chargeOff, undoChargeOff, writeOff, undoWriteOff, recoveryPayment
      * @endpoint post /v1/working-capital-loans/external-id/{loanExternalId}/transactions
      * @param loanExternalId loanExternalId
      * @param command command
@@ -822,7 +822,7 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
 
     /**
      * Execute Working Capital Loan transaction
-     * Supported command query parameter: repayment, creditBalanceRefund, discountFee, discountFeeAdjustment
+     * Supported command query parameter: repayment, creditBalanceRefund, payoutRefund, goodwillCredit, discountFee, discountFeeAdjustment, chargeOff, undoChargeOff, writeOff, undoWriteOff, recoveryPayment
      * @endpoint post /v1/working-capital-loans/{loanId}/transactions
      * @param loanId loanId
      * @param command command

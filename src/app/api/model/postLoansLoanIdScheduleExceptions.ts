@@ -23,44 +23,26 @@
  * Do not edit the class manually.
  */
 
+import { PostLoansLoanIdScheduleModifiedInstallment } from './postLoansLoanIdScheduleModifiedInstallment';
+import { PostLoansLoanIdScheduleDeletedInstallment } from './postLoansLoanIdScheduleDeletedInstallment';
+import { PostLoansLoanIdScheduleNewInstallment } from './postLoansLoanIdScheduleNewInstallment';
 
 
 /**
- * GetWorkingCapitalLoansLoanIdTimeline
+ * The installment changes to apply to the repayment schedule
  */
-export interface GetWorkingCapitalLoansLoanIdTimeline { 
-    actualDisbursementDate?: string;
+export interface PostLoansLoanIdScheduleExceptions { 
     /**
-     * Actual maturity date (when loan is fully paid)
+     * Installments removed from the schedule
      */
-    actualMaturityDate?: string;
-    approvedByFirstname?: string;
-    approvedByLastname?: string;
-    approvedByUsername?: string;
-    approvedOnDate?: string;
-    closedByFirstname?: string;
-    closedByLastname?: string;
-    closedByUsername?: string;
-    closedOnDate?: string;
-    disbursedByFirstname?: string;
-    disbursedByLastname?: string;
-    disbursedByUsername?: string;
-    expectedDisbursementDate?: string;
+    deletedinstallments?: Array<PostLoansLoanIdScheduleDeletedInstallment>;
     /**
-     * Expected maturity date
+     * Installments whose due date, principal or instalment amount changes
      */
-    expectedMaturityDate?: string;
+    modifiedinstallments?: Array<PostLoansLoanIdScheduleModifiedInstallment>;
     /**
-     * Overpaid date
+     * Installments added to the schedule
      */
-    overpaidOnDate?: string;
-    rejectedByFirstname?: string;
-    rejectedByLastname?: string;
-    rejectedByUsername?: string;
-    rejectedOnDate?: string;
-    submittedByFirstname?: string;
-    submittedByLastname?: string;
-    submittedByUsername?: string;
-    submittedOnDate?: string;
+    newinstallments?: Array<PostLoansLoanIdScheduleNewInstallment>;
 }
 

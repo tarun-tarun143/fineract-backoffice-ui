@@ -68,5 +68,6 @@ export interface Charge {
     restartFrequencyEnum?: number;
     savingsCharge?: boolean;
     taxGroup?: TaxGroup;
+    workingCapitalLoanCharge?: boolean;
 }
 

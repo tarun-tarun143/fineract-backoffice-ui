@@ -26,41 +26,20 @@
 
 
 /**
- * GetWorkingCapitalLoansLoanIdTimeline
+ * PutLoansLoanIdDisbursementsDisbursementIdRequest
  */
-export interface GetWorkingCapitalLoansLoanIdTimeline { 
-    actualDisbursementDate?: string;
-    /**
-     * Actual maturity date (when loan is fully paid)
-     */
-    actualMaturityDate?: string;
-    approvedByFirstname?: string;
-    approvedByLastname?: string;
-    approvedByUsername?: string;
-    approvedOnDate?: string;
-    closedByFirstname?: string;
-    closedByLastname?: string;
-    closedByUsername?: string;
-    closedOnDate?: string;
-    disbursedByFirstname?: string;
-    disbursedByLastname?: string;
-    disbursedByUsername?: string;
+export interface PutLoansLoanIdDisbursementsDisbursementIdRequest { 
+    approvedLoanAmount?: number;
+    dateFormat?: string;
     expectedDisbursementDate?: string;
+    locale?: string;
     /**
-     * Expected maturity date
+     * The new expected disbursement date of the tranche
      */
-    expectedMaturityDate?: string;
+    updatedExpectedDisbursementDate?: string;
     /**
-     * Overpaid date
+     * The new principal of the tranche
      */
-    overpaidOnDate?: string;
-    rejectedByFirstname?: string;
-    rejectedByLastname?: string;
-    rejectedByUsername?: string;
-    rejectedOnDate?: string;
-    submittedByFirstname?: string;
-    submittedByLastname?: string;
-    submittedByUsername?: string;
-    submittedOnDate?: string;
+    updatedPrincipal?: number;
 }
 

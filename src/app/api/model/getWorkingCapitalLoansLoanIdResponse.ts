@@ -32,6 +32,7 @@ import { GetWorkingCapitalLoanNearBreach } from './getWorkingCapitalLoanNearBrea
 import { GetWorkingCapitalLoansLoanIdStatus } from './getWorkingCapitalLoansLoanIdStatus';
 import { GetWorkingCapitalLoansLoanIdTimeline } from './getWorkingCapitalLoansLoanIdTimeline';
 import { GetDelinquencyBucket } from './getDelinquencyBucket';
+import { WorkingCapitalLoanPeriodPaymentRateChangeData } from './workingCapitalLoanPeriodPaymentRateChangeData';
 import { CurrencyData } from './currencyData';
 import { GetWorkingCapitalLoansClient } from './getWorkingCapitalLoansClient';
 import { GetWorkingCapitalLoansLoanIdOriginatorData } from './getWorkingCapitalLoansLoanIdOriginatorData';
@@ -52,6 +53,9 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
      * Approved discount fee set during loan approval
      */
     approvedDiscountFee?: number;
+    /**
+     * Principal granted at approval; zero before approval and after undoing it (deliberate Working Capital divergence from classic loans)
+     */
     approvedPrincipal?: number;
     balance?: GetBalance;
     breach?: GetWorkingCapitalLoanBreach;
@@ -65,7 +69,7 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
     breachStartDate?: string;
     breachStartType?: StringEnumOptionData;
     /**
-     * Annualized EIR: (1 + dailyEir)^365 − 1; null if schedule not yet generated
+     * Annualized EIR as a fraction (0.1691 = 16.91%): (1 + dailyEir)^npvDayCount − 1; null if schedule not yet generated. Note: periodPaymentRateHistory[].calculatedAnnualEir is a percentage
      */
     calculatedAnnualEir?: number;
     chargeOffReason?: CodeValueData;
@@ -148,6 +152,10 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
      * List of originators associated with this loan
      */
     originators?: Array<GetWorkingCapitalLoansLoanIdOriginatorData>;
+    /**
+     * Date on which loan was overpaid otherwise null
+     */
+    overpaidOnDate?: string;
     paymentAllocation?: Array<GetPaymentAllocation>;
     paymentRate?: number;
     /**
@@ -155,7 +163,11 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
      */
     periodPaymentAmount?: number;
     /**
-     * Active principal (loanProductRelatedDetails.principal)
+     * Period payment rate change history, most recently booked first - which for a backdated change is not the same as effective-date order. Each entry carries the annual EIR (as a percentage, e.g. 43.756245 - unlike the top-level calculatedAnnualEir, which is a fraction), daily payment amount and segment term the amortization schedule computed when that change was booked; those are null for changes booked before the snapshot was introduced
+     */
+    periodPaymentRateHistory?: Array<WorkingCapitalLoanPeriodPaymentRateChangeData>;
+    /**
+     * Active principal: the requested amount while the application is pending, the granted amount from approval, the actually disbursed amount from disbursement. Undoing approval or disbursal restores the previous stage\'s value. This is the contractual principal, not the outstanding balance - see summary.principalOutstanding for that.
      */
     principal?: number;
     product?: GetWorkingCapitalLoanProductsResponse;
@@ -163,6 +175,9 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
      * Proposed discount fee at loan submission time
      */
     proposedDiscountFee?: number;
+    /**
+     * Principal requested at submission; never changes afterwards
+     */
     proposedPrincipal?: number;
     repaymentEvery?: number;
     repaymentFrequencyType?: StringEnumOptionData;
