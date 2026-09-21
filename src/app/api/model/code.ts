@@ -27,7 +27,7 @@ import { CodeValue } from './codeValue';
 
 
 export interface Code { 
-    id?: number | null;
+    id?: number;
     name?: string;
     'new'?: boolean;
     systemDefined?: boolean;

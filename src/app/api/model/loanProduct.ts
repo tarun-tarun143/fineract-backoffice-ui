@@ -70,7 +70,7 @@ export interface LoanProduct {
     floatingRates?: LoanProductFloatingRates;
     fund?: Fund;
     holdGuaranteeFunds?: boolean;
-    id?: number | null;
+    id?: number;
     includeInBorrowerCycle?: boolean;
     interestPeriodFrequencyType?: LoanProduct.InterestPeriodFrequencyTypeEnum;
     interestRecalculationEnabled?: boolean;

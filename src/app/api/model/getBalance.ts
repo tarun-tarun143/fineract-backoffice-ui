@@ -36,22 +36,52 @@ export interface GetBalance {
     fee?: number;
     feeOutstanding?: number;
     feePaid?: number;
+    /**
+     * Fees moved out of the outstanding balance by a write-off
+     */
+    feeWrittenOff?: number;
     id?: number;
     overpaymentAmount?: number;
     penalty?: number;
     penaltyOutstanding?: number;
     penaltyPaid?: number;
+    /**
+     * Penalties moved out of the outstanding balance by a write-off
+     */
+    penaltyWrittenOff?: number;
+    /**
+     * Total repayable principal: the disbursed amount plus the discount fee. Zero until disbursement, and zero again once a disbursal is undone.
+     */
     principal?: number;
     principalAdjustment?: number;
     principalOutstanding?: number;
     principalPaid?: number;
+    /**
+     * Principal moved out of the outstanding balance by a write-off
+     */
+    principalWrittenOff?: number;
     realizedIncomeFromDiscountFee?: number;
+    /**
+     * Total amount actually disbursed
+     */
     totalDisbursement?: number;
     totalDiscountFee?: number;
     totalDiscountFeeAdjustment?: number;
     totalExpectedRepayment?: number;
     totalOutstanding?: number;
+    /**
+     * Collected after the write-off and recognized as recovery income
+     */
+    totalRecovered?: number;
     totalRepayment?: number;
+    /**
+     * Gross amount written off; not reduced by recoveries
+     */
+    totalWrittenOff?: number;
     unrealizedIncomeFromDiscountFee?: number;
+    /**
+     * Still recoverable (totalWrittenOff - totalRecovered); caps the next recovery payment
+     */
+    writtenOffOutstanding?: number;
 }
 

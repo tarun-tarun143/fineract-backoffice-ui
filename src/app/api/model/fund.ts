@@ -26,7 +26,7 @@
 
 
 export interface Fund { 
-    id?: number | null;
+    id?: number;
     name?: string;
     'new'?: boolean;
 }
