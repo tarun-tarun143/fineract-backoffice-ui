@@ -26,9 +26,12 @@
 
 
 /**
- * PostFloatingRatesResponse
+ * A repayment schedule installment of a loan transaction template
  */
-export interface PostFloatingRatesResponse { 
-    resourceId?: number;
+export interface GetLoansLoanIdRepaymentScheduleInstallment { 
+    amount?: number;
+    date?: string;
+    id?: number;
+    installmentId?: number;
 }
 

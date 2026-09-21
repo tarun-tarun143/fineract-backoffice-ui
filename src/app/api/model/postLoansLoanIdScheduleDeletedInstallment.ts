@@ -23,10 +23,12 @@
  * Do not edit the class manually.
  */
 
-import { PostFloatingRatesRatePeriods } from './postFloatingRatesRatePeriods';
 
 
-export interface PutFloatingRatesChanges { 
-    ratePeriods?: Set<PostFloatingRatesRatePeriods>;
+/**
+ * Installments removed from the schedule
+ */
+export interface PostLoansLoanIdScheduleDeletedInstallment { 
+    dueDate?: string;
 }
 

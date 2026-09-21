@@ -46,6 +46,8 @@ import { PostWorkingCapitalLoanTransactionsRequest } from '../model/postWorkingC
 import { PostWorkingCapitalLoanTransactionsResponse } from '../model/postWorkingCapitalLoanTransactionsResponse';
 // @ts-ignore
 import { WorkingCapitalLoanCommandTemplateData } from '../model/workingCapitalLoanCommandTemplateData';
+// @ts-ignore
+import { WorkingCapitalLoanTransactionTemplateResponse } from '../model/workingCapitalLoanTransactionTemplateResponse';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -194,6 +196,112 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
     }
 
     /**
+     * Get Working Capital Loan transaction template by loan external id
+     * Supported command query parameters: disburse, repayment, goodwillCredit, creditBalanceRefund, recoveryPayment, discountFee, discountFeeAdjustment, chargeOff, prepayLoan. The optional transactionDate quotes the balance as of that date, defaulting to the business date; only what is owed is scoped to it, so the amount stays net of every payment already made.
+     * @endpoint get /v1/working-capital-loans/external-id/{loanExternalId}/transactions/template
+     * @param loanExternalId loanExternalId
+     * @param command command
+     * @param dateFormat dateFormat
+     * @param transactionDate transactionDate
+     * @param locale locale
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     * @param options additional options
+     */
+    public getWorkingCapitalLoansExternalIdLoanExternalIdTransactionsTemplate(loanExternalId: string, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WorkingCapitalLoanTransactionTemplateResponse>;
+    public getWorkingCapitalLoansExternalIdLoanExternalIdTransactionsTemplate(loanExternalId: string, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WorkingCapitalLoanTransactionTemplateResponse>>;
+    public getWorkingCapitalLoansExternalIdLoanExternalIdTransactionsTemplate(loanExternalId: string, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WorkingCapitalLoanTransactionTemplateResponse>>;
+    public getWorkingCapitalLoansExternalIdLoanExternalIdTransactionsTemplate(loanExternalId: string, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (loanExternalId === null || loanExternalId === undefined) {
+            throw new Error('Required parameter loanExternalId was null or undefined when calling getWorkingCapitalLoansExternalIdLoanExternalIdTransactionsTemplate.');
+        }
+
+        let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'command',
+            <any>command,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'dateFormat',
+            <any>dateFormat,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'transactionDate',
+            <any>transactionDate,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'locale',
+            <any>locale,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basicAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basicAuth', 'Authorization', localVarHeaders, 'Basic ');
+
+        // authentication (tenantid) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('tenantid', 'fineract-platform-tenantid', localVarHeaders);
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/v1/working-capital-loans/external-id/${this.configuration.encodeParam({name: "loanExternalId", value: loanExternalId, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/transactions/template`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<WorkingCapitalLoanTransactionTemplateResponse>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters.toHttpParams(),
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Retrieve a transaction by loan external id and transaction id
      * Retrieves a single Working Capital Loan transaction by loan external id and transaction id.
      * @endpoint get /v1/working-capital-loans/external-id/{loanExternalId}/transactions/{transactionId}
@@ -262,7 +370,7 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
 
     /**
      * Retrieve Working Capital Loan action template
-     * Returns loan data for applying the proper loan action
+     * Loan approval only - it is the one action that posts no transaction. Supported templateType query parameter: approve. Everything else, disbursement included, lives on {loanId}/transactions/template?command&#x3D;...
      * @endpoint get /v1/working-capital-loans/{loanId}/template
      * @param loanId loanId
      * @param templateType templateType
@@ -467,6 +575,112 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
     }
 
     /**
+     * Get Working Capital Loan transaction template by loan id
+     * Supported command query parameters: disburse, repayment, goodwillCredit, creditBalanceRefund, recoveryPayment, discountFee, discountFeeAdjustment, chargeOff, prepayLoan. The optional transactionDate quotes the balance as of that date, defaulting to the business date; only what is owed is scoped to it, so the amount stays net of every payment already made.
+     * @endpoint get /v1/working-capital-loans/{loanId}/transactions/template
+     * @param loanId loanId
+     * @param command command
+     * @param dateFormat dateFormat
+     * @param transactionDate transactionDate
+     * @param locale locale
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     * @param options additional options
+     */
+    public getWorkingCapitalLoansLoanIdTransactionsTemplate(loanId: number, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WorkingCapitalLoanTransactionTemplateResponse>;
+    public getWorkingCapitalLoansLoanIdTransactionsTemplate(loanId: number, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WorkingCapitalLoanTransactionTemplateResponse>>;
+    public getWorkingCapitalLoansLoanIdTransactionsTemplate(loanId: number, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WorkingCapitalLoanTransactionTemplateResponse>>;
+    public getWorkingCapitalLoansLoanIdTransactionsTemplate(loanId: number, command?: string, dateFormat?: string, transactionDate?: object, locale?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (loanId === null || loanId === undefined) {
+            throw new Error('Required parameter loanId was null or undefined when calling getWorkingCapitalLoansLoanIdTransactionsTemplate.');
+        }
+
+        let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'command',
+            <any>command,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'dateFormat',
+            <any>dateFormat,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'transactionDate',
+            <any>transactionDate,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        localVarQueryParameters = this.addToHttpParams(
+            localVarQueryParameters,
+            'locale',
+            <any>locale,
+            QueryParamStyle.Form,
+            true,
+        );
+
+
+        let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basicAuth) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basicAuth', 'Authorization', localVarHeaders, 'Basic ');
+
+        // authentication (tenantid) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('tenantid', 'fineract-platform-tenantid', localVarHeaders);
+
+        const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
+            'application/json'
+        ]);
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        const localVarHttpContext: HttpContext = options?.context ?? new HttpContext();
+
+        const localVarTransferCache: boolean = options?.transferCache ?? true;
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/v1/working-capital-loans/${this.configuration.encodeParam({name: "loanId", value: loanId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/transactions/template`;
+        const { basePath, withCredentials } = this.configuration;
+        return this.httpClient.request<WorkingCapitalLoanTransactionTemplateResponse>('get', `${basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters.toHttpParams(),
+                responseType: <any>responseType_,
+                ...(withCredentials ? { withCredentials } : {}),
+                headers: localVarHeaders,
+                observe: observe,
+                ...(localVarTransferCache !== undefined ? { transferCache: localVarTransferCache } : {}),
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Retrieve a transaction
      * Retrieves a single Working Capital Loan transaction.  Example: working-capital-loans/1/transactions/1
      * @endpoint get /v1/working-capital-loans/{loanId}/transactions/{transactionId}
@@ -535,7 +749,7 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
 
     /**
      * Execute Working Capital Loan transaction by external id
-     * Supported command query parameter: repayment, creditBalanceRefund, discountFee, discountFeeAdjustment
+     * Supported command query parameter: repayment, creditBalanceRefund, payoutRefund, goodwillCredit, discountFee, discountFeeAdjustment, chargeOff, undoChargeOff, writeOff, undoWriteOff, recoveryPayment
      * @endpoint post /v1/working-capital-loans/external-id/{loanExternalId}/transactions
      * @param loanExternalId loanExternalId
      * @param command command
@@ -822,7 +1036,7 @@ export class WorkingCapitalLoanTransactionsService extends BaseService {
 
     /**
      * Execute Working Capital Loan transaction
-     * Supported command query parameter: repayment, creditBalanceRefund, discountFee, discountFeeAdjustment
+     * Supported command query parameter: repayment, creditBalanceRefund, payoutRefund, goodwillCredit, discountFee, discountFeeAdjustment, chargeOff, undoChargeOff, writeOff, undoWriteOff, recoveryPayment
      * @endpoint post /v1/working-capital-loans/{loanId}/transactions
      * @param loanId loanId
      * @param command command

@@ -43,7 +43,7 @@ export interface AppUser {
     enabled?: boolean;
     failedLoginAttempts?: number;
     firstname?: string;
-    id?: number | null;
+    id?: number;
     lastTimePasswordUpdated?: string;
     lastname?: string;
     loginRetryLimitEnabled?: boolean;
