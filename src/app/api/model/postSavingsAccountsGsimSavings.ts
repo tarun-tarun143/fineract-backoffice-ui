@@ -25,10 +25,12 @@
 
 
 
-/**
- * PostFloatingRatesResponse
- */
-export interface PostFloatingRatesResponse { 
-    resourceId?: number;
+export interface PostSavingsAccountsGsimSavings { 
+    childAccountId?: number;
+    dateFormat?: string;
+    locale?: string;
+    paymentTypeId?: number;
+    transactionAmount?: number;
+    transactionDate?: string;
 }
 

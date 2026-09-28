@@ -30,6 +30,12 @@ import { PostAccountsRequestedShares } from './postAccountsRequestedShares';
  * PostAccountsTypeAccountIdRequest
  */
 export interface PostAccountsTypeAccountIdRequest { 
+    /**
+     * command=activate
+     */
+    activatedDate?: string;
+    dateFormat?: string;
+    locale?: string;
     requestedShares?: Set<PostAccountsRequestedShares>;
 }
 

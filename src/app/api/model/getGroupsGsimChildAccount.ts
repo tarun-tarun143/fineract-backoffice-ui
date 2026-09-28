@@ -25,10 +25,7 @@
 
 
 
-export interface PostFloatingRatesRatePeriods { 
-    dateFormat?: string;
-    fromDate?: string;
-    interestRate?: number;
-    locale?: string;
+export interface GetGroupsGsimChildAccount { 
+    id?: number;
 }
 

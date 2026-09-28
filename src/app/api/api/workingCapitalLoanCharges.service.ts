@@ -657,8 +657,8 @@ export class WorkingCapitalLoanChargesService extends BaseService {
     }
 
     /**
-     * Adjust a Working Capital Loan Charge by Loan and Charge External Ids
-     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction. Pass command&#x3D;adjustment.
+     * Adjust or Waive a Working Capital Loan Charge by Loan and Charge External Ids
+     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction (command&#x3D;adjustment), or waives its full outstanding amount by creating a WAIVE_CHARGES transaction (command&#x3D;waive).
      * @endpoint post /v1/working-capital-loans/external-id/{loanExternalId}/charges/external-id/{loanChargeExternalId}
      * @param loanExternalId loanExternalId
      * @param loanChargeExternalId loanChargeExternalId
@@ -751,8 +751,8 @@ export class WorkingCapitalLoanChargesService extends BaseService {
     }
 
     /**
-     * Adjust a Working Capital Loan Charge by Loan External Id
-     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction. Pass command&#x3D;adjustment.
+     * Adjust or Waive a Working Capital Loan Charge by Loan External Id
+     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction (command&#x3D;adjustment), or waives its full outstanding amount by creating a WAIVE_CHARGES transaction (command&#x3D;waive).
      * @endpoint post /v1/working-capital-loans/external-id/{loanExternalId}/charges/{loanChargeId}
      * @param loanExternalId loanExternalId
      * @param loanChargeId loanChargeId
@@ -922,8 +922,8 @@ export class WorkingCapitalLoanChargesService extends BaseService {
     }
 
     /**
-     * Adjust a Working Capital Loan Charge by Charge External Id
-     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction. Pass command&#x3D;adjustment.
+     * Adjust or Waive a Working Capital Loan Charge by Charge External Id
+     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction (command&#x3D;adjustment), or waives its full outstanding amount by creating a WAIVE_CHARGES transaction (command&#x3D;waive).
      * @endpoint post /v1/working-capital-loans/{loanId}/charges/external-id/{loanChargeExternalId}
      * @param loanId loanId
      * @param loanChargeExternalId loanChargeExternalId
@@ -1016,8 +1016,8 @@ export class WorkingCapitalLoanChargesService extends BaseService {
     }
 
     /**
-     * Adjust a Working Capital Loan Charge
-     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction. Pass command&#x3D;adjustment.
+     * Adjust or Waive a Working Capital Loan Charge
+     * Adjusts a working capital loan charge by creating a CHARGE_ADJUSTMENT transaction (command&#x3D;adjustment), or waives its full outstanding amount by creating a WAIVE_CHARGES transaction (command&#x3D;waive).
      * @endpoint post /v1/working-capital-loans/{loanId}/charges/{loanChargeId}
      * @param loanId loanId
      * @param loanChargeId loanChargeId

@@ -23,19 +23,11 @@
  * Do not edit the class manually.
  */
 
+import { CenterData } from './centerData';
 
 
-/**
- * GetFloatingRatesResponse
- */
-export interface GetFloatingRatesResponse { 
-    createdBy?: string;
-    createdOn?: string;
-    id?: number;
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
-    modifiedBy?: string;
-    modifiedOn?: string;
-    name?: string;
+export interface PageCenterData { 
+    pageItems?: Array<CenterData>;
+    totalFilteredRecords?: number;
 }
 

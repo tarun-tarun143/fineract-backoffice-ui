@@ -23,6 +23,7 @@
  * Do not edit the class manually.
  */
 
+import { PostWorkingCapitalLoansDataTable } from './postWorkingCapitalLoansDataTable';
 import { PostPaymentAllocationRule } from './postPaymentAllocationRule';
 import { PostWorkingCapitalLoansOriginatorData } from './postWorkingCapitalLoansOriginatorData';
 
@@ -33,6 +34,10 @@ import { PostWorkingCapitalLoansOriginatorData } from './postWorkingCapitalLoans
 export interface PostWorkingCapitalLoansRequest { 
     accountNo?: string;
     /**
+     * Annual EIR percentage (6 decimal places max). Required for ANNUAL_EIR strategy products.
+     */
+    annualEir?: number;
+    /**
      * Number of days to shift the start of the first breach schedule period after disbursement
      */
     breachGraceDays?: number;
@@ -42,6 +47,7 @@ export interface PostWorkingCapitalLoansRequest {
      */
     breachStartType?: string;
     clientId: number;
+    datatables?: Array<PostWorkingCapitalLoansDataTable>;
     dateFormat?: string;
     delinquencyBucketId?: number;
     delinquencyGraceDays?: number;
@@ -60,6 +66,10 @@ export interface PostWorkingCapitalLoansRequest {
      */
     originators?: Array<PostWorkingCapitalLoansOriginatorData>;
     paymentAllocation?: Array<PostPaymentAllocationRule>;
+    /**
+     * Daily payment amount, at most the currency\'s decimal precision. Overrides the product default on PAYMENT_AMOUNT strategy products.
+     */
+    paymentAmount?: number;
     periodPaymentRate?: number;
     /**
      * Principal (disbursement) amount

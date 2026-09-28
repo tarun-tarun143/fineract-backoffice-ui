@@ -26,7 +26,16 @@
 
 
 export interface WorkingCapitalLoanPeriodPaymentRateChangeData { 
+    /**
+     * Annual EIR of the segment this change opened, as a percentage (e.g. 43.756245), snapshotted when the change was booked
+     */
+    calculatedAnnualEir?: number;
+    /**
+     * Audit/system timestamp. Prefer submittedOnDate for the booking business/tenant date.
+     * @deprecated
+     */
     createdDate?: string;
+    dailyPaymentAmount?: number;
     effectiveDate?: string;
     id?: number;
     loanId?: number;
@@ -34,5 +43,7 @@ export interface WorkingCapitalLoanPeriodPaymentRateChangeData {
     previousRate?: number;
     reversed?: boolean;
     reversedOnDate?: string;
+    segmentTerm?: number;
+    submittedOnDate?: string;
 }
 
