@@ -23,13 +23,20 @@
  * Do not edit the class manually.
  */
 
-import { FloatingRatePeriodRequest } from './floatingRatePeriodRequest';
 
 
-export interface FloatingRateRequest { 
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
-    name?: string;
-    ratePeriods?: Array<FloatingRatePeriodRequest>;
+/**
+ * A period of the schedule the calculateLoanSchedule command returns
+ */
+export interface PostLoansLoanIdSchedulePeriod { 
+    dueDate?: string;
+    fromDate?: string;
+    interestOriginalDue?: number;
+    period?: number;
+    principalDue?: number;
+    principalOriginalDue?: number;
+    totalDueForPeriod?: number;
+    totalOriginalDueForPeriod?: number;
+    totalOutstandingForPeriod?: number;
 }
 

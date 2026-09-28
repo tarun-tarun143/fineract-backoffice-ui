@@ -33,6 +33,14 @@ export interface PostSavingsAccountsSavingsAccountIdChargesRequest {
     chargeId?: number;
     dateFormat?: string;
     dueDate?: string;
+    /**
+     * The recurring day an annual or monthly fee falls due
+     */
+    feeOnMonthDay?: string;
     locale?: string;
+    /**
+     * Required with feeOnMonthDay
+     */
+    monthDayFormat?: string;
 }
 
