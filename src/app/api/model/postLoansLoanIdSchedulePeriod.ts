@@ -25,10 +25,18 @@
 
 
 
-export interface PostFloatingRatesRatePeriods { 
-    dateFormat?: string;
+/**
+ * A period of the schedule the calculateLoanSchedule command returns
+ */
+export interface PostLoansLoanIdSchedulePeriod { 
+    dueDate?: string;
     fromDate?: string;
-    interestRate?: number;
-    locale?: string;
+    interestOriginalDue?: number;
+    period?: number;
+    principalDue?: number;
+    principalOriginalDue?: number;
+    totalDueForPeriod?: number;
+    totalOriginalDueForPeriod?: number;
+    totalOutstandingForPeriod?: number;
 }
 

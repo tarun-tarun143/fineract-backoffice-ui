@@ -30,7 +30,7 @@ export interface Office {
     children?: Array<Office>;
     externalId?: ExternalId;
     hierarchy?: string;
-    id?: number | null;
+    id?: number;
     name?: string;
     'new'?: boolean;
     openingDate?: string;

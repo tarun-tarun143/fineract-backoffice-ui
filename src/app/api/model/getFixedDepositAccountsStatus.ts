@@ -32,6 +32,7 @@ export interface GetFixedDepositAccountsStatus {
     code?: string;
     description?: string;
     id?: number;
+    matured?: boolean;
     prematureClosed?: boolean;
     rejected?: boolean;
     submittedAndPendingApproval?: boolean;

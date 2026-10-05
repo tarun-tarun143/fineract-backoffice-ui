@@ -23,12 +23,36 @@
  * Do not edit the class manually.
  */
 
+import { PostWorkingCapitalLoanTransactionsPaymentDetailRequest } from './postWorkingCapitalLoanTransactionsPaymentDetailRequest';
 
 
 /**
- * Request for working capital loan transaction command execution
+ * Request for transaction command executed on a transaction named in the path: undo, discountFee or discountFeeAdjustment
  */
 export interface ExecuteWorkingCapitalLoanTransactionCommandRequest { 
+    /**
+     * Optional code value id for transaction classification (command=discountFee, discountFeeAdjustment)
+     */
+    classificationId?: number;
+    dateFormat?: string;
+    /**
+     * Optional external id for the created transaction (command=discountFee, discountFeeAdjustment)
+     */
+    externalId?: string;
+    locale?: string;
+    note?: string;
+    paymentDetails?: PostWorkingCapitalLoanTransactionsPaymentDetailRequest;
+    /**
+     * Optional external id for the reversal (command=undo)
+     */
     reversalExternalId?: string;
+    /**
+     * Transaction amount (command=discountFee, discountFeeAdjustment)
+     */
+    transactionAmount?: number;
+    /**
+     * Transaction date (command=discountFeeAdjustment); command=discountFee uses the date of the related disbursement
+     */
+    transactionDate?: string;
 }
 

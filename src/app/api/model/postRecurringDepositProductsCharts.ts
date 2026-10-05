@@ -29,7 +29,9 @@ import { PostRecurringDepositProductsChartSlabs } from './postRecurringDepositPr
 export interface PostRecurringDepositProductsCharts { 
     chartSlabs?: Set<PostRecurringDepositProductsChartSlabs>;
     dateFormat?: string;
+    endDate?: string;
     fromDate?: string;
+    isPrimaryGroupingByAmount?: boolean;
     locale?: string;
 }
 

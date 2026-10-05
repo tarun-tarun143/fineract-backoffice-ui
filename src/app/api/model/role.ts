@@ -29,7 +29,7 @@ import { Permission } from './permission';
 export interface Role { 
     disabled?: boolean;
     enabled?: boolean;
-    id?: number | null;
+    id?: number;
     name?: string;
     'new'?: boolean;
     permissions?: Array<Permission>;

@@ -25,7 +25,7 @@
 
 
 
-export interface PutFinancialActivityAccountscommentsSwagger { 
-    glAccountId?: number;
+export interface GetGroupsGsimChildAccount { 
+    id?: number;
 }
 

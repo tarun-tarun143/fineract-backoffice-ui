@@ -23,10 +23,16 @@
  * Do not edit the class manually.
  */
 
-import { PostFloatingRatesRatePeriods } from './postFloatingRatesRatePeriods';
 
 
-export interface PutFloatingRatesChanges { 
-    ratePeriods?: Set<PostFloatingRatesRatePeriods>;
+/**
+ * Post dated check backing one repayment installment
+ */
+export interface PostLoansLoanIdPostDatedCheckData { 
+    accountNo?: number;
+    amount?: number;
+    checkNo?: number;
+    installmentId?: number;
+    name?: string;
 }
 

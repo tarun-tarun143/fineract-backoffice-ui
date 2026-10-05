@@ -30,7 +30,7 @@ export interface DelinquencyBucket {
     bucketType?: DelinquencyBucket.BucketTypeEnum;
     createdBy: number;
     createdDate: string;
-    id?: number | null;
+    id?: number;
     lastModifiedBy: number;
     lastModifiedDate: string;
     name?: string;

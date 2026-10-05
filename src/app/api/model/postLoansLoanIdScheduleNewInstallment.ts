@@ -26,16 +26,11 @@
 
 
 /**
- * GetFloatingRatesResponse
+ * Installments added to the schedule
  */
-export interface GetFloatingRatesResponse { 
-    createdBy?: string;
-    createdOn?: string;
-    id?: number;
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
-    modifiedBy?: string;
-    modifiedOn?: string;
-    name?: string;
+export interface PostLoansLoanIdScheduleNewInstallment { 
+    dueDate?: string;
+    installmentAmount?: number;
+    principal?: number;
 }
 

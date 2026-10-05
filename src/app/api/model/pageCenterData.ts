@@ -23,13 +23,11 @@
  * Do not edit the class manually.
  */
 
-import { FloatingRatePeriodRequest } from './floatingRatePeriodRequest';
+import { CenterData } from './centerData';
 
 
-export interface FloatingRateRequest { 
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
-    name?: string;
-    ratePeriods?: Array<FloatingRatePeriodRequest>;
+export interface PageCenterData { 
+    pageItems?: Array<CenterData>;
+    totalFilteredRecords?: number;
 }
 
