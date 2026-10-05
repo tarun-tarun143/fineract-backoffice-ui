@@ -31,7 +31,7 @@ export interface LoanProductFloatingRates {
     defaultDifferentialLendingRate?: number;
     floatingInterestRateCalculationAllowed?: boolean;
     floatingRate?: FloatingRate;
-    id?: number | null;
+    id?: number;
     interestRateDifferential?: number;
     loanProduct?: LoanProduct;
     maxDifferentialLendingRate?: number;

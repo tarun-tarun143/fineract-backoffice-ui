@@ -63,7 +63,9 @@ export interface GetFixedDepositAccountsAccountIdResponse {
     maxDepositTermType?: GetFixedDepositAccountsMaxDepositTermType;
     minDepositTerm?: number;
     minDepositTermType?: GetFixedDepositAccountsMinDepositTermType;
+    nominalAnnualInterestRate?: number;
     preClosurePenalApplicable?: boolean;
+    preClosurePenalInterest?: number;
     savingsProductId?: number;
     savingsProductName?: string;
     status?: GetFixedDepositAccountsStatus;

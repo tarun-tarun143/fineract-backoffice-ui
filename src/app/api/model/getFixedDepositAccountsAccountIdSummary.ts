@@ -29,5 +29,8 @@ import { GetFixedDepositAccountsAccountIdCurrency } from './getFixedDepositAccou
 export interface GetFixedDepositAccountsAccountIdSummary { 
     accountBalance?: number;
     currency?: GetFixedDepositAccountsAccountIdCurrency;
+    totalDeposits?: number;
+    totalInterestPosted?: number;
+    totalWithholdTax?: number;
 }
 

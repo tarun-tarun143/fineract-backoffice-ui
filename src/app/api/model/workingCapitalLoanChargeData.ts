@@ -33,6 +33,7 @@ export interface WorkingCapitalLoanChargeData {
     amount?: number;
     amountOutstanding?: number;
     amountPaid?: number;
+    amountWaived?: number;
     amountWrittenOff?: number;
     chargeCalculationType?: EnumOptionData;
     chargeId?: number;

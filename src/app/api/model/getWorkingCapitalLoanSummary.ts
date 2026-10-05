@@ -34,10 +34,18 @@ export interface GetWorkingCapitalLoanSummary {
     fee?: number;
     feeOutstanding?: number;
     feePaid?: number;
+    /**
+     * Fees moved out of the outstanding balance by a charge waiver
+     */
+    feeWaived?: number;
     overpayment?: number;
     penalty?: number;
     penaltyOutstanding?: number;
     penaltyPaid?: number;
+    /**
+     * Penalties moved out of the outstanding balance by a charge waiver
+     */
+    penaltyWaived?: number;
     /**
      * Total principal due: original principal plus principalAdjustment. Already inclusive of principalAdjustment — do not add the two together.
      */
@@ -49,6 +57,9 @@ export interface GetWorkingCapitalLoanSummary {
     principalOutstanding?: number;
     principalPaid?: number;
     realizedIncomeFromDiscountFee?: number;
+    /**
+     * Total amount actually disbursed
+     */
     totalDisbursement?: number;
     totalDiscountFee?: number;
     totalDiscountFeeAdjustment?: number;

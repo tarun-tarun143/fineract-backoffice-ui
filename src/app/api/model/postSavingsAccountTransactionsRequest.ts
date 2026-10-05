@@ -23,6 +23,7 @@
  * Do not edit the class manually.
  */
 
+import { PostSavingsAccountsGsimSavings } from './postSavingsAccountsGsimSavings';
 
 
 /**
@@ -34,8 +35,14 @@ export interface PostSavingsAccountTransactionsRequest {
     isPostInterestAsOn?: boolean;
     lienAllowed?: string;
     locale?: string;
+    note?: string;
     paymentTypeId?: number;
+    postInterestManualOrAutomatic?: boolean;
     reasonForBlock?: string;
+    /**
+     * command=gsimDeposit: the child accounts of a GSIM parent to deposit into, and how much into each
+     */
+    savingsArray?: Array<PostSavingsAccountsGsimSavings>;
     transactionAmount?: number;
     transactionDate?: string;
 }

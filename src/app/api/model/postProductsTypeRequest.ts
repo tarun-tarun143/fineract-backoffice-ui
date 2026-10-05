@@ -38,6 +38,10 @@ export interface PostProductsTypeRequest {
     description?: string;
     digitsAfterDecimal?: number;
     inMultiplesOf?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    incomeFromFeeAccountId?: number;
     locale?: string;
     lockinPeriodFrequency?: number;
     lockinPeriodFrequencyType?: number;
@@ -48,6 +52,18 @@ export interface PostProductsTypeRequest {
     minimumactiveperiodFrequencyType?: number;
     name?: string;
     nominalShares?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    shareEquityId?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    shareReferenceId?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    shareSuspenseId?: number;
     sharesIssued?: number;
     shortName?: string;
     totalShares?: number;

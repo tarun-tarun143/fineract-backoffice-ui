@@ -35,7 +35,7 @@ export interface TaxComponent {
     creditAccountType?: number;
     debitAccount?: GLAccount;
     debitAccountType?: number;
-    id?: number | null;
+    id?: number;
     lastModifiedBy?: number;
     lastModifiedDate?: string;
     name?: string;

@@ -32,6 +32,7 @@ import { GetWorkingCapitalLoanNearBreach } from './getWorkingCapitalLoanNearBrea
 import { GetWorkingCapitalLoansLoanIdStatus } from './getWorkingCapitalLoansLoanIdStatus';
 import { GetWorkingCapitalLoansLoanIdTimeline } from './getWorkingCapitalLoansLoanIdTimeline';
 import { GetDelinquencyBucket } from './getDelinquencyBucket';
+import { WorkingCapitalLoanPeriodPaymentRateChangeData } from './workingCapitalLoanPeriodPaymentRateChangeData';
 import { CurrencyData } from './currencyData';
 import { GetWorkingCapitalLoansClient } from './getWorkingCapitalLoansClient';
 import { GetWorkingCapitalLoansLoanIdOriginatorData } from './getWorkingCapitalLoansLoanIdOriginatorData';
@@ -49,23 +50,34 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
     accountNo?: string;
     amortizationType?: StringEnumOptionData;
     /**
+     * Configured annual EIR percentage for ANNUAL_EIR strategy loans
+     */
+    annualEir?: number;
+    /**
      * Approved discount fee set during loan approval
      */
     approvedDiscountFee?: number;
+    /**
+     * Principal granted at approval; zero before approval and after undoing it (deliberate Working Capital divergence from classic loans)
+     */
     approvedPrincipal?: number;
     balance?: GetBalance;
     breach?: GetWorkingCapitalLoanBreach;
+    /**
+     * Effective start date of the loan\'s breach, i.e. breachStartDate shifted forward by breachGraceDays (the cool off period). Only the first breach period carries the grace days, so this is null when the earliest breached period is not the first one, when no breach grace days are configured, and when the loan is not in breach
+     */
+    breachEffectiveStartDate?: string;
     /**
      * Number of days to shift the start of the first breach schedule period after disbursement
      */
     breachGraceDays?: number;
     /**
-     * Start date of the loan\'s breach, i.e. the fromDate of the earliest breached breach schedule period (the breach grace days are already reflected in this date). Null when the loan is not in breach
+     * Start date of the loan\'s breach, i.e. the fromDate of the earliest breached breach schedule period. Null when the loan is not in breach
      */
     breachStartDate?: string;
     breachStartType?: StringEnumOptionData;
     /**
-     * Annualized EIR: (1 + dailyEir)^365 − 1; null if schedule not yet generated
+     * Annual effective rate the loan was priced at, as a percentage: compounded over the product\'s NPV day count, not a calendar year, and rounded to six decimals. The base schedule\'s daily discounting derives from it. A rate change does not restate it - the schedule re-solves its own rate from the day the change takes effect. Comes from discount-fee pricing, not a lending interest rate. Null if schedule not yet generated or if the loan amortizes FLAT, which solves no rate
      */
     calculatedAnnualEir?: number;
     chargeOffReason?: CodeValueData;
@@ -88,17 +100,17 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
     clientName?: string;
     clientOfficeId?: number;
     currency?: CurrencyData;
-    /**
-     * Periodic (daily) effective interest rate computed via RATE(); null if schedule not yet generated
-     */
-    dailyEir?: number;
     delinquencyBucket?: GetDelinquencyBucket;
+    /**
+     * Effective start date of the loan\'s delinquency, i.e. delinquencyStartDate shifted forward by delinquencyGraceDays (the cool off period). Only the first delinquency period carries the grace days, so this is null when the earliest delinquent period is not the first one, when no delinquency grace days are configured, and when the loan is not delinquent
+     */
+    delinquencyEffectiveStartDate?: string;
     /**
      * Number of grace days before delinquency tracking starts
      */
     delinquencyGraceDays?: number;
     /**
-     * Start date of the loan\'s delinquency, i.e. the fromDate of the earliest delinquent range schedule period shifted by delinquencyGraceDays. Null when the loan is not delinquent
+     * Start date of the loan\'s delinquency, i.e. the fromDate of the earliest delinquent range schedule period. Null when the loan is not delinquent
      */
     delinquencyStartDate?: string;
     delinquencyStartType?: StringEnumOptionData;
@@ -141,21 +153,37 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
      */
     npvDayCount?: number;
     /**
-     * Number of repayments (effectiveTotalTerm from the amortization schedule; for WC this is the loan term in days); null if schedule not yet generated
+     * Number of repayments (effectiveTotalTerm from the amortization schedule; for WC this is the loan term in days). Unlike the priced figures beside it a rate change does move it, to the day the rate now in force is solved to close the schedule on - a day the amounts here cannot be used to derive, because it falls out of the balance and the fee still unearned when the change takes effect. Null if schedule not yet generated
      */
     numberOfRepayments?: number;
     /**
      * List of originators associated with this loan
      */
     originators?: Array<GetWorkingCapitalLoansLoanIdOriginatorData>;
+    /**
+     * Date on which loan was overpaid otherwise null
+     */
+    overpaidOnDate?: string;
     paymentAllocation?: Array<GetPaymentAllocation>;
+    /**
+     * Configured daily payment amount for PAYMENT_AMOUNT strategy loans
+     */
+    paymentAmount?: number;
+    paymentAmountCalculationStrategy?: StringEnumOptionData;
+    /**
+     * The loan\'s own period payment rate. A rate change does not move it - the rate in force on a given date comes from the rate-change history
+     */
     paymentRate?: number;
     /**
-     * Daily expected payment amount from the amortization schedule; null if schedule not yet generated
+     * Daily payment amount the loan was priced at, following paymentAmountCalculationStrategy: totalPaymentVolume x paymentRate / 100 / npvDayCount rounded to the currency under TPV, solved from annualEir under ANNUAL_EIR, and paymentAmount itself under PAYMENT_AMOUNT. A rate change does not restate it, no more than it restates paymentRate or calculatedAnnualEir - what is billed from the day a change takes effect follows the rate then in force, and is read off the amortization schedule rows. Null if schedule not yet generated
      */
     periodPaymentAmount?: number;
     /**
-     * Active principal (loanProductRelatedDetails.principal)
+     * Period payment rate change history, most recently booked first - which for a backdated change is not the same as effective-date order. Each entry carries the annual EIR (as a percentage, e.g. 43.756245, the unit the top-level calculatedAnnualEir is expressed in as well), daily payment amount and segment term the amortization schedule computed when that change was booked; those are null for changes booked before the snapshot was introduced, and the EIR is null on a FLAT loan
+     */
+    periodPaymentRateHistory?: Array<WorkingCapitalLoanPeriodPaymentRateChangeData>;
+    /**
+     * Active principal: the requested amount while the application is pending, the granted amount from approval, the actually disbursed amount from disbursement. Undoing approval or disbursal restores the previous stage\'s value. This is the contractual principal, not the outstanding balance - see summary.principalOutstanding for that.
      */
     principal?: number;
     product?: GetWorkingCapitalLoanProductsResponse;
@@ -163,6 +191,9 @@ export interface GetWorkingCapitalLoansLoanIdResponse {
      * Proposed discount fee at loan submission time
      */
     proposedDiscountFee?: number;
+    /**
+     * Principal requested at submission; never changes afterwards
+     */
     proposedPrincipal?: number;
     repaymentEvery?: number;
     repaymentFrequencyType?: StringEnumOptionData;
