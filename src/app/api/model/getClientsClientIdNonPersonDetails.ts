@@ -23,13 +23,14 @@
  * Do not edit the class manually.
  */
 
-import { GetObligeeData } from './getObligeeData';
+import { CodeValueData } from './codeValueData';
 
 
-/**
- * GetClientObligeeDetailsResponse
- */
-export interface GetClientObligeeDetailsResponse { 
-    obligees?: Set<GetObligeeData>;
+export interface GetClientsClientIdNonPersonDetails { 
+    constitution?: CodeValueData;
+    incorpNumber?: string;
+    incorpValidityTillDate?: string;
+    mainBusinessLine?: CodeValueData;
+    remarks?: string;
 }
 

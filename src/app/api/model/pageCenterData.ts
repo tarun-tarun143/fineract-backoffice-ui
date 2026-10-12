@@ -23,12 +23,11 @@
  * Do not edit the class manually.
  */
 
+import { CenterData } from './centerData';
 
 
-export interface PostFloatingRatesRatePeriods { 
-    dateFormat?: string;
-    fromDate?: string;
-    interestRate?: number;
-    locale?: string;
+export interface PageCenterData { 
+    pageItems?: Array<CenterData>;
+    totalFilteredRecords?: number;
 }
 

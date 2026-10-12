@@ -23,25 +23,15 @@
  * Do not edit the class manually.
  */
 
-import { PaymentTypeData } from './paymentTypeData';
 import { CurrencyData } from './currencyData';
-import { CodeValueData } from './codeValueData';
 
 
 export interface WorkingCapitalLoanCommandTemplateData { 
     approvalAmount?: number;
     approvalDate?: string;
-    chargeOffAmount?: number;
-    chargeOffDate?: string;
-    chargeOffReasonOptions?: Array<CodeValueData>;
-    classificationOptions?: Array<CodeValueData>;
     currency?: CurrencyData;
     discountAmount?: number;
-    expectedAmount?: number;
     expectedDisbursementDate?: string;
-    expectedMaturityDate?: string;
-    loanId?: number;
     overrideDiscountDisabled?: boolean;
-    paymentTypeOptions?: Array<PaymentTypeData>;
 }
 

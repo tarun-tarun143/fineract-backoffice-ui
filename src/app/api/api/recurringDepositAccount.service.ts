@@ -41,6 +41,8 @@ import { GetRecurringDepositAccountsResponse } from '../model/getRecurringDeposi
 // @ts-ignore
 import { GetRecurringDepositAccountsTemplateResponse } from '../model/getRecurringDepositAccountsTemplateResponse';
 // @ts-ignore
+import { PostRecurringDepositAccountsAccountIdRequest } from '../model/postRecurringDepositAccountsAccountIdRequest';
+// @ts-ignore
 import { PostRecurringDepositAccountsAccountIdResponse } from '../model/postRecurringDepositAccountsAccountIdResponse';
 // @ts-ignore
 import { PostRecurringDepositAccountsRequest } from '../model/postRecurringDepositAccountsRequest';
@@ -753,21 +755,21 @@ export class RecurringDepositAccountService extends BaseService {
      * Approve recurring deposit application:  Approves recurring deposit application so long as its in \&#39;Submitted and pending approval\&#39; state.  Undo approval recurring deposit application:  Will move \&#39;approved\&#39; recurring deposit application back to \&#39;Submitted and pending approval\&#39; state.  Reject recurring deposit application  Rejects recurring deposit application so long as its in \&#39;Submitted and pending approval\&#39; state.  Withdraw recurring deposit application:  Used when an applicant withdraws from the recurring deposit application. It must be in \&#39;Submitted and pending approval\&#39; state.  Activate a recurring deposit account:  Results in an approved recurring deposit application being converted into an \&#39;active\&#39; recurring deposit account.  Update the recommended deposit amount for a recurring deposit account:  Updates the recommended deposit amount for a RD account as on the effective date.  Close a recurring deposit account  Results in a Matured recurring deposit account being converted into a \&#39;closed\&#39; recurring deposit account.  On account close allowed actions are.Premature Close a recurring deposit account:  Results in an Active recurring deposit account being converted into a \&#39;Premature Closed\&#39; recurring deposit account with options to withdraw prematured amount. (premature amount is calculated using interest rate chart applicable along with penal interest if any.)  On account premature closure allowed actions are.  Calculate Premature amount on Recurring deposit account:  Calculate premature amount on recurring deposit till premature close date. Premature amount is calculated based on interest chart and penal interest applicable if any.  Calculate Interest on recurring Deposit Account:  Calculates interest earned on a recurring deposit account based on todays date. It does not attempt to post or credit the interest on the account. That is responsibility of the Post Interest API that will likely be called by overnight process.  Post Interest on recurring Deposit Account:  Calculates and Posts interest earned on a recurring deposit account based on todays date and whether an interest posting or crediting event is due.  Showing request/response for \&#39;Post Interest on recurring Deposit Account\&#39;
      * @endpoint post /v1/recurringdepositaccounts/{accountId}
      * @param accountId accountId
-     * @param body 
+     * @param postRecurringDepositAccountsAccountIdRequest 
      * @param command command
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postRecurringdepositaccountsAccountId(accountId: number, body: object, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostRecurringDepositAccountsAccountIdResponse>;
-    public postRecurringdepositaccountsAccountId(accountId: number, body: object, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostRecurringDepositAccountsAccountIdResponse>>;
-    public postRecurringdepositaccountsAccountId(accountId: number, body: object, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostRecurringDepositAccountsAccountIdResponse>>;
-    public postRecurringdepositaccountsAccountId(accountId: number, body: object, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public postRecurringdepositaccountsAccountId(accountId: number, postRecurringDepositAccountsAccountIdRequest: PostRecurringDepositAccountsAccountIdRequest, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostRecurringDepositAccountsAccountIdResponse>;
+    public postRecurringdepositaccountsAccountId(accountId: number, postRecurringDepositAccountsAccountIdRequest: PostRecurringDepositAccountsAccountIdRequest, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostRecurringDepositAccountsAccountIdResponse>>;
+    public postRecurringdepositaccountsAccountId(accountId: number, postRecurringDepositAccountsAccountIdRequest: PostRecurringDepositAccountsAccountIdRequest, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostRecurringDepositAccountsAccountIdResponse>>;
+    public postRecurringdepositaccountsAccountId(accountId: number, postRecurringDepositAccountsAccountIdRequest: PostRecurringDepositAccountsAccountIdRequest, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (accountId === null || accountId === undefined) {
             throw new Error('Required parameter accountId was null or undefined when calling postRecurringdepositaccountsAccountId.');
         }
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling postRecurringdepositaccountsAccountId.');
+        if (postRecurringDepositAccountsAccountIdRequest === null || postRecurringDepositAccountsAccountIdRequest === undefined) {
+            throw new Error('Required parameter postRecurringDepositAccountsAccountIdRequest was null or undefined when calling postRecurringdepositaccountsAccountId.');
         }
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
@@ -826,7 +828,7 @@ export class RecurringDepositAccountService extends BaseService {
         return this.httpClient.request<PostRecurringDepositAccountsAccountIdResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: postRecurringDepositAccountsAccountIdRequest,
                 params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),

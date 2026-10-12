@@ -26,7 +26,6 @@
 import { CurrencyData } from './currencyData';
 import { ChargeData } from './chargeData';
 import { EnumOptionData } from './enumOptionData';
-import { ChargeFeeOnMonthDay } from './chargeFeeOnMonthDay';
 
 
 export interface SavingsAccountChargeData { 
@@ -48,7 +47,10 @@ export interface SavingsAccountChargeData {
     dueDate?: string;
     feeCharge?: boolean;
     feeInterval?: number;
-    feeOnMonthDay?: ChargeFeeOnMonthDay;
+    /**
+     * The recurring day the fee falls due, as an ISO-8601 month-day
+     */
+    feeOnMonthDay?: string;
     freeWithdrawalChargeFrequency?: number;
     id?: number;
     inactivationDate?: string;

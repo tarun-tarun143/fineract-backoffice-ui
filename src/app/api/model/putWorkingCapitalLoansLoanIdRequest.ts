@@ -55,6 +55,10 @@ export interface PutWorkingCapitalLoansLoanIdRequest {
     locale?: string;
     nearBreachId?: number;
     paymentAllocation?: Array<PostPaymentAllocationRule>;
+    /**
+     * Daily payment amount, at most the currency\'s decimal precision. Overrides the product default on PAYMENT_AMOUNT strategy products.
+     */
+    paymentAmount?: number;
     periodPaymentRate?: number;
     /**
      * Principal (disbursement) amount

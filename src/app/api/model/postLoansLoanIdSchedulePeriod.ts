@@ -25,7 +25,18 @@
 
 
 
-export interface PutFinancialActivityAccountscommentsSwagger { 
-    glAccountId?: number;
+/**
+ * A period of the schedule the calculateLoanSchedule command returns
+ */
+export interface PostLoansLoanIdSchedulePeriod { 
+    dueDate?: string;
+    fromDate?: string;
+    interestOriginalDue?: number;
+    period?: number;
+    principalDue?: number;
+    principalOriginalDue?: number;
+    totalDueForPeriod?: number;
+    totalOriginalDueForPeriod?: number;
+    totalOutstandingForPeriod?: number;
 }
 

@@ -44,6 +44,10 @@ export interface GetWorkingCapitalLoanProductsProductIdResponse {
     accountingRule?: StringEnumOptionData;
     allowAttributeOverrides?: GetConfigurableAttributes;
     amortizationType?: StringEnumOptionData;
+    /**
+     * Configured annual EIR percentage. Only for ANNUAL_EIR strategy.
+     */
+    annualEir?: number;
     breach?: GetWorkingCapitalLoanBreach;
     /**
      * Number of days to shift the start of the first breach schedule period after disbursement
@@ -63,14 +67,35 @@ export interface GetWorkingCapitalLoanProductsProductIdResponse {
     fundId?: number;
     fundName?: string;
     id?: number;
+    /**
+     * Maximum annual EIR percentage. Optional; only for ANNUAL_EIR strategy.
+     */
+    maxAnnualEir?: number;
+    /**
+     * Maximum daily payment amount. Optional; only for PAYMENT_AMOUNT strategy.
+     */
+    maxPaymentAmount?: number;
     maxPeriodPaymentRate?: number;
     maxPrincipal?: number;
+    /**
+     * Minimum annual EIR percentage. Optional; only for ANNUAL_EIR strategy.
+     */
+    minAnnualEir?: number;
+    /**
+     * Minimum daily payment amount. Optional; only for PAYMENT_AMOUNT strategy.
+     */
+    minPaymentAmount?: number;
     minPeriodPaymentRate?: number;
     minPrincipal?: number;
     name?: string;
     nearBreach?: GetWorkingCapitalLoanNearBreach;
     npvDayCount?: number;
     paymentAllocation?: Array<GetPaymentAllocation>;
+    /**
+     * Configured daily payment amount. Only for PAYMENT_AMOUNT strategy.
+     */
+    paymentAmount?: number;
+    paymentAmountCalculationStrategy?: StringEnumOptionData;
     paymentChannelToFundSourceMappings?: Array<PaymentTypeToGLAccountMapper>;
     penaltyToIncomeAccountMappings?: Array<ChargeToGLAccountMapper>;
     periodPaymentRate?: number;
