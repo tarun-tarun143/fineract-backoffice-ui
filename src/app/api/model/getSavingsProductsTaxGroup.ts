@@ -25,17 +25,8 @@
 
 
 
-/**
- * GetFloatingRatesResponse
- */
-export interface GetFloatingRatesResponse { 
-    createdBy?: string;
-    createdOn?: string;
+export interface GetSavingsProductsTaxGroup { 
     id?: number;
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
-    modifiedBy?: string;
-    modifiedOn?: string;
     name?: string;
 }
 

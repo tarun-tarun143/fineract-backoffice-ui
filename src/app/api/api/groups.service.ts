@@ -37,6 +37,8 @@ import { DeleteGroupsGroupIdResponse } from '../model/deleteGroupsGroupIdRespons
 // @ts-ignore
 import { GetGroupsGroupIdAccountsResponse } from '../model/getGroupsGroupIdAccountsResponse';
 // @ts-ignore
+import { GetGroupsGroupIdGsimAccountsResponse } from '../model/getGroupsGroupIdGsimAccountsResponse';
+// @ts-ignore
 import { GetGroupsGroupIdResponse } from '../model/getGroupsGroupIdResponse';
 // @ts-ignore
 import { GetGroupsResponse } from '../model/getGroupsResponse';
@@ -635,9 +637,9 @@ export class GroupsService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<GetGroupsGroupIdGsimAccountsResponse>>;
+    public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<GetGroupsGroupIdGsimAccountsResponse>>>;
+    public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<GetGroupsGroupIdGsimAccountsResponse>>>;
     public getGroupsGroupIdGsimaccounts(groupId: number, parentGSIMAccountNo?: string, parentGSIMId?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (groupId === null || groupId === undefined) {
             throw new Error('Required parameter groupId was null or undefined when calling getGroupsGroupIdGsimaccounts.');
@@ -696,7 +698,7 @@ export class GroupsService extends BaseService {
 
         let localVarPath = `/v1/groups/${this.configuration.encodeParam({name: "groupId", value: groupId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/gsimaccounts`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Array<GetGroupsGroupIdGsimAccountsResponse>>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters.toHttpParams(),

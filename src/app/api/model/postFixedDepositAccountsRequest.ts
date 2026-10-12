@@ -34,8 +34,27 @@ export interface PostFixedDepositAccountsRequest {
     depositAmount?: number;
     depositPeriod?: number;
     depositPeriodFrequencyId?: number;
+    inMultiplesOfDepositTerm?: number;
+    inMultiplesOfDepositTermTypeId?: number;
+    interestCalculationDaysInYearType?: number;
+    interestCalculationType?: number;
+    interestCompoundingPeriodType?: number;
+    interestPostingPeriodType?: number;
+    linkAccountId?: number;
     locale?: string;
+    lockinPeriodFrequency?: number;
+    lockinPeriodFrequencyType?: number;
+    maturityInstructionId?: number;
+    maxDepositTerm?: number;
+    maxDepositTermTypeId?: number;
+    minDepositTerm?: number;
+    minDepositTermTypeId?: number;
+    monthDayFormat?: string;
+    preClosurePenalApplicable?: boolean;
+    preClosurePenalInterest?: number;
+    preClosurePenalInterestOnTypeId?: number;
     productId?: number;
     submittedOnDate?: string;
+    transferInterestToSavings?: boolean;
 }
 

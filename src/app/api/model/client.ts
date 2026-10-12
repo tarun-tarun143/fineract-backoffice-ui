@@ -53,7 +53,7 @@ export interface Client {
     fullname?: string;
     gender?: CodeValue;
     groups?: Set<Group>;
-    id?: number | null;
+    id?: number;
     identifiers?: Set<ClientIdentifier>;
     imageId?: number;
     lastModifiedBy: number;

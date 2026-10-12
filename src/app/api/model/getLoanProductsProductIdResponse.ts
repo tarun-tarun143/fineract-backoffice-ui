@@ -105,6 +105,7 @@ export interface GetLoanProductsProductIdResponse {
     enableDownPayment?: boolean;
     enableIncomeCapitalization?: boolean;
     enableInstallmentLevelDelinquency?: boolean;
+    externalId?: string;
     feeToIncomeAccountMappings?: Set<GetLoanFeeToIncomeAccountMappings>;
     fixedLength?: number;
     fixedPrincipalPercentagePerInstallment?: number;

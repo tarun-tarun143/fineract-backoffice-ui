@@ -54,6 +54,7 @@ export interface GetRecurringDepositAccountsResponse {
     interestCalculationType?: GetRecurringDepositAccountsInterestCalculationType;
     interestCompoundingPeriodType?: GetRecurringDepositAccountsInterestCompoundingPeriodType;
     interestPostingPeriodType?: GetRecurringDepositAccountsInterestPostingPeriodType;
+    mandatoryRecommendedDepositAmount?: number;
     maturityAmount?: number;
     maturityDate?: string;
     maxDepositTerm?: number;
@@ -61,9 +62,8 @@ export interface GetRecurringDepositAccountsResponse {
     minDepositTerm?: number;
     minDepositTermType?: GetRecurringDepositAccountsMinDepositTermType;
     preClosurePenalApplicable?: boolean;
-    recurringDepositAmount?: number;
-    recurringDepositFrequency?: number;
-    recurringDepositFrequencyType?: GetRecurringDepositAccountsRecurringDepositFrequencyType;
+    recurringFrequency?: number;
+    recurringFrequencyType?: GetRecurringDepositAccountsRecurringDepositFrequencyType;
     savingsProductId?: number;
     savingsProductName?: string;
     status?: GetRecurringDepositAccountsStatus;

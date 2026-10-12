@@ -42,6 +42,10 @@ export interface PostWorkingCapitalLoanProductsRequest {
     allowAttributeOverrides?: PostAllowAttributeOverrides;
     amortizationType?: PostWorkingCapitalLoanProductsRequest.AmortizationTypeEnum;
     /**
+     * Annual EIR percentage (6 decimal places max). Required when strategy is ANNUAL_EIR.
+     */
+    annualEir?: number;
+    /**
      * Number of days to shift the start of the first breach schedule period after disbursement
      */
     breachGraceDays?: number;
@@ -82,8 +86,24 @@ export interface PostWorkingCapitalLoanProductsRequest {
     incomeFromRecoveryAccountId?: number;
     loanPortfolioAccountId?: number;
     locale?: string;
+    /**
+     * Maximum annual EIR percentage. Optional; only for ANNUAL_EIR strategy.
+     */
+    maxAnnualEir?: number;
+    /**
+     * Maximum daily payment amount. Optional; only for PAYMENT_AMOUNT strategy.
+     */
+    maxPaymentAmount?: number;
     maxPeriodPaymentRate?: number;
     maxPrincipal?: number;
+    /**
+     * Minimum annual EIR percentage. Optional; only for ANNUAL_EIR strategy.
+     */
+    minAnnualEir?: number;
+    /**
+     * Minimum daily payment amount. Optional; only for PAYMENT_AMOUNT strategy.
+     */
+    minPaymentAmount?: number;
     minPeriodPaymentRate?: number;
     minPrincipal?: number;
     name?: string;
@@ -91,6 +111,14 @@ export interface PostWorkingCapitalLoanProductsRequest {
     npvDayCount?: number;
     overpaymentLiabilityAccountId?: number;
     paymentAllocation?: Array<PostPaymentAllocation>;
+    /**
+     * Daily payment amount, at most the currency\'s decimal precision. Required when strategy is PAYMENT_AMOUNT.
+     */
+    paymentAmount?: number;
+    /**
+     * Payment amount calculation strategy: TPV (default), ANNUAL_EIR or PAYMENT_AMOUNT
+     */
+    paymentAmountCalculationStrategy?: PostWorkingCapitalLoanProductsRequest.PaymentAmountCalculationStrategyEnum;
     paymentChannelToFundSourceMappings?: Array<WorkingCapitalLoanPaymentChannelToFundSourceMappings>;
     penaltyToIncomeAccountMappings?: Array<WorkingCapitalLoanProductChargeToGLAccountMapper>;
     periodPaymentRate?: number;
@@ -116,6 +144,12 @@ export namespace PostWorkingCapitalLoanProductsRequest {
         Flat: 'FLAT'
     } as const;
     export type AmortizationTypeEnum = typeof AmortizationTypeEnum[keyof typeof AmortizationTypeEnum];
+    export const PaymentAmountCalculationStrategyEnum = {
+        Tpv: 'TPV',
+        AnnualEir: 'ANNUAL_EIR',
+        PaymentAmount: 'PAYMENT_AMOUNT'
+    } as const;
+    export type PaymentAmountCalculationStrategyEnum = typeof PaymentAmountCalculationStrategyEnum[keyof typeof PaymentAmountCalculationStrategyEnum];
     export const RepaymentFrequencyTypeEnum = {
         Days: 'DAYS',
         Months: 'MONTHS',
