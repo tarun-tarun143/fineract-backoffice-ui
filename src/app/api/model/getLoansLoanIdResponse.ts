@@ -84,9 +84,9 @@ export interface GetLoansLoanIdResponse {
     disallowExpectedDisbursements?: boolean;
     disbursedAmountPercentageForDownPayment?: number;
     /**
-     * Set of GetLoansLoanIdDisbursementDetails
+     * List of GetLoansLoanIdDisbursementDetails
      */
-    disbursementDetails?: Set<GetLoansLoanIdDisbursementDetails>;
+    disbursementDetails?: Array<GetLoansLoanIdDisbursementDetails>;
     /**
      * List of GetLoansLoanIdLoanTermVariations
      */
@@ -112,6 +112,10 @@ export interface GetLoansLoanIdResponse {
     interestRecognitionOnDisbursementDate?: boolean;
     interestType?: GetLoansLoanIdInterestType;
     isFloatingInterestRate?: boolean;
+    /**
+     * Whether the loan is a non-performing asset
+     */
+    isNPA?: boolean;
     lastClosedBusinessDate?: string;
     loanOfficerId?: number;
     loanOfficerName?: string;
@@ -127,6 +131,7 @@ export interface GetLoansLoanIdResponse {
      */
     loanTermVariations?: Array<GetLoansLoanIdLoanTermVariations>;
     loanType?: GetLoansLoanIdLoanType;
+    monthEndDueDateStrategy?: StringEnumOptionData;
     netDisbursalAmount?: number;
     numberOfRepayments?: number;
     /**

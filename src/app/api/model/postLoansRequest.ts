@@ -43,12 +43,20 @@ export interface PostLoansRequest {
     buyDownFeeCalculationType?: PostLoansRequest.BuyDownFeeCalculationTypeEnum;
     buyDownFeeIncomeType?: PostLoansRequest.BuyDownFeeIncomeTypeEnum;
     buyDownFeeStrategy?: PostLoansRequest.BuyDownFeeStrategyEnum;
+    /**
+     * Meeting calendar to attach the loan to; required for jlg loans
+     */
+    calendarId?: number;
     capitalizedIncomeCalculationType?: PostLoansRequest.CapitalizedIncomeCalculationTypeEnum;
     capitalizedIncomeStrategy?: PostLoansRequest.CapitalizedIncomeStrategyEnum;
     capitalizedIncomeType?: StringEnumOptionData;
     charges?: Array<PostLoansRequestChargeData>;
     clientId?: number;
     collateral?: Array<PostLoansRequestCollateralData>;
+    /**
+     * Requires linkAccountId when true
+     */
+    createStandingInstructionAtDisbursement?: boolean;
     datatables?: Array<PostLoansDataTable>;
     dateFormat?: string;
     daysInYearCustomStrategy?: PostLoansRequest.DaysInYearCustomStrategyEnum;
@@ -78,10 +86,19 @@ export interface PostLoansRequest {
     groupId?: number;
     inArrearsTolerance?: number;
     interestCalculationPeriodType?: number;
+    interestChargedFromDate?: string;
+    /**
+     * Added to the floating rate when isFloatingInterestRate is true
+     */
+    interestRateDifferential?: number;
     interestRateFrequencyType?: number;
     interestRatePerPeriod?: number;
     interestRecognitionOnDisbursementDate?: boolean;
     interestType?: number;
+    /**
+     * Take the rate from the product\'s floating rate instead of interestRatePerPeriod
+     */
+    isFloatingInterestRate?: boolean;
     /**
      * GLIM loans only: marks this application as the GLIM parent account
      */
@@ -96,6 +113,10 @@ export interface PostLoansRequest {
      * Maximum allowed outstanding balance
      */
     maxOutstandingLoanBalance?: number;
+    /**
+     * Overrides the loan product\'s month end due date strategy for this loan. It has no effect on a loan whose repayments follow a meeting calendar.
+     */
+    monthEndDueDateStrategy?: PostLoansRequest.MonthEndDueDateStrategyEnum;
     numberOfRepayments?: number;
     /**
      * Optional array of originators to associate with this loan. Each entry can reference an existing originator by \'id\' or \'externalId\'. If the global config \'enable_originator_creation_during_loan_application\' is enabled, non-existing originators will be auto-created using the provided details (name, typeId, channelTypeId).
@@ -108,6 +129,10 @@ export interface PostLoansRequest {
     repaymentStartDateType?: number;
     repaymentsStartingFromDate?: string;
     submittedOnDate?: string;
+    /**
+     * Sync the disbursement date with the attached meeting
+     */
+    syncDisbursementWithMeeting?: boolean;
     /**
      * GLIM loans only: the total principal of the parent GLIM account
      */
@@ -140,6 +165,11 @@ export namespace PostLoansRequest {
         FullLeapYearFeb29PeriodOnly: 'FULL_LEAP_YEAR, FEB_29_PERIOD_ONLY'
     } as const;
     export type DaysInYearCustomStrategyEnum = typeof DaysInYearCustomStrategyEnum[keyof typeof DaysInYearCustomStrategyEnum];
+    export const MonthEndDueDateStrategyEnum = {
+        LastDayOfMonth: 'LAST_DAY_OF_MONTH',
+        FirstDayOfNextMonth: 'FIRST_DAY_OF_NEXT_MONTH'
+    } as const;
+    export type MonthEndDueDateStrategyEnum = typeof MonthEndDueDateStrategyEnum[keyof typeof MonthEndDueDateStrategyEnum];
 }
 
 

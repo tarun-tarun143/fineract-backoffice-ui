@@ -28,7 +28,7 @@
 export interface Permission { 
     code?: string;
     grouping?: string;
-    id?: number | null;
+    id?: number;
     'new'?: boolean;
 }
 

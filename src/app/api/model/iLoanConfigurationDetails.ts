@@ -45,6 +45,7 @@ export interface ILoanConfigurationDetails {
     interestRecalculationEnabled?: boolean;
     interestRecognitionOnDisbursementDate?: boolean;
     loanScheduleProcessingType?: ILoanConfigurationDetails.LoanScheduleProcessingTypeEnum;
+    monthEndDueDateStrategy?: ILoanConfigurationDetails.MonthEndDueDateStrategyEnum;
     nominalInterestRatePerPeriod?: number;
     numberOfRepayments?: number;
     preCloseInterestCalculationStrategy?: ILoanConfigurationDetails.PreCloseInterestCalculationStrategyEnum;
@@ -91,6 +92,11 @@ export namespace ILoanConfigurationDetails {
         Vertical: 'VERTICAL'
     } as const;
     export type LoanScheduleProcessingTypeEnum = typeof LoanScheduleProcessingTypeEnum[keyof typeof LoanScheduleProcessingTypeEnum];
+    export const MonthEndDueDateStrategyEnum = {
+        LastDayOfMonth: 'LAST_DAY_OF_MONTH',
+        FirstDayOfNextMonth: 'FIRST_DAY_OF_NEXT_MONTH'
+    } as const;
+    export type MonthEndDueDateStrategyEnum = typeof MonthEndDueDateStrategyEnum[keyof typeof MonthEndDueDateStrategyEnum];
     export const PreCloseInterestCalculationStrategyEnum = {
         None: 'NONE',
         TillPreClosureDate: 'TILL_PRE_CLOSURE_DATE',

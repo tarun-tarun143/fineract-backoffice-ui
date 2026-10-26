@@ -68,6 +68,10 @@ export interface PutLoansLoanIdRequest {
     loanType?: string;
     locale?: string;
     maxOutstandingLoanBalance?: number;
+    /**
+     * Overrides the loan product\'s month end due date strategy for this loan. It has no effect on a loan whose repayments follow a meeting calendar.
+     */
+    monthEndDueDateStrategy?: PutLoansLoanIdRequest.MonthEndDueDateStrategyEnum;
     numberOfRepayments?: number;
     principal?: number;
     productId?: number;
@@ -79,4 +83,12 @@ export interface PutLoansLoanIdRequest {
     submittedOnDate?: string;
     transactionProcessingStrategyCode?: string;
 }
+export namespace PutLoansLoanIdRequest {
+    export const MonthEndDueDateStrategyEnum = {
+        LastDayOfMonth: 'LAST_DAY_OF_MONTH',
+        FirstDayOfNextMonth: 'FIRST_DAY_OF_NEXT_MONTH'
+    } as const;
+    export type MonthEndDueDateStrategyEnum = typeof MonthEndDueDateStrategyEnum[keyof typeof MonthEndDueDateStrategyEnum];
+}
+
 

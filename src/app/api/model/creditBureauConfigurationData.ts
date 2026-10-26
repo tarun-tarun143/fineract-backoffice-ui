@@ -23,10 +23,13 @@
  * Do not edit the class manually.
  */
 
-import { PostFloatingRatesRatePeriods } from './postFloatingRatesRatePeriods';
 
 
-export interface PutFloatingRatesChanges { 
-    ratePeriods?: Set<PostFloatingRatesRatePeriods>;
+export interface CreditBureauConfigurationData { 
+    configurationKey?: string;
+    creditBureauConfigurationId?: number;
+    description?: string;
+    organizationCreditBureauId?: number;
+    value?: string;
 }
 

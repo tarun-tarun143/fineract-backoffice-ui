@@ -23,13 +23,16 @@
  * Do not edit the class manually.
  */
 
-import { GetObligeeData } from './getObligeeData';
 
 
 /**
- * GetClientObligeeDetailsResponse
+ * Entries for the datatables registered against this entity
  */
-export interface GetClientObligeeDetailsResponse { 
-    obligees?: Set<GetObligeeData>;
+export interface PostGroupsDatatable { 
+    /**
+     * The datatable columns and their values
+     */
+    data?: { [key: string]: object; };
+    registeredTableName?: string;
 }
 

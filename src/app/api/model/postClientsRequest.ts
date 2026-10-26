@@ -25,6 +25,7 @@
 
 import { PostClientsDatatable } from './postClientsDatatable';
 import { ClientAddressRequest } from './clientAddressRequest';
+import { PostClientsNonPersonDetails } from './postClientsNonPersonDetails';
 
 
 /**
@@ -37,6 +38,11 @@ export interface PostClientsRequest {
      * Address requests
      */
     address?: Array<ClientAddressRequest>;
+    clientNonPersonDetails?: PostClientsNonPersonDetails;
+    /**
+     * A code value of the ClientType code
+     */
+    clientTypeId?: number;
     /**
      * List of PostClientsDatatable
      */

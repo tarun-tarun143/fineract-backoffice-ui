@@ -131,15 +131,36 @@ export interface PostLoanProductsRequest {
     loanScheduleProcessingType?: string;
     loanScheduleType?: string;
     locale?: string;
+    /**
+     * Percentage of the loan that guarantors must cover
+     */
+    mandatoryGuarantee?: number;
     maxInterestRatePerPeriod?: number;
     maxNumberOfRepayments?: number;
     maxPrincipal?: number;
     maxTrancheCount?: number;
+    /**
+     * Maximum days between two installments of a variable installment loan
+     */
+    maximumGap?: number;
     merchantBuyDownFee?: boolean;
     minInterestRatePerPeriod?: number;
     minNumberOfRepayments?: number;
     minPrincipal?: number;
     minimumDaysBetweenDisbursalAndFirstRepayment?: number;
+    /**
+     * Minimum days between two installments of a variable installment loan
+     */
+    minimumGap?: number;
+    /**
+     * Minimum percentage of the guarantee an external guarantor must provide
+     */
+    minimumGuaranteeFromGuarantor?: number;
+    /**
+     * Minimum percentage of the guarantee the borrower must provide from own funds
+     */
+    minimumGuaranteeFromOwnFunds?: number;
+    monthEndDueDateStrategy?: PostLoanProductsRequest.MonthEndDueDateStrategyEnum;
     multiDisburseLoan?: boolean;
     name?: string;
     numberOfRepaymentVariationsForBorrowerCycle?: Array<number>;
@@ -176,6 +197,10 @@ export interface PostLoanProductsRequest {
     shortName?: string;
     startDate?: string;
     supportedInterestRefundTypes?: Array<string>;
+    /**
+     * Force the actual disbursement date to match the expected disbursement date
+     */
+    syncExpectedWithDisbursementDate?: boolean;
     transactionProcessingStrategyCode?: string;
     transfersInSuspenseAccountId?: number;
     useBorrowerCycle?: boolean;
@@ -209,6 +234,11 @@ export namespace PostLoanProductsRequest {
         Interest: 'INTEREST'
     } as const;
     export type CapitalizedIncomeTypeEnum = typeof CapitalizedIncomeTypeEnum[keyof typeof CapitalizedIncomeTypeEnum];
+    export const MonthEndDueDateStrategyEnum = {
+        LastDayOfMonth: 'LAST_DAY_OF_MONTH',
+        FirstDayOfNextMonth: 'FIRST_DAY_OF_NEXT_MONTH'
+    } as const;
+    export type MonthEndDueDateStrategyEnum = typeof MonthEndDueDateStrategyEnum[keyof typeof MonthEndDueDateStrategyEnum];
 }
 
 

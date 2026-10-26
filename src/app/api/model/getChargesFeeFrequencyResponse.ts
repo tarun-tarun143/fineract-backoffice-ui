@@ -23,14 +23,11 @@
  * Do not edit the class manually.
  */
 
-import { PutFloatingRatesChanges } from './putFloatingRatesChanges';
 
 
-/**
- * PutFloatingRatesFloatingRateIdResponse
- */
-export interface PutFloatingRatesFloatingRateIdResponse { 
-    changes?: PutFloatingRatesChanges;
-    resourceId?: number;
+export interface GetChargesFeeFrequencyResponse { 
+    code?: string;
+    id?: number;
+    value?: string;
 }
 

@@ -28,7 +28,7 @@
 export interface ClientIdentifier { 
     createdBy: number;
     createdDate: string;
-    id?: number | null;
+    id?: number;
     lastModifiedBy: number;
     lastModifiedDate: string;
     'new'?: boolean;

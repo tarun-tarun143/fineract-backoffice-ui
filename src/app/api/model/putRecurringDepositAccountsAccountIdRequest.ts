@@ -29,7 +29,34 @@
  * PutRecurringDepositAccountsAccountIdRequest
  */
 export interface PutRecurringDepositAccountsAccountIdRequest { 
+    clientId?: number;
+    dateFormat?: string;
     depositAmount?: number;
+    depositPeriod?: number;
+    depositPeriodFrequencyId?: number;
+    expectedFirstDepositOnDate?: string;
+    inMultiplesOfDepositTerm?: number;
+    inMultiplesOfDepositTermTypeId?: number;
+    interestCalculationDaysInYearType?: number;
+    interestCalculationType?: number;
+    interestCompoundingPeriodType?: number;
+    interestPostingPeriodType?: number;
+    isCalendarInherited?: boolean;
     locale?: string;
+    lockinPeriodFrequency?: number;
+    lockinPeriodFrequencyType?: number;
+    mandatoryRecommendedDepositAmount?: number;
+    maxDepositTerm?: number;
+    maxDepositTermTypeId?: number;
+    minDepositTerm?: number;
+    minDepositTermTypeId?: number;
+    monthDayFormat?: string;
+    preClosurePenalApplicable?: boolean;
+    preClosurePenalInterest?: number;
+    preClosurePenalInterestOnTypeId?: number;
+    productId?: number;
+    recurringFrequency?: number;
+    recurringFrequencyType?: number;
+    submittedOnDate?: string;
 }
 

@@ -25,10 +25,12 @@
 
 
 
-export interface PostFloatingRatesRatePeriods { 
-    dateFormat?: string;
-    fromDate?: string;
-    interestRate?: number;
-    locale?: string;
+/**
+ * Installments added to the schedule
+ */
+export interface PostLoansLoanIdScheduleNewInstallment { 
+    dueDate?: string;
+    installmentAmount?: number;
+    principal?: number;
 }
 

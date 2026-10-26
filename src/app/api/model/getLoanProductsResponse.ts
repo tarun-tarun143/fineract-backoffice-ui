@@ -76,6 +76,7 @@ export interface GetLoanProductsResponse {
     merchantBuyDownFee?: boolean;
     minNumberOfRepayments?: number;
     minPrincipal?: number;
+    monthEndDueDateStrategy?: StringEnumOptionData;
     name?: string;
     numberOfRepaymentVariationsForBorrowerCycle?: Array<number>;
     numberOfRepayments?: number;

@@ -23,8 +23,10 @@
  * Do not edit the class manually.
  */
 
+import { GetTaxesComponentsDebitAccount } from './getTaxesComponentsDebitAccount';
 import { GetTaxesComponentsCreditAccount } from './getTaxesComponentsCreditAccount';
 import { GetTaxesComponentsCreditAccountType } from './getTaxesComponentsCreditAccountType';
+import { GetTaxesComponentsDebitAccountType } from './getTaxesComponentsDebitAccountType';
 
 
 /**
@@ -33,6 +35,8 @@ import { GetTaxesComponentsCreditAccountType } from './getTaxesComponentsCreditA
 export interface GetTaxesComponentsResponse { 
     creditAccount?: GetTaxesComponentsCreditAccount;
     creditAccountType?: GetTaxesComponentsCreditAccountType;
+    debitAccount?: GetTaxesComponentsDebitAccount;
+    debitAccountType?: GetTaxesComponentsDebitAccountType;
     id?: number;
     name?: string;
     percentage?: number;
