@@ -23,19 +23,29 @@
  * Do not edit the class manually.
  */
 
+import { PostSavingsAccountsGsimSavings } from './postSavingsAccountsGsimSavings';
 
 
 /**
  * PostSavingsAccountTransactionsRequest
  */
 export interface PostSavingsAccountTransactionsRequest { 
+    checkNumber?: string;
     dateFormat?: string;
     externalId?: string;
     isPostInterestAsOn?: boolean;
     lienAllowed?: string;
     locale?: string;
+    note?: string;
     paymentTypeId?: number;
+    postInterestManualOrAutomatic?: boolean;
     reasonForBlock?: string;
+    receiptNumber?: string;
+    routingCode?: string;
+    /**
+     * command=gsimDeposit: the child accounts of a GSIM parent to deposit into, and how much into each
+     */
+    savingsArray?: Array<PostSavingsAccountsGsimSavings>;
     transactionAmount?: number;
     transactionDate?: string;
 }

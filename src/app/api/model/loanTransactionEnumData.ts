@@ -54,6 +54,7 @@ export interface LoanTransactionEnumData {
     initiateTransfer?: boolean;
     interestPaymentWaiver?: boolean;
     interestRefund?: boolean;
+    loanWithdrawal?: boolean;
     merchantIssuedRefund?: boolean;
     payoutRefund?: boolean;
     reAge?: boolean;

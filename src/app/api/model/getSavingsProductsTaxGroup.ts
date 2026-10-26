@@ -23,13 +23,10 @@
  * Do not edit the class manually.
  */
 
-import { FloatingRatePeriodRequest } from './floatingRatePeriodRequest';
 
 
-export interface FloatingRateRequest { 
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
+export interface GetSavingsProductsTaxGroup { 
+    id?: number;
     name?: string;
-    ratePeriods?: Array<FloatingRatePeriodRequest>;
 }
 

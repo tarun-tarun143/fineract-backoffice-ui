@@ -61,6 +61,7 @@ export const TransactionType = {
     CapitalizedIncomeAmortization: 'capitalizedIncomeAmortization',
     CapitalizedIncomeAdjustment: 'capitalizedIncomeAdjustment',
     ContractTermination: 'contractTermination',
+    LoanWithdrawal: 'loanWithdrawal',
     CapitalizedIncomeAmortizationAdjustment: 'capitalizedIncomeAmortizationAdjustment',
     BuyDownFeeAmortization: 'buyDownFeeAmortization',
     BuyDownFeeAmortizationAdjustment: 'buyDownFeeAmortizationAdjustment'

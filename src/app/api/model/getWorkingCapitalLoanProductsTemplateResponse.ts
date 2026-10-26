@@ -54,6 +54,10 @@ export interface GetWorkingCapitalLoanProductsTemplateResponse {
     delinquencyStartTypeOptions?: Array<StringEnumOptionData>;
     fundOptions?: Array<FundData>;
     nearBreachOptions?: Array<WorkingCapitalNearBreachData>;
+    /**
+     * Payment amount calculation strategies a product can be created with
+     */
+    paymentAmountCalculationStrategyOptions?: Array<StringEnumOptionData>;
     paymentTypeOptions?: Array<PaymentTypeData>;
     penaltyOptions?: Array<ChargeData>;
     periodFrequencyTypeOptions?: Array<StringEnumOptionData>;

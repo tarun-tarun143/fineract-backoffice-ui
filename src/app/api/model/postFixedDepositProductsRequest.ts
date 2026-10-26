@@ -33,22 +33,38 @@ export interface PostFixedDepositProductsRequest {
     accountingRule?: number;
     charts?: Set<PostFixedDepositProductsCharts>;
     currencyCode?: string;
+    depositAmount?: number;
     description?: string;
     digitsAfterDecimal?: number;
+    feesReceivableAccountId?: number;
     inMultiplesOf?: number;
+    inMultiplesOfDepositTerm?: number;
+    inMultiplesOfDepositTermTypeId?: number;
+    incomeFromFeeAccountId?: number;
+    incomeFromPenaltyAccountId?: number;
     interestCalculationDaysInYearType?: number;
     interestCalculationType?: number;
     interestCompoundingPeriodType?: number;
+    interestOnSavingsAccountId?: number;
+    interestPayableAccountId?: number;
     interestPostingPeriodType?: number;
     locale?: string;
+    lockinPeriodFrequency?: number;
+    lockinPeriodFrequencyType?: number;
     maxDepositTerm?: number;
     maxDepositTermTypeId?: number;
     minDepositTerm?: number;
     minDepositTermTypeId?: number;
     name?: string;
+    penaltiesReceivableAccountId?: number;
     preClosurePenalApplicable?: boolean;
     preClosurePenalInterest?: number;
     preClosurePenalInterestOnTypeId?: number;
+    savingsControlAccountId?: number;
+    savingsReferenceAccountId?: number;
     shortName?: string;
+    taxGroupId?: number;
+    transfersInSuspenseAccountId?: number;
+    withHoldTax?: boolean;
 }
 

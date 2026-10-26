@@ -26,16 +26,16 @@
 
 
 /**
- * GetFloatingRatesResponse
+ * PostCreditReportRequest
  */
-export interface GetFloatingRatesResponse { 
-    createdBy?: string;
-    createdOn?: string;
-    id?: number;
-    isActive?: boolean;
-    isBaseLendingRate?: boolean;
-    modifiedBy?: string;
-    modifiedOn?: string;
-    name?: string;
+export interface PostCreditReportRequest { 
+    /**
+     * The national registration card number of the borrower
+     */
+    NRC?: string;
+    /**
+     * The organisation credit bureau to query
+     */
+    creditBureauID?: string;
 }
 

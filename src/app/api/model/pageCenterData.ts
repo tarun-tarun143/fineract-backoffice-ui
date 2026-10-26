@@ -23,9 +23,11 @@
  * Do not edit the class manually.
  */
 
+import { CenterData } from './centerData';
 
 
-export interface PutFinancialActivityAccountscommentsSwagger { 
-    glAccountId?: number;
+export interface PageCenterData { 
+    pageItems?: Array<CenterData>;
+    totalFilteredRecords?: number;
 }
 
