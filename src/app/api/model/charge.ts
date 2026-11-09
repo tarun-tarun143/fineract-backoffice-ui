@@ -46,12 +46,13 @@ export interface Charge {
     currencyCode?: string;
     deleted?: boolean;
     disbursementCharge?: boolean;
+    downPaymentCharge?: boolean;
     enableFreeWithdrawal?: boolean;
     enablePaymentType?: boolean;
     feeInterval?: number;
     feeOnMonthDay?: ChargeFeeOnMonthDay;
     frequencyFreeWithdrawalCharge?: number;
-    id?: number | null;
+    id?: number;
     incomeAccountId?: number;
     loanCharge?: boolean;
     maxCap?: number;
@@ -68,5 +69,6 @@ export interface Charge {
     restartFrequencyEnum?: number;
     savingsCharge?: boolean;
     taxGroup?: TaxGroup;
+    workingCapitalLoanCharge?: boolean;
 }
 

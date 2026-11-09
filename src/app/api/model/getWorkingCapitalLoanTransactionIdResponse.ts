@@ -40,6 +40,10 @@ export interface GetWorkingCapitalLoanTransactionIdResponse {
     classification?: CodeValueData;
     externalId?: string;
     /**
+     * External id of the loan this transaction belongs to
+     */
+    externalLoanId?: string;
+    /**
      * Fee charges portion from allocation
      */
     feeChargesPortion?: number;
@@ -61,5 +65,6 @@ export interface GetWorkingCapitalLoanTransactionIdResponse {
     transactionAmount?: number;
     transactionDate?: string;
     type?: LoanTransactionEnumData;
+    wcLoanId?: number;
 }
 

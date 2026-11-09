@@ -23,19 +23,48 @@
  * Do not edit the class manually.
  */
 
+import { PostFixedDepositAccountsCharges } from './postFixedDepositAccountsCharges';
 
 
 /**
  * PostFixedDepositAccountsRequest
  */
 export interface PostFixedDepositAccountsRequest { 
+    charges?: Array<PostFixedDepositAccountsCharges>;
     clientId?: number;
     dateFormat?: string;
     depositAmount?: number;
     depositPeriod?: number;
     depositPeriodFrequencyId?: number;
+    inMultiplesOfDepositTerm?: number;
+    inMultiplesOfDepositTermTypeId?: number;
+    interestCalculationDaysInYearType?: number;
+    interestCalculationType?: number;
+    interestCompoundingPeriodType?: number;
+    interestPostingPeriodType?: number;
+    /**
+     * Determines whether product level interest rate chart is overridden by custom nominal annual interest rate
+     */
+    isRateChartOverridden?: boolean;
+    linkAccountId?: number;
     locale?: string;
+    lockinPeriodFrequency?: number;
+    lockinPeriodFrequencyType?: number;
+    maturityInstructionId?: number;
+    maxDepositTerm?: number;
+    maxDepositTermTypeId?: number;
+    minDepositTerm?: number;
+    minDepositTermTypeId?: number;
+    monthDayFormat?: string;
+    /**
+     * Custom nominal annual interest rate to override product chart slabs
+     */
+    nominalAnnualInterestRate?: number;
+    preClosurePenalApplicable?: boolean;
+    preClosurePenalInterest?: number;
+    preClosurePenalInterestOnTypeId?: number;
     productId?: number;
     submittedOnDate?: string;
+    transferInterestToSavings?: boolean;
 }
 

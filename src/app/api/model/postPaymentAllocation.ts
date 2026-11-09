@@ -37,18 +37,9 @@ export namespace PostPaymentAllocation {
     export const TransactionTypeEnum = {
         Default: 'DEFAULT',
         Repayment: 'REPAYMENT',
-        DownPayment: 'DOWN_PAYMENT',
-        MerchantIssuedRefund: 'MERCHANT_ISSUED_REFUND',
         PayoutRefund: 'PAYOUT_REFUND',
         GoodwillCredit: 'GOODWILL_CREDIT',
-        ChargeRefund: 'CHARGE_REFUND',
-        ChargeAdjustment: 'CHARGE_ADJUSTMENT',
-        WaiveInterest: 'WAIVE_INTEREST',
-        ChargePayment: 'CHARGE_PAYMENT',
-        RefundForActiveLoan: 'REFUND_FOR_ACTIVE_LOAN',
-        InterestPaymentWaiver: 'INTEREST_PAYMENT_WAIVER',
-        InterestRefund: 'INTEREST_REFUND',
-        CapitalizedIncomeAdjustment: 'CAPITALIZED_INCOME_ADJUSTMENT'
+        ChargeAdjustment: 'CHARGE_ADJUSTMENT'
     } as const;
     export type TransactionTypeEnum = typeof TransactionTypeEnum[keyof typeof TransactionTypeEnum];
 }

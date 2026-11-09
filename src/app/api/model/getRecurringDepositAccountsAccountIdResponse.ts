@@ -43,10 +43,11 @@ import { GetRecurringDepositAccountsInterestPostingPeriodType } from './getRecur
  */
 export interface GetRecurringDepositAccountsAccountIdResponse { 
     accountChart?: GetRecurringDepositAccountsAccountChart;
-    accountNo?: number;
+    accountNo?: string;
     clientId?: number;
     clientName?: string;
     currency?: GetRecurringDepositAccountsCurrency;
+    depositAmount?: number;
     depositPeriod?: number;
     depositPeriodFrequency?: GetRecurringDepositAccountsDepositPeriodFrequency;
     expectedFirstDepositOnDate?: string;
@@ -57,14 +58,21 @@ export interface GetRecurringDepositAccountsAccountIdResponse {
     interestCalculationType?: GetRecurringDepositAccountsInterestCalculationType;
     interestCompoundingPeriodType?: GetRecurringDepositAccountsInterestCompoundingPeriodType;
     interestPostingPeriodType?: GetRecurringDepositAccountsInterestPostingPeriodType;
+    /**
+     * Determines whether product level interest rate chart is overridden by custom nominal annual interest rate
+     */
+    isRateChartOverridden?: boolean;
+    mandatoryRecommendedDepositAmount?: number;
+    maturityAmount?: number;
     maxDepositTerm?: number;
     maxDepositTermType?: GetRecurringDepositAccountsMaxDepositTermType;
     minDepositTerm?: number;
     minDepositTermType?: GetRecurringDepositAccountsMinDepositTermType;
+    nominalAnnualInterestRate?: number;
     preClosurePenalApplicable?: boolean;
-    recurringDepositAmount?: number;
-    recurringDepositFrequency?: number;
-    recurringDepositFrequencyType?: GetRecurringDepositAccountsRecurringDepositFrequencyType;
+    preClosurePenalInterest?: number;
+    recurringFrequency?: number;
+    recurringFrequencyType?: GetRecurringDepositAccountsRecurringDepositFrequencyType;
     savingsProductId?: number;
     savingsProductName?: string;
     status?: GetRecurringDepositAccountsStatus;

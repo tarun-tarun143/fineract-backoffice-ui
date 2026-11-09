@@ -28,6 +28,7 @@ import { GLAccountData } from './gLAccountData';
 import { TransactionProcessingStrategyData } from './transactionProcessingStrategyData';
 import { CodeValueData } from './codeValueData';
 import { LoanProductConfigurableAttributes } from './loanProductConfigurableAttributes';
+import { DatatableData } from './datatableData';
 import { AdvancedPaymentData } from './advancedPaymentData';
 import { ClassificationToGLAccountData } from './classificationToGLAccountData';
 import { FundData } from './fundData';
@@ -95,6 +96,7 @@ export interface LoanProductData {
     creditAllocationTransactionTypes?: Array<EnumOptionData>;
     currency?: CurrencyData;
     currencyOptions?: Array<CurrencyData>;
+    datatables?: Array<DatatableData>;
     daysInMonthType?: EnumOptionData;
     daysInMonthTypeOptions?: Array<EnumOptionData>;
     daysInYearCustomStrategy?: StringEnumOptionData;
@@ -117,6 +119,7 @@ export interface LoanProductData {
     equalAmortization?: boolean;
     externalId?: string;
     feeToIncomeAccountMappings?: Array<ChargeToGLAccountMapper>;
+    firstRepaymentDayOfMonth?: number;
     fixedLength?: number;
     fixedPrincipalPercentagePerInstallment?: number;
     floatingInterestRateCalculationAllowed?: boolean;
@@ -176,6 +179,8 @@ export interface LoanProductData {
     minPrincipal?: number;
     minimumDaysBetweenDisbursalAndFirstRepayment?: number;
     minimumGap?: number;
+    monthEndDueDateStrategy?: StringEnumOptionData;
+    monthEndDueDateStrategyOptions?: Array<StringEnumOptionData>;
     multiDisburseLoan?: boolean;
     name?: string;
     numberOfRepaymentVariationsForBorrowerCycle?: Array<LoanProductBorrowerCycleVariationData>;
@@ -205,6 +210,7 @@ export interface LoanProductData {
     repaymentStartDateType?: EnumOptionData;
     repaymentStartDateTypeOptions?: Array<EnumOptionData>;
     rescheduleStrategyTypeOptions?: Array<EnumOptionData>;
+    secondRepaymentDayOfMonth?: number;
     shortName?: string;
     startDate?: string;
     status?: string;

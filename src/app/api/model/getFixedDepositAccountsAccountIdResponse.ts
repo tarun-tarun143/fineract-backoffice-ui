@@ -42,7 +42,7 @@ import { GetFixedDepositAccountsTimeline } from './getFixedDepositAccountsTimeli
  */
 export interface GetFixedDepositAccountsAccountIdResponse { 
     accountChart?: GetFixedDepositAccountsAccountChart;
-    accountNo?: number;
+    accountNo?: string;
     clientId?: number;
     clientName?: string;
     currency?: GetFixedDepositAccountsAccountIdCurrency;
@@ -57,13 +57,19 @@ export interface GetFixedDepositAccountsAccountIdResponse {
     interestCompoundingPeriodType?: GetFixedDepositAccountsInterestCompoundingPeriodType;
     interestFreePeriodApplicable?: boolean;
     interestPostingPeriodType?: GetFixedDepositAccountsInterestPostingPeriodType;
+    /**
+     * Determines whether product level interest rate chart is overridden by custom nominal annual interest rate
+     */
+    isRateChartOverridden?: boolean;
     maturityAmount?: number;
     maturityDate?: string;
     maxDepositTerm?: number;
     maxDepositTermType?: GetFixedDepositAccountsMaxDepositTermType;
     minDepositTerm?: number;
     minDepositTermType?: GetFixedDepositAccountsMinDepositTermType;
+    nominalAnnualInterestRate?: number;
     preClosurePenalApplicable?: boolean;
+    preClosurePenalInterest?: number;
     savingsProductId?: number;
     savingsProductName?: string;
     status?: GetFixedDepositAccountsStatus;

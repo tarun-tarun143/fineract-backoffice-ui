@@ -74,6 +74,7 @@ export interface PostLoanProductsRequest {
     daysInMonthType?: number;
     daysInYearCustomStrategy?: string;
     daysInYearType?: number;
+    defaultDifferentialLendingRate?: number;
     deferredIncomeLiabilityAccountId?: number;
     delinquencyBucketId?: number;
     description?: string;
@@ -90,8 +91,16 @@ export interface PostLoanProductsRequest {
     enableInstallmentLevelDelinquency?: boolean;
     externalId?: string;
     feeToIncomeAccountMappings?: Array<LoanProductChargeToGLAccountMapper>;
+    /**
+     * First due day of the month of a semi-monthly product, between 1 and 27.
+     */
+    firstRepaymentDayOfMonth?: number;
     fixedLength?: number;
     fixedPrincipalPercentagePerInstallment?: number;
+    /**
+     * The floating rate the product follows, when isLinkedToFloatingInterestRates is true
+     */
+    floatingRatesId?: number;
     fundId?: number;
     fundSourceAccountId?: number;
     goodwillCreditAccountId?: number;
@@ -116,6 +125,7 @@ export interface PostLoanProductsRequest {
     installmentAmountInMultiplesOf?: number;
     interestCalculationPeriodType?: number;
     interestOnLoanAccountId?: number;
+    interestRateDifferential?: number;
     interestRateFrequencyType?: number;
     interestRatePerPeriod?: number;
     interestRateVariationsForBorrowerCycle?: Array<number>;
@@ -125,21 +135,45 @@ export interface PostLoanProductsRequest {
     isArrearsBasedOnOriginalSchedule?: boolean;
     isCompoundingToBePostedAsTransaction?: boolean;
     isEqualAmortization?: boolean;
+    isFloatingInterestRateCalculationAllowed?: boolean;
     isInterestRecalculationEnabled?: boolean;
     isLinkedToFloatingInterestRates?: boolean;
     loanPortfolioAccountId?: number;
     loanScheduleProcessingType?: string;
     loanScheduleType?: string;
     locale?: string;
+    /**
+     * Percentage of the loan that guarantors must cover
+     */
+    mandatoryGuarantee?: number;
+    maxDifferentialLendingRate?: number;
     maxInterestRatePerPeriod?: number;
     maxNumberOfRepayments?: number;
     maxPrincipal?: number;
     maxTrancheCount?: number;
+    /**
+     * Maximum days between two installments of a variable installment loan
+     */
+    maximumGap?: number;
     merchantBuyDownFee?: boolean;
+    minDifferentialLendingRate?: number;
     minInterestRatePerPeriod?: number;
     minNumberOfRepayments?: number;
     minPrincipal?: number;
     minimumDaysBetweenDisbursalAndFirstRepayment?: number;
+    /**
+     * Minimum days between two installments of a variable installment loan
+     */
+    minimumGap?: number;
+    /**
+     * Minimum percentage of the guarantee an external guarantor must provide
+     */
+    minimumGuaranteeFromGuarantor?: number;
+    /**
+     * Minimum percentage of the guarantee the borrower must provide from own funds
+     */
+    minimumGuaranteeFromOwnFunds?: number;
+    monthEndDueDateStrategy?: PostLoanProductsRequest.MonthEndDueDateStrategyEnum;
     multiDisburseLoan?: boolean;
     name?: string;
     numberOfRepaymentVariationsForBorrowerCycle?: Array<number>;
@@ -173,9 +207,17 @@ export interface PostLoanProductsRequest {
     repaymentFrequencyType?: number;
     repaymentStartDateType?: number;
     rescheduleStrategyMethod?: number;
+    /**
+     * Second due day of the month of a semi-monthly product, between 2 and 31 and greater than the first one. A day the month lacks falls on its last day, so 31 is the last day of every month.
+     */
+    secondRepaymentDayOfMonth?: number;
     shortName?: string;
     startDate?: string;
     supportedInterestRefundTypes?: Array<string>;
+    /**
+     * Force the actual disbursement date to match the expected disbursement date
+     */
+    syncExpectedWithDisbursementDate?: boolean;
     transactionProcessingStrategyCode?: string;
     transfersInSuspenseAccountId?: number;
     useBorrowerCycle?: boolean;
@@ -209,6 +251,11 @@ export namespace PostLoanProductsRequest {
         Interest: 'INTEREST'
     } as const;
     export type CapitalizedIncomeTypeEnum = typeof CapitalizedIncomeTypeEnum[keyof typeof CapitalizedIncomeTypeEnum];
+    export const MonthEndDueDateStrategyEnum = {
+        LastDayOfMonth: 'LAST_DAY_OF_MONTH',
+        FirstDayOfNextMonth: 'FIRST_DAY_OF_NEXT_MONTH'
+    } as const;
+    export type MonthEndDueDateStrategyEnum = typeof MonthEndDueDateStrategyEnum[keyof typeof MonthEndDueDateStrategyEnum];
 }
 
 

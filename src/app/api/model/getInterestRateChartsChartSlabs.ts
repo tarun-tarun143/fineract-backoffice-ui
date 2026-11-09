@@ -33,5 +33,6 @@ export interface GetInterestRateChartsChartSlabs {
     fromPeriod?: number;
     id?: number;
     periodTypes?: GetInterestRateChartsTemplatePeriodTypes;
+    toPeriod?: number;
 }
 

@@ -108,6 +108,8 @@ export interface GetLoanProductsTemplateResponse {
     loanScheduleProcessingTypeOptions?: Array<EnumOptionData>;
     loanScheduleTypeOptions?: Array<EnumOptionData>;
     merchantBuyDownFee?: boolean;
+    monthEndDueDateStrategy?: StringEnumOptionData;
+    monthEndDueDateStrategyOptions?: Array<StringEnumOptionData>;
     numberOfRepaymentVariationsForBorrowerCycle?: Array<number>;
     paymentTypeOptions?: Set<GetLoanProductsPaymentTypeOptions>;
     preClosureInterestCalculationStrategyOptions?: Set<GetLoanProductsPreClosureInterestCalculationStrategy>;

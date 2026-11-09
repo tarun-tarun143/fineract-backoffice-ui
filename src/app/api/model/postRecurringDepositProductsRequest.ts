@@ -32,16 +32,26 @@ import { PostRecurringDepositProductsCharts } from './postRecurringDepositProduc
 export interface PostRecurringDepositProductsRequest { 
     accountingRule?: number;
     charts?: Set<PostRecurringDepositProductsCharts>;
+    closeDate?: string;
     currencyCode?: string;
+    dateFormat?: string;
     depositAmount?: number;
     description?: string;
     digitsAfterDecimal?: number;
     inMultiplesOf?: number;
+    inMultiplesOfDepositTerm?: number;
+    inMultiplesOfDepositTermTypeId?: number;
+    incomeFromFeeAccountId?: number;
+    incomeFromPenaltyAccountId?: number;
     interestCalculationDaysInYearType?: number;
     interestCalculationType?: number;
     interestCompoundingPeriodType?: number;
+    interestOnSavingsAccountId?: number;
     interestPostingPeriodType?: number;
+    isMandatoryDeposit?: boolean;
     locale?: string;
+    lockinPeriodFrequency?: number;
+    lockinPeriodFrequencyType?: number;
     maxDepositAmount?: number;
     maxDepositTerm?: number;
     maxDepositTermTypeId?: number;
@@ -52,6 +62,14 @@ export interface PostRecurringDepositProductsRequest {
     preClosurePenalApplicable?: boolean;
     preClosurePenalInterest?: number;
     preClosurePenalInterestOnTypeId?: number;
+    recurringFrequency?: number;
+    recurringFrequencyType?: number;
+    savingsControlAccountId?: number;
+    savingsReferenceAccountId?: number;
     shortName?: string;
+    startDate?: string;
+    taxGroupId?: number;
+    transfersInSuspenseAccountId?: number;
+    withHoldTax?: boolean;
 }
 
