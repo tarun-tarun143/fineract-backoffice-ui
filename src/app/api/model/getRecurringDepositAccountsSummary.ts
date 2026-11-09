@@ -29,5 +29,8 @@ import { GetRecurringDepositAccountsCurrency } from './getRecurringDepositAccoun
 export interface GetRecurringDepositAccountsSummary { 
     accountBalance?: number;
     currency?: GetRecurringDepositAccountsCurrency;
+    totalDeposits?: number;
+    totalInterestPosted?: number;
+    totalWithholdTax?: number;
 }
 

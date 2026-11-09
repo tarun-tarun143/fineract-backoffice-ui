@@ -34,7 +34,7 @@ export interface LoanProductConfigurableAttributes {
     graceOnArrearsAgingBoolean?: boolean;
     graceOnPrincipalAndInterestPayment?: boolean;
     graceOnPrincipalAndInterestPaymentBoolean?: boolean;
-    id?: number | null;
+    id?: number;
     inArrearsTolerance?: boolean;
     interestCalcPeriodBoolean?: boolean;
     interestCalculationPeriodType?: boolean;

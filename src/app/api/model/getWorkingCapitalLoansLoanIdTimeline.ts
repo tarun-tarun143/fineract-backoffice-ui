@@ -50,6 +50,10 @@ export interface GetWorkingCapitalLoansLoanIdTimeline {
      * Expected maturity date
      */
     expectedMaturityDate?: string;
+    /**
+     * Overpaid date
+     */
+    overpaidOnDate?: string;
     rejectedByFirstname?: string;
     rejectedByLastname?: string;
     rejectedByUsername?: string;

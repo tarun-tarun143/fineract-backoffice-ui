@@ -32,6 +32,7 @@ export interface GetRecurringDepositAccountsStatus {
     code?: string;
     description?: string;
     id?: number;
+    matured?: boolean;
     prematureClosed?: boolean;
     rejected?: boolean;
     submittedAndPendingApproval?: boolean;

@@ -51,6 +51,7 @@ export interface LoanProductRelatedDetail {
     enableDownPayment?: boolean;
     enableIncomeCapitalization?: boolean;
     equalAmortization?: boolean;
+    firstRepaymentDayOfMonth?: number;
     fixedLength?: number;
     graceOnArrearsAgeing?: number;
     graceOnInterestCharged?: number;
@@ -66,12 +67,14 @@ export interface LoanProductRelatedDetail {
     loanScheduleProcessingType?: LoanProductRelatedDetail.LoanScheduleProcessingTypeEnum;
     loanScheduleType?: LoanProductRelatedDetail.LoanScheduleTypeEnum;
     merchantBuyDownFee?: boolean;
+    monthEndDueDateStrategy?: LoanProductRelatedDetail.MonthEndDueDateStrategyEnum;
     nominalInterestRatePerPeriod?: number;
     numberOfRepayments?: number;
     principal?: Money;
     recurringMoratoriumOnPrincipalPeriods?: number;
     repayEvery?: number;
     repaymentPeriodFrequencyType?: LoanProductRelatedDetail.RepaymentPeriodFrequencyTypeEnum;
+    secondRepaymentDayOfMonth?: number;
     supportedInterestRefundTypes?: Array<LoanProductRelatedDetail.SupportedInterestRefundTypesEnum>;
 }
 export namespace LoanProductRelatedDetail {
@@ -136,7 +139,8 @@ export namespace LoanProductRelatedDetail {
         Months: 'MONTHS',
         Years: 'YEARS',
         WholeTerm: 'WHOLE_TERM',
-        Invalid: 'INVALID'
+        Invalid: 'INVALID',
+        SemiMonthly: 'SEMI_MONTHLY'
     } as const;
     export type InterestPeriodFrequencyTypeEnum = typeof InterestPeriodFrequencyTypeEnum[keyof typeof InterestPeriodFrequencyTypeEnum];
     export const LoanScheduleProcessingTypeEnum = {
@@ -149,13 +153,19 @@ export namespace LoanProductRelatedDetail {
         Progressive: 'PROGRESSIVE'
     } as const;
     export type LoanScheduleTypeEnum = typeof LoanScheduleTypeEnum[keyof typeof LoanScheduleTypeEnum];
+    export const MonthEndDueDateStrategyEnum = {
+        LastDayOfMonth: 'LAST_DAY_OF_MONTH',
+        FirstDayOfNextMonth: 'FIRST_DAY_OF_NEXT_MONTH'
+    } as const;
+    export type MonthEndDueDateStrategyEnum = typeof MonthEndDueDateStrategyEnum[keyof typeof MonthEndDueDateStrategyEnum];
     export const RepaymentPeriodFrequencyTypeEnum = {
         Days: 'DAYS',
         Weeks: 'WEEKS',
         Months: 'MONTHS',
         Years: 'YEARS',
         WholeTerm: 'WHOLE_TERM',
-        Invalid: 'INVALID'
+        Invalid: 'INVALID',
+        SemiMonthly: 'SEMI_MONTHLY'
     } as const;
     export type RepaymentPeriodFrequencyTypeEnum = typeof RepaymentPeriodFrequencyTypeEnum[keyof typeof RepaymentPeriodFrequencyTypeEnum];
     export const SupportedInterestRefundTypesEnum = {

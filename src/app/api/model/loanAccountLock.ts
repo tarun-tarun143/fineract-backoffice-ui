@@ -27,7 +27,7 @@
 
 export interface LoanAccountLock { 
     error?: string;
-    id?: number | null;
+    id?: number;
     loanId?: number;
     lockOwner?: LoanAccountLock.LockOwnerEnum;
     lockPlacedOn?: string;

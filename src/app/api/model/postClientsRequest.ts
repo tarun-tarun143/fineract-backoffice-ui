@@ -25,6 +25,7 @@
 
 import { PostClientsDatatable } from './postClientsDatatable';
 import { ClientAddressRequest } from './clientAddressRequest';
+import { PostClientsNonPersonDetails } from './postClientsNonPersonDetails';
 
 
 /**
@@ -37,6 +38,11 @@ export interface PostClientsRequest {
      * Address requests
      */
     address?: Array<ClientAddressRequest>;
+    clientNonPersonDetails?: PostClientsNonPersonDetails;
+    /**
+     * A code value of the ClientType code
+     */
+    clientTypeId?: number;
     /**
      * List of PostClientsDatatable
      */
@@ -54,6 +60,10 @@ export interface PostClientsRequest {
     middlename?: string;
     mobileNo?: string;
     officeId?: number;
+    /**
+     * Savings product of the account opened automatically when the client is activated
+     */
+    savingsProductId?: number;
     submittedOnDate?: string;
 }
 

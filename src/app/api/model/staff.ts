@@ -32,7 +32,7 @@ export interface Staff {
     emailAddress?: string;
     externalId?: string;
     firstname?: string;
-    id?: number | null;
+    id?: number;
     imageId?: number;
     joiningDate?: string;
     lastname?: string;

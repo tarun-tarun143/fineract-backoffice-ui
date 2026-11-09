@@ -34,7 +34,7 @@ export interface Scorecard {
     appUser?: AppUser;
     client?: Client;
     createdOn?: string;
-    id?: number | null;
+    id?: number;
     'new'?: boolean;
     question?: Question;
     response?: Response;

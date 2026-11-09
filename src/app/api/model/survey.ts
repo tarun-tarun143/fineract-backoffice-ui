@@ -31,7 +31,7 @@ export interface Survey {
     components?: Array<Component>;
     countryCode?: string;
     description?: string;
-    id?: number | null;
+    id?: number;
     key?: string;
     name?: string;
     'new'?: boolean;

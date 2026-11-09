@@ -32,6 +32,8 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { Observable }                                        from 'rxjs';
 import { OpenApiHttpParams, QueryParamStyle } from '../query.params';
 
+// @ts-ignore
+import { GetSavingsAccountsSavingsAccountIdOnHoldTransactionsResponse } from '../model/getSavingsAccountsSavingsAccountIdOnHoldTransactionsResponse';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -62,9 +64,9 @@ export class DepositAccountOnHoldFundTransactionsService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<GetSavingsAccountsSavingsAccountIdOnHoldTransactionsResponse>;
+    public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<GetSavingsAccountsSavingsAccountIdOnHoldTransactionsResponse>>;
+    public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<GetSavingsAccountsSavingsAccountIdOnHoldTransactionsResponse>>;
     public getSavingsaccountsSavingsIdOnholdtransactions(savingsId: number, guarantorFundingId?: number, offset?: number, limit?: number, orderBy?: string, sortOrder?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (savingsId === null || savingsId === undefined) {
             throw new Error('Required parameter savingsId was null or undefined when calling getSavingsaccountsSavingsIdOnholdtransactions.');
@@ -150,7 +152,7 @@ export class DepositAccountOnHoldFundTransactionsService extends BaseService {
 
         let localVarPath = `/v1/savingsaccounts/${this.configuration.encodeParam({name: "savingsId", value: savingsId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/onholdtransactions`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<GetSavingsAccountsSavingsAccountIdOnHoldTransactionsResponse>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters.toHttpParams(),

@@ -28,7 +28,7 @@
 export interface GroupLevel { 
     center?: boolean;
     group?: boolean;
-    id?: number | null;
+    id?: number;
     levelName?: string;
     'new'?: boolean;
     parentId?: number;
