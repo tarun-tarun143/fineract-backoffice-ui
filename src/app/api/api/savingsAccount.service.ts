@@ -43,6 +43,10 @@ import { PostSavingsAccountsAccountIdRequest } from '../model/postSavingsAccount
 // @ts-ignore
 import { PostSavingsAccountsAccountIdResponse } from '../model/postSavingsAccountsAccountIdResponse';
 // @ts-ignore
+import { PostSavingsAccountsGsimRequest } from '../model/postSavingsAccountsGsimRequest';
+// @ts-ignore
+import { PostSavingsAccountsGsimResponse } from '../model/postSavingsAccountsGsimResponse';
+// @ts-ignore
 import { PostSavingsAccountsRequest } from '../model/postSavingsAccountsRequest';
 // @ts-ignore
 import { PostSavingsAccountsResponse } from '../model/postSavingsAccountsResponse';
@@ -50,6 +54,8 @@ import { PostSavingsAccountsResponse } from '../model/postSavingsAccountsRespons
 import { PutSavingsAccountsAccountIdRequest } from '../model/putSavingsAccountsAccountIdRequest';
 // @ts-ignore
 import { PutSavingsAccountsAccountIdResponse } from '../model/putSavingsAccountsAccountIdResponse';
+// @ts-ignore
+import { PutSavingsAccountsGsimRequest } from '../model/putSavingsAccountsGsimRequest';
 // @ts-ignore
 import { SavingsAccountData } from '../model/savingsAccountData';
 
@@ -1023,16 +1029,20 @@ export class SavingsAccountService extends BaseService {
     }
 
     /**
+     * Submit a group savings (GSIM) application
      * @endpoint post /v1/savingsaccounts/gsim
-     * @param body 
+     * @param postSavingsAccountsGsimRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postSavingsaccountsGsim(body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public postSavingsaccountsGsim(body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public postSavingsaccountsGsim(body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public postSavingsaccountsGsim(body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public postSavingsaccountsGsim(postSavingsAccountsGsimRequest: PostSavingsAccountsGsimRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostSavingsAccountsGsimResponse>;
+    public postSavingsaccountsGsim(postSavingsAccountsGsimRequest: PostSavingsAccountsGsimRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostSavingsAccountsGsimResponse>>;
+    public postSavingsaccountsGsim(postSavingsAccountsGsimRequest: PostSavingsAccountsGsimRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostSavingsAccountsGsimResponse>>;
+    public postSavingsaccountsGsim(postSavingsAccountsGsimRequest: PostSavingsAccountsGsimRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (postSavingsAccountsGsimRequest === null || postSavingsAccountsGsimRequest === undefined) {
+            throw new Error('Required parameter postSavingsAccountsGsimRequest was null or undefined when calling postSavingsaccountsGsim.');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -1076,10 +1086,10 @@ export class SavingsAccountService extends BaseService {
 
         let localVarPath = `/v1/savingsaccounts/gsim`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PostSavingsAccountsGsimResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: postSavingsAccountsGsimRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -1091,20 +1101,25 @@ export class SavingsAccountService extends BaseService {
     }
 
     /**
+     * Act on a group savings (GSIM) application
+     * Commands: reject, withdrawnByApplicant, approve, undoapproval, activate, calculateInterest, postInterest, close
      * @endpoint post /v1/savingsaccounts/gsimcommands/{parentAccountId}
      * @param parentAccountId 
+     * @param postSavingsAccountsAccountIdRequest 
      * @param command 
-     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, command?: string, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, command?: string, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, command?: string, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, command?: string, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, postSavingsAccountsAccountIdRequest: PostSavingsAccountsAccountIdRequest, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostSavingsAccountsAccountIdResponse>;
+    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, postSavingsAccountsAccountIdRequest: PostSavingsAccountsAccountIdRequest, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostSavingsAccountsAccountIdResponse>>;
+    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, postSavingsAccountsAccountIdRequest: PostSavingsAccountsAccountIdRequest, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostSavingsAccountsAccountIdResponse>>;
+    public postSavingsaccountsGsimcommandsParentAccountId(parentAccountId: number, postSavingsAccountsAccountIdRequest: PostSavingsAccountsAccountIdRequest, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (parentAccountId === null || parentAccountId === undefined) {
             throw new Error('Required parameter parentAccountId was null or undefined when calling postSavingsaccountsGsimcommandsParentAccountId.');
+        }
+        if (postSavingsAccountsAccountIdRequest === null || postSavingsAccountsAccountIdRequest === undefined) {
+            throw new Error('Required parameter postSavingsAccountsAccountIdRequest was null or undefined when calling postSavingsaccountsGsimcommandsParentAccountId.');
         }
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
@@ -1160,10 +1175,10 @@ export class SavingsAccountService extends BaseService {
 
         let localVarPath = `/v1/savingsaccounts/gsimcommands/${this.configuration.encodeParam({name: "parentAccountId", value: parentAccountId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PostSavingsAccountsAccountIdResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: postSavingsAccountsAccountIdRequest,
                 params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
@@ -1534,19 +1549,23 @@ export class SavingsAccountService extends BaseService {
     }
 
     /**
+     * Update a group savings (GSIM) application
      * @endpoint put /v1/savingsaccounts/gsim/{parentAccountId}
      * @param parentAccountId 
-     * @param body 
+     * @param putSavingsAccountsGsimRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, putSavingsAccountsGsimRequest: PutSavingsAccountsGsimRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostSavingsAccountsGsimResponse>;
+    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, putSavingsAccountsGsimRequest: PutSavingsAccountsGsimRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostSavingsAccountsGsimResponse>>;
+    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, putSavingsAccountsGsimRequest: PutSavingsAccountsGsimRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostSavingsAccountsGsimResponse>>;
+    public putSavingsaccountsGsimParentAccountId(parentAccountId: number, putSavingsAccountsGsimRequest: PutSavingsAccountsGsimRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (parentAccountId === null || parentAccountId === undefined) {
             throw new Error('Required parameter parentAccountId was null or undefined when calling putSavingsaccountsGsimParentAccountId.');
+        }
+        if (putSavingsAccountsGsimRequest === null || putSavingsAccountsGsimRequest === undefined) {
+            throw new Error('Required parameter putSavingsAccountsGsimRequest was null or undefined when calling putSavingsaccountsGsimParentAccountId.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -1591,10 +1610,10 @@ export class SavingsAccountService extends BaseService {
 
         let localVarPath = `/v1/savingsaccounts/gsim/${this.configuration.encodeParam({name: "parentAccountId", value: parentAccountId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('put', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PostSavingsAccountsGsimResponse>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: putSavingsAccountsGsimRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

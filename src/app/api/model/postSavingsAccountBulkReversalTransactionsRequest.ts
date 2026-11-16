@@ -29,7 +29,13 @@
  * PostSavingsAccountBulkReversalTransactionsRequest
  */
 export interface PostSavingsAccountBulkReversalTransactionsRequest { 
+    dateFormat?: string;
     externalId?: string;
     isBulk?: string;
+    locale?: string;
+    paymentTypeId?: number;
+    transactionAmount?: number;
+    transactionDate?: string;
+    transactionTime?: string;
 }
 

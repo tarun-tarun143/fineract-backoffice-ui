@@ -34,6 +34,15 @@ export interface PostSavingsAccountsAccountIdRequest {
     closedOnDate?: string;
     dateFormat?: string;
     locale?: string;
+    note?: string;
+    /**
+     * command=close
+     */
+    postInterestValidationOnClosure?: boolean;
+    /**
+     * command=block, blockCredit, blockDebit
+     */
+    reasonForBlock?: string;
     rejectedOnDate?: string;
     withdrawBalance?: boolean;
     withdrawnOnDate?: string;

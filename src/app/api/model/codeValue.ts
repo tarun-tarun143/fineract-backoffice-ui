@@ -30,7 +30,7 @@ export interface CodeValue {
     active?: boolean;
     code?: Code;
     description?: string;
-    id?: number | null;
+    id?: number;
     label?: string;
     mandatory?: boolean;
     'new'?: boolean;

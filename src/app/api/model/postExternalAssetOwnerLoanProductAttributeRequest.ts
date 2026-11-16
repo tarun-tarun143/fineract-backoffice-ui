@@ -29,7 +29,13 @@
  * PostExternalAssetOwnerLoanProductAttributeRequest
  */
 export interface PostExternalAssetOwnerLoanProductAttributeRequest { 
+    /**
+     * Attribute key, one of the keys returned by the loan product attributes template endpoint, e.g. SETTLEMENT_MODEL or EXCLUDED_TRANSACTION_TYPES.
+     */
     attributeKey?: string;
+    /**
+     * Attribute value. For multi value attributes such as EXCLUDED_TRANSACTION_TYPES this is a comma separated list, e.g. BUY_DOWN_FEE,BUY_DOWN_FEE_ADJUSTMENT.
+     */
     attributeValue?: string;
 }
 
