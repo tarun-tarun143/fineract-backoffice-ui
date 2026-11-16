@@ -28,5 +28,6 @@
 export interface PutFixedDepositAccountsChanges { 
     depositAmount?: number;
     locale?: string;
+    submittedOnDate?: string;
 }
 

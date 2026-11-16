@@ -28,7 +28,7 @@ import { Survey } from './survey';
 
 export interface Component { 
     description?: string;
-    id?: number | null;
+    id?: number;
     key?: string;
     'new'?: boolean;
     sequenceNo?: number;

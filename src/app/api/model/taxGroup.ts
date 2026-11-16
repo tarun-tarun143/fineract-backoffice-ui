@@ -29,7 +29,7 @@ import { TaxGroupMappings } from './taxGroupMappings';
 export interface TaxGroup { 
     createdBy?: number;
     createdDate?: string;
-    id?: number | null;
+    id?: number;
     lastModifiedBy?: number;
     lastModifiedDate?: string;
     name?: string;

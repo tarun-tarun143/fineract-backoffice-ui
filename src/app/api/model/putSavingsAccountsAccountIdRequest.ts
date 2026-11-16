@@ -31,9 +31,19 @@
 export interface PutSavingsAccountsAccountIdRequest { 
     clientId?: number;
     dateFormat?: string;
+    externalId?: string;
+    /**
+     * Mandatory for a group savings account, in place of clientId
+     */
+    groupId?: number;
     locale?: string;
     nominalAnnualInterestRate?: number;
     productId?: number;
     submittedOnDate?: string;
+    /**
+     * command=updateWithHoldTax
+     */
+    withHoldTax?: boolean;
+    withdrawalFeeForTransfers?: boolean;
 }
 

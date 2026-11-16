@@ -37,13 +37,17 @@ import { AdvancedPaymentData } from '../model/advancedPaymentData';
 // @ts-ignore
 import { CampaignPreviewData } from '../model/campaignPreviewData';
 // @ts-ignore
+import { ClientAuditFieldsData } from '../model/clientAuditFieldsData';
+// @ts-ignore
 import { CommandProcessingResult } from '../model/commandProcessingResult';
 // @ts-ignore
-import { CommandWrapper } from '../model/commandWrapper';
+import { EmailData } from '../model/emailData';
 // @ts-ignore
 import { ExternalEventResponse } from '../model/externalEventResponse';
 // @ts-ignore
 import { FormDataBodyPart } from '../model/formDataBodyPart';
+// @ts-ignore
+import { GetTwoFactorConfigurationResponse } from '../model/getTwoFactorConfigurationResponse';
 // @ts-ignore
 import { ImageCreateResponse } from '../model/imageCreateResponse';
 // @ts-ignore
@@ -51,9 +55,23 @@ import { ImageDeleteResponse } from '../model/imageDeleteResponse';
 // @ts-ignore
 import { LoanAuditFieldsData } from '../model/loanAuditFieldsData';
 // @ts-ignore
+import { PostEmailRequest } from '../model/postEmailRequest';
+// @ts-ignore
+import { PutEmailRequest } from '../model/putEmailRequest';
+// @ts-ignore
+import { PutTwoFactorConfigurationRequest } from '../model/putTwoFactorConfigurationRequest';
+// @ts-ignore
+import { PutTwoFactorConfigurationResponse } from '../model/putTwoFactorConfigurationResponse';
+// @ts-ignore
+import { SmsCampaignCreationDto } from '../model/smsCampaignCreationDto';
+// @ts-ignore
 import { SmsCampaignData } from '../model/smsCampaignData';
 // @ts-ignore
+import { SmsCampaignHandlerDto } from '../model/smsCampaignHandlerDto';
+// @ts-ignore
 import { SmsCampaignPreviewDto } from '../model/smsCampaignPreviewDto';
+// @ts-ignore
+import { SmsCampaignUpdateDto } from '../model/smsCampaignUpdateDto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -141,9 +159,9 @@ export class DefaultService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public deleteEmailResourceId(resourceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public deleteEmailResourceId(resourceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public deleteEmailResourceId(resourceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public deleteEmailResourceId(resourceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
+    public deleteEmailResourceId(resourceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
+    public deleteEmailResourceId(resourceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
     public deleteEmailResourceId(resourceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (resourceId === null || resourceId === undefined) {
             throw new Error('Required parameter resourceId was null or undefined when calling deleteEmailResourceId.');
@@ -182,7 +200,7 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/email/${this.configuration.encodeParam({name: "resourceId", value: resourceId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('delete', `${basePath}${localVarPath}`,
+        return this.httpClient.request<CommandProcessingResult>('delete', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -1278,9 +1296,9 @@ export class DefaultService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getEmailResourceId(resourceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public getEmailResourceId(resourceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public getEmailResourceId(resourceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public getEmailResourceId(resourceId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<EmailData>;
+    public getEmailResourceId(resourceId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<EmailData>>;
+    public getEmailResourceId(resourceId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<EmailData>>;
     public getEmailResourceId(resourceId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (resourceId === null || resourceId === undefined) {
             throw new Error('Required parameter resourceId was null or undefined when calling getEmailResourceId.');
@@ -1319,7 +1337,7 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/email/${this.configuration.encodeParam({name: "resourceId", value: resourceId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<EmailData>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -1544,9 +1562,9 @@ export class DefaultService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getInternalClientClientIdAudit(clientId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public getInternalClientClientIdAudit(clientId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public getInternalClientClientIdAudit(clientId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public getInternalClientClientIdAudit(clientId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientAuditFieldsData>;
+    public getInternalClientClientIdAudit(clientId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientAuditFieldsData>>;
+    public getInternalClientClientIdAudit(clientId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientAuditFieldsData>>;
     public getInternalClientClientIdAudit(clientId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (clientId === null || clientId === undefined) {
             throw new Error('Required parameter clientId was null or undefined when calling getInternalClientClientIdAudit.');
@@ -1585,7 +1603,7 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/internal/client/${this.configuration.encodeParam({name: "clientId", value: clientId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/audit`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<ClientAuditFieldsData>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -2408,9 +2426,9 @@ export class DefaultService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getTwofactorConfigure(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public getTwofactorConfigure(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public getTwofactorConfigure(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public getTwofactorConfigure(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<GetTwoFactorConfigurationResponse>;
+    public getTwofactorConfigure(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<GetTwoFactorConfigurationResponse>>;
+    public getTwofactorConfigure(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<GetTwoFactorConfigurationResponse>>;
     public getTwofactorConfigure(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
@@ -2446,7 +2464,7 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/twofactor/configure`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<GetTwoFactorConfigurationResponse>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,
@@ -2462,15 +2480,18 @@ export class DefaultService extends BaseService {
     /**
      * Create an email message
      * @endpoint post /v1/email
-     * @param body 
+     * @param postEmailRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postEmail(body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public postEmail(body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public postEmail(body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public postEmail(body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public postEmail(postEmailRequest: PostEmailRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
+    public postEmail(postEmailRequest: PostEmailRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
+    public postEmail(postEmailRequest: PostEmailRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
+    public postEmail(postEmailRequest: PostEmailRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (postEmailRequest === null || postEmailRequest === undefined) {
+            throw new Error('Required parameter postEmailRequest was null or undefined when calling postEmail.');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -2514,10 +2535,10 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/email`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('post', `${basePath}${localVarPath}`,
+        return this.httpClient.request<CommandProcessingResult>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: postEmailRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -2914,17 +2935,17 @@ export class DefaultService extends BaseService {
      * Create a SMS Campaign
      * Mandatory Fields campaignName, campaignType, triggerType, providerId, runReportId, message  Mandatory Fields for Cash based on selected report id paramValue in json format
      * @endpoint post /v1/smscampaigns
-     * @param commandWrapper 
+     * @param smsCampaignCreationDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postSmscampaigns(commandWrapper: CommandWrapper, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
-    public postSmscampaigns(commandWrapper: CommandWrapper, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
-    public postSmscampaigns(commandWrapper: CommandWrapper, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
-    public postSmscampaigns(commandWrapper: CommandWrapper, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (commandWrapper === null || commandWrapper === undefined) {
-            throw new Error('Required parameter commandWrapper was null or undefined when calling postSmscampaigns.');
+    public postSmscampaigns(smsCampaignCreationDto: SmsCampaignCreationDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
+    public postSmscampaigns(smsCampaignCreationDto: SmsCampaignCreationDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
+    public postSmscampaigns(smsCampaignCreationDto: SmsCampaignCreationDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
+    public postSmscampaigns(smsCampaignCreationDto: SmsCampaignCreationDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (smsCampaignCreationDto === null || smsCampaignCreationDto === undefined) {
+            throw new Error('Required parameter smsCampaignCreationDto was null or undefined when calling postSmscampaigns.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -2972,7 +2993,7 @@ export class DefaultService extends BaseService {
         return this.httpClient.request<CommandProcessingResult>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: commandWrapper,
+                body: smsCampaignCreationDto,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -2988,17 +3009,21 @@ export class DefaultService extends BaseService {
      * Activates | Deactivates | Reactivates
      * @endpoint post /v1/smscampaigns/{campaignId}
      * @param campaignId 
+     * @param smsCampaignHandlerDto 
      * @param command 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postSmscampaignsCampaignId(campaignId: number, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
-    public postSmscampaignsCampaignId(campaignId: number, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
-    public postSmscampaignsCampaignId(campaignId: number, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
-    public postSmscampaignsCampaignId(campaignId: number, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public postSmscampaignsCampaignId(campaignId: number, smsCampaignHandlerDto: SmsCampaignHandlerDto, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
+    public postSmscampaignsCampaignId(campaignId: number, smsCampaignHandlerDto: SmsCampaignHandlerDto, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
+    public postSmscampaignsCampaignId(campaignId: number, smsCampaignHandlerDto: SmsCampaignHandlerDto, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
+    public postSmscampaignsCampaignId(campaignId: number, smsCampaignHandlerDto: SmsCampaignHandlerDto, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (campaignId === null || campaignId === undefined) {
             throw new Error('Required parameter campaignId was null or undefined when calling postSmscampaignsCampaignId.');
+        }
+        if (smsCampaignHandlerDto === null || smsCampaignHandlerDto === undefined) {
+            throw new Error('Required parameter smsCampaignHandlerDto was null or undefined when calling postSmscampaignsCampaignId.');
         }
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
@@ -3032,6 +3057,15 @@ export class DefaultService extends BaseService {
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
 
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -3048,6 +3082,7 @@ export class DefaultService extends BaseService {
         return this.httpClient.request<CommandProcessingResult>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                body: smsCampaignHandlerDto,
                 params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
@@ -3274,17 +3309,20 @@ export class DefaultService extends BaseService {
      * Update an email message
      * @endpoint put /v1/email/{resourceId}
      * @param resourceId 
-     * @param body 
+     * @param putEmailRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public putEmailResourceId(resourceId: number, body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public putEmailResourceId(resourceId: number, body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public putEmailResourceId(resourceId: number, body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public putEmailResourceId(resourceId: number, body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public putEmailResourceId(resourceId: number, putEmailRequest: PutEmailRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
+    public putEmailResourceId(resourceId: number, putEmailRequest: PutEmailRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
+    public putEmailResourceId(resourceId: number, putEmailRequest: PutEmailRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
+    public putEmailResourceId(resourceId: number, putEmailRequest: PutEmailRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (resourceId === null || resourceId === undefined) {
             throw new Error('Required parameter resourceId was null or undefined when calling putEmailResourceId.');
+        }
+        if (putEmailRequest === null || putEmailRequest === undefined) {
+            throw new Error('Required parameter putEmailRequest was null or undefined when calling putEmailResourceId.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -3329,10 +3367,10 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/email/${this.configuration.encodeParam({name: "resourceId", value: resourceId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('put', `${basePath}${localVarPath}`,
+        return this.httpClient.request<CommandProcessingResult>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: putEmailRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -3483,20 +3521,20 @@ export class DefaultService extends BaseService {
      * Update a Campaign
      * @endpoint put /v1/smscampaigns/{campaignId}
      * @param campaignId 
-     * @param commandWrapper 
+     * @param smsCampaignUpdateDto 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public putSmscampaignsCampaignId(campaignId: number, commandWrapper: CommandWrapper, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
-    public putSmscampaignsCampaignId(campaignId: number, commandWrapper: CommandWrapper, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
-    public putSmscampaignsCampaignId(campaignId: number, commandWrapper: CommandWrapper, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
-    public putSmscampaignsCampaignId(campaignId: number, commandWrapper: CommandWrapper, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public putSmscampaignsCampaignId(campaignId: number, smsCampaignUpdateDto: SmsCampaignUpdateDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CommandProcessingResult>;
+    public putSmscampaignsCampaignId(campaignId: number, smsCampaignUpdateDto: SmsCampaignUpdateDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CommandProcessingResult>>;
+    public putSmscampaignsCampaignId(campaignId: number, smsCampaignUpdateDto: SmsCampaignUpdateDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CommandProcessingResult>>;
+    public putSmscampaignsCampaignId(campaignId: number, smsCampaignUpdateDto: SmsCampaignUpdateDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (campaignId === null || campaignId === undefined) {
             throw new Error('Required parameter campaignId was null or undefined when calling putSmscampaignsCampaignId.');
         }
-        if (commandWrapper === null || commandWrapper === undefined) {
-            throw new Error('Required parameter commandWrapper was null or undefined when calling putSmscampaignsCampaignId.');
+        if (smsCampaignUpdateDto === null || smsCampaignUpdateDto === undefined) {
+            throw new Error('Required parameter smsCampaignUpdateDto was null or undefined when calling putSmscampaignsCampaignId.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -3544,7 +3582,7 @@ export class DefaultService extends BaseService {
         return this.httpClient.request<CommandProcessingResult>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: commandWrapper,
+                body: smsCampaignUpdateDto,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -3557,15 +3595,18 @@ export class DefaultService extends BaseService {
 
     /**
      * @endpoint put /v1/twofactor/configure
-     * @param body 
+     * @param putTwoFactorConfigurationRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public putTwofactorConfigure(body?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public putTwofactorConfigure(body?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public putTwofactorConfigure(body?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public putTwofactorConfigure(body?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public putTwofactorConfigure(putTwoFactorConfigurationRequest: PutTwoFactorConfigurationRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PutTwoFactorConfigurationResponse>;
+    public putTwofactorConfigure(putTwoFactorConfigurationRequest: PutTwoFactorConfigurationRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PutTwoFactorConfigurationResponse>>;
+    public putTwofactorConfigure(putTwoFactorConfigurationRequest: PutTwoFactorConfigurationRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PutTwoFactorConfigurationResponse>>;
+    public putTwofactorConfigure(putTwoFactorConfigurationRequest: PutTwoFactorConfigurationRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (putTwoFactorConfigurationRequest === null || putTwoFactorConfigurationRequest === undefined) {
+            throw new Error('Required parameter putTwoFactorConfigurationRequest was null or undefined when calling putTwofactorConfigure.');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -3609,10 +3650,10 @@ export class DefaultService extends BaseService {
 
         let localVarPath = `/v1/twofactor/configure`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<string>('put', `${basePath}${localVarPath}`,
+        return this.httpClient.request<PutTwoFactorConfigurationResponse>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: putTwoFactorConfigurationRequest,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

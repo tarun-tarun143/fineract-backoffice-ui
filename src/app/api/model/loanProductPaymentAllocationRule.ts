@@ -31,7 +31,7 @@ export interface LoanProductPaymentAllocationRule {
     createdBy: number;
     createdDate: string;
     futureInstallmentAllocationRule?: LoanProductPaymentAllocationRule.FutureInstallmentAllocationRuleEnum;
-    id?: number | null;
+    id?: number;
     lastModifiedBy: number;
     lastModifiedDate: string;
     loanProduct?: LoanProduct;
@@ -75,7 +75,8 @@ export namespace LoanProductPaymentAllocationRule {
         RefundForActiveLoan: 'REFUND_FOR_ACTIVE_LOAN',
         InterestPaymentWaiver: 'INTEREST_PAYMENT_WAIVER',
         InterestRefund: 'INTEREST_REFUND',
-        CapitalizedIncomeAdjustment: 'CAPITALIZED_INCOME_ADJUSTMENT'
+        CapitalizedIncomeAdjustment: 'CAPITALIZED_INCOME_ADJUSTMENT',
+        FeeRefund: 'FEE_REFUND'
     } as const;
     export type TransactionTypeEnum = typeof TransactionTypeEnum[keyof typeof TransactionTypeEnum];
 }

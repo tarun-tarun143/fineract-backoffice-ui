@@ -43,6 +43,8 @@ import { GetFixedDepositAccountsResponse } from '../model/getFixedDepositAccount
 // @ts-ignore
 import { GetFixedDepositAccountsTemplateResponse } from '../model/getFixedDepositAccountsTemplateResponse';
 // @ts-ignore
+import { PostFixedDepositAccountsAccountIdRequest } from '../model/postFixedDepositAccountsAccountIdRequest';
+// @ts-ignore
 import { PostFixedDepositAccountsAccountIdResponse } from '../model/postFixedDepositAccountsAccountIdResponse';
 // @ts-ignore
 import { PostFixedDepositAccountsRequest } from '../model/postFixedDepositAccountsRequest';
@@ -864,21 +866,21 @@ export class FixedDepositAccountService extends BaseService {
      * Approve fixed deposit application:  Approves fixed deposit application so long as its in \&#39;Submitted and pending approval\&#39; state.  Undo approval fixed deposit application:  Will move \&#39;approved\&#39; fixed deposit application back to \&#39;Submitted and pending approval\&#39; state.  Reject fixed deposit application:  Rejects fixed deposit application so long as its in \&#39;Submitted and pending approval\&#39; state.  Withdraw fixed deposit application:  Used when an applicant withdraws from the fixed deposit application. It must be in \&#39;Submitted and pending approval\&#39; state.  Close a fixed deposit account:  Results in a Matured fixed deposit account being converted into a \&#39;closed\&#39; fixed deposit account.  Premature Close a fixed deposit account:  Results in an Active fixed deposit account being converted into a \&#39;Premature Closed\&#39; fixed deposit account with options to withdraw prematured amount. (premature amount is calculated using interest rate chart applicable along with penal interest if any.)  Calculate Premature amount on Fixed deposit account:  Calculate premature amount on fixed deposit account till premature close date. Premature amount is calculated based on interest chart and penal interest applicable.  Calculate Interest on Fixed Deposit Account:  Calculates interest earned on a fixed deposit account based on todays date. It does not attempt to post or credit the interest on the account. That is responsibility of the Post Interest API that will likely be called by overnight process.  Post Interest on Fixed Deposit Account:  Calculates and Posts interest earned on a fixed deposit account based on today\&#39;s date and whether an interest posting or crediting event is due.  Showing request/response for Calculate Interest on Fixed Deposit Account
      * @endpoint post /v1/fixeddepositaccounts/{accountId}
      * @param accountId accountId
-     * @param body 
+     * @param postFixedDepositAccountsAccountIdRequest 
      * @param command command
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public postFixeddepositaccountsAccountId(accountId: number, body: object, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostFixedDepositAccountsAccountIdResponse>;
-    public postFixeddepositaccountsAccountId(accountId: number, body: object, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostFixedDepositAccountsAccountIdResponse>>;
-    public postFixeddepositaccountsAccountId(accountId: number, body: object, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostFixedDepositAccountsAccountIdResponse>>;
-    public postFixeddepositaccountsAccountId(accountId: number, body: object, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public postFixeddepositaccountsAccountId(accountId: number, postFixedDepositAccountsAccountIdRequest: PostFixedDepositAccountsAccountIdRequest, command?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<PostFixedDepositAccountsAccountIdResponse>;
+    public postFixeddepositaccountsAccountId(accountId: number, postFixedDepositAccountsAccountIdRequest: PostFixedDepositAccountsAccountIdRequest, command?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<PostFixedDepositAccountsAccountIdResponse>>;
+    public postFixeddepositaccountsAccountId(accountId: number, postFixedDepositAccountsAccountIdRequest: PostFixedDepositAccountsAccountIdRequest, command?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<PostFixedDepositAccountsAccountIdResponse>>;
+    public postFixeddepositaccountsAccountId(accountId: number, postFixedDepositAccountsAccountIdRequest: PostFixedDepositAccountsAccountIdRequest, command?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (accountId === null || accountId === undefined) {
             throw new Error('Required parameter accountId was null or undefined when calling postFixeddepositaccountsAccountId.');
         }
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling postFixeddepositaccountsAccountId.');
+        if (postFixedDepositAccountsAccountIdRequest === null || postFixedDepositAccountsAccountIdRequest === undefined) {
+            throw new Error('Required parameter postFixedDepositAccountsAccountIdRequest was null or undefined when calling postFixeddepositaccountsAccountId.');
         }
 
         let localVarQueryParameters = new OpenApiHttpParams(this.encoder);
@@ -937,7 +939,7 @@ export class FixedDepositAccountService extends BaseService {
         return this.httpClient.request<PostFixedDepositAccountsAccountIdResponse>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: body,
+                body: postFixedDepositAccountsAccountIdRequest,
                 params: localVarQueryParameters.toHttpParams(),
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
