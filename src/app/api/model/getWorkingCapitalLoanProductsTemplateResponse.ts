@@ -26,6 +26,7 @@
 import { PaymentTypeData } from './paymentTypeData';
 import { StringEnumOptionData } from './stringEnumOptionData';
 import { CurrencyData } from './currencyData';
+import { GLAccountData } from './gLAccountData';
 import { CodeValueData } from './codeValueData';
 import { WorkingCapitalNearBreachData } from './workingCapitalNearBreachData';
 import { GetDelinquencyBucket } from './getDelinquencyBucket';
@@ -39,7 +40,7 @@ import { WorkingCapitalBreachData } from './workingCapitalBreachData';
  * GetWorkingCapitalLoanProductsTemplateResponse
  */
 export interface GetWorkingCapitalLoanProductsTemplateResponse { 
-    accountingMappingOptions?: { [key: string]: object; };
+    accountingMappingOptions?: { [key: string]: Array<GLAccountData>; };
     accountingRuleOptions?: Array<StringEnumOptionData>;
     advancedPaymentAllocationTransactionTypes?: Array<EnumOptionData>;
     advancedPaymentAllocationTypes?: Array<StringEnumOptionData>;
@@ -54,6 +55,10 @@ export interface GetWorkingCapitalLoanProductsTemplateResponse {
     delinquencyStartTypeOptions?: Array<StringEnumOptionData>;
     fundOptions?: Array<FundData>;
     nearBreachOptions?: Array<WorkingCapitalNearBreachData>;
+    /**
+     * Payment amount calculation strategies a product can be created with
+     */
+    paymentAmountCalculationStrategyOptions?: Array<StringEnumOptionData>;
     paymentTypeOptions?: Array<PaymentTypeData>;
     penaltyOptions?: Array<ChargeData>;
     periodFrequencyTypeOptions?: Array<StringEnumOptionData>;

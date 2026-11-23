@@ -32,7 +32,7 @@ export interface FloatingRate {
     createdBy: number;
     createdDate: string;
     floatingRatePeriods?: Array<FloatingRatePeriod>;
-    id?: number | null;
+    id?: number;
     lastModifiedBy: number;
     lastModifiedDate: string;
     name?: string;

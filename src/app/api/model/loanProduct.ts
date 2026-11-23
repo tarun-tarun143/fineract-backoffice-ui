@@ -70,7 +70,7 @@ export interface LoanProduct {
     floatingRates?: LoanProductFloatingRates;
     fund?: Fund;
     holdGuaranteeFunds?: boolean;
-    id?: number | null;
+    id?: number;
     includeInBorrowerCycle?: boolean;
     interestPeriodFrequencyType?: LoanProduct.InterestPeriodFrequencyTypeEnum;
     interestRecalculationEnabled?: boolean;
@@ -126,7 +126,8 @@ export namespace LoanProduct {
         Months: 'MONTHS',
         Years: 'YEARS',
         WholeTerm: 'WHOLE_TERM',
-        Invalid: 'INVALID'
+        Invalid: 'INVALID',
+        SemiMonthly: 'SEMI_MONTHLY'
     } as const;
     export type InterestPeriodFrequencyTypeEnum = typeof InterestPeriodFrequencyTypeEnum[keyof typeof InterestPeriodFrequencyTypeEnum];
     export const RepaymentStartDateTypeEnum = {

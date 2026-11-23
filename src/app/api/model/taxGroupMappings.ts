@@ -31,7 +31,7 @@ export interface TaxGroupMappings {
     createdBy?: number;
     createdDate?: string;
     endDate?: string;
-    id?: number | null;
+    id?: number;
     lastModifiedBy?: number;
     lastModifiedDate?: string;
     'new'?: boolean;

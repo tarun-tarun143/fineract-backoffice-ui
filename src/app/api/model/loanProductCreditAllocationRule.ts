@@ -27,10 +27,11 @@ import { LoanProduct } from './loanProduct';
 
 
 export interface LoanProductCreditAllocationRule { 
+    allocationStrategy?: LoanProductCreditAllocationRule.AllocationStrategyEnum;
     allocationTypes?: Array<LoanProductCreditAllocationRule.AllocationTypesEnum>;
     createdBy: number;
     createdDate: string;
-    id?: number | null;
+    id?: number;
     lastModifiedBy: number;
     lastModifiedDate: string;
     loanProduct?: LoanProduct;
@@ -38,6 +39,11 @@ export interface LoanProductCreditAllocationRule {
     transactionType?: LoanProductCreditAllocationRule.TransactionTypeEnum;
 }
 export namespace LoanProductCreditAllocationRule {
+    export const AllocationStrategyEnum = {
+        RuleBased: 'RULE_BASED',
+        PrincipalOnly: 'PRINCIPAL_ONLY'
+    } as const;
+    export type AllocationStrategyEnum = typeof AllocationStrategyEnum[keyof typeof AllocationStrategyEnum];
     export const AllocationTypesEnum = {
         Penalty: 'PENALTY',
         Fee: 'FEE',

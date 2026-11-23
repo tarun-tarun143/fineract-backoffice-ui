@@ -31,7 +31,7 @@ export interface Rate {
     approveUser?: AppUser;
     createdBy?: number;
     createdDate?: string;
-    id?: number | null;
+    id?: number;
     lastModifiedBy?: number;
     lastModifiedDate?: string;
     name?: string;

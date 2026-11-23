@@ -28,5 +28,6 @@
 export interface PutRecurringDepositAccountsChanges { 
     depositAmount?: number;
     locale?: string;
+    submittedOnDate?: string;
 }
 

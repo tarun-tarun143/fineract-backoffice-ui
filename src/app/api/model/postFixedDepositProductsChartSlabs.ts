@@ -26,9 +26,12 @@
 
 
 export interface PostFixedDepositProductsChartSlabs { 
+    amountRangeFrom?: number;
+    amountRangeTo?: number;
     annualInterestRate?: number;
     description?: string;
     fromPeriod?: number;
+    locale?: string;
     periodType?: number;
     toPeriod?: number;
 }

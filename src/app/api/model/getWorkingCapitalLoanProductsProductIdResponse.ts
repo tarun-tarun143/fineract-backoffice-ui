@@ -40,10 +40,15 @@ import { GetPaymentAllocation } from './getPaymentAllocation';
  * GetWorkingCapitalLoanProductsProductIdResponse
  */
 export interface GetWorkingCapitalLoanProductsProductIdResponse { 
+    accountingMappingOptions?: { [key: string]: Array<GLAccountData>; };
     accountingMappings?: { [key: string]: GLAccountData; };
     accountingRule?: StringEnumOptionData;
     allowAttributeOverrides?: GetConfigurableAttributes;
     amortizationType?: StringEnumOptionData;
+    /**
+     * Configured annual EIR percentage. Only for ANNUAL_EIR strategy.
+     */
+    annualEir?: number;
     breach?: GetWorkingCapitalLoanBreach;
     /**
      * Number of days to shift the start of the first breach schedule period after disbursement
@@ -63,14 +68,35 @@ export interface GetWorkingCapitalLoanProductsProductIdResponse {
     fundId?: number;
     fundName?: string;
     id?: number;
+    /**
+     * Maximum annual EIR percentage. Optional; only for ANNUAL_EIR strategy.
+     */
+    maxAnnualEir?: number;
+    /**
+     * Maximum payment amount per repayment period. Optional; only for PAYMENT_AMOUNT strategy.
+     */
+    maxPaymentAmount?: number;
     maxPeriodPaymentRate?: number;
     maxPrincipal?: number;
+    /**
+     * Minimum annual EIR percentage. Optional; only for ANNUAL_EIR strategy.
+     */
+    minAnnualEir?: number;
+    /**
+     * Minimum payment amount per repayment period. Optional; only for PAYMENT_AMOUNT strategy.
+     */
+    minPaymentAmount?: number;
     minPeriodPaymentRate?: number;
     minPrincipal?: number;
     name?: string;
     nearBreach?: GetWorkingCapitalLoanNearBreach;
     npvDayCount?: number;
     paymentAllocation?: Array<GetPaymentAllocation>;
+    /**
+     * Configured payment amount per repayment period. Only for PAYMENT_AMOUNT strategy.
+     */
+    paymentAmount?: number;
+    paymentAmountCalculationStrategy?: StringEnumOptionData;
     paymentChannelToFundSourceMappings?: Array<PaymentTypeToGLAccountMapper>;
     penaltyToIncomeAccountMappings?: Array<ChargeToGLAccountMapper>;
     periodPaymentRate?: number;

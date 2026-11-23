@@ -23,12 +23,36 @@
  * Do not edit the class manually.
  */
 
+import { PostWorkingCapitalLoanTransactionsPaymentDetailRequest } from './postWorkingCapitalLoanTransactionsPaymentDetailRequest';
 
 
 /**
- * Request for working capital loan transaction command execution
+ * Request for transaction command executed on a transaction named in the path: undo, adjust, adjustByDelta, discountFee or discountFeeAdjustment. For command=undo use only note and reversalExternalId. For command=adjust and command=adjustByDelta dateFormat / locale / transactionDate / transactionAmount / classificationId / note / reversalExternalId / externalId / paymentDetails are accepted.
  */
 export interface ExecuteWorkingCapitalLoanTransactionCommandRequest { 
+    /**
+     * Optional code value id for transaction classification (command=discountFee, discountFeeAdjustment, adjust, adjustByDelta)
+     */
+    classificationId?: number;
+    dateFormat?: string;
+    /**
+     * Optional external id for the created transaction. For command=adjust and command=adjustByDelta this is the id of the replacement, when there is one (same as term-loan adjust). If omitted and auto-generation is enabled, a new id is generated for the replacement. Inheritance (command=adjust, adjustByDelta): set it to the external id of the transaction being adjusted and that external id moves to the replacement - it is removed from the reversed transaction, so the external id keeps pointing to the live transaction and the next adjustment can be sent against it again. A full reversal (new amount 0) has no replacement, so the external id stays on the reversed transaction. Any other value leaves the reversed transaction\'s external id where it is and must be unique (already.exists otherwise).
+     */
+    externalId?: string;
+    locale?: string;
+    note?: string;
+    paymentDetails?: PostWorkingCapitalLoanTransactionsPaymentDetailRequest;
+    /**
+     * Optional external id stamped on the reversed transaction (command=undo, adjust, adjustByDelta)
+     */
     reversalExternalId?: string;
+    /**
+     * Transaction amount (command=discountFee, discountFeeAdjustment); command=adjust zero reverses the existing transaction (same as undo). A positive amount reverses it and creates a replacement. command=adjustByDelta: a signed delta on the existing amount (positive increases, negative decreases) - the replacement is existing + transactionAmount; a delta that cancels the existing amount only reverses it, zero is rejected (400) and a decrease beyond the existing amount is refused (403)
+     */
+    transactionAmount?: number;
+    /**
+     * Transaction date (command=discountFeeAdjustment); for command=discountFee it defaults to the date of the related disbursement and, when sent, must be equal to it; command=adjust required when transactionAmount > 0: date of the replacement transaction. Optional when transactionAmount is 0 (undo). command=adjustByDelta optional: moves the replacement to this date; when omitted the replacement keeps the original\'s date.
+     */
+    transactionDate?: string;
 }
 
