@@ -37,8 +37,14 @@ export interface Charge {
     allowedLoanChargeTime?: boolean;
     allowedSavingsChargeCalculationType?: boolean;
     allowedSavingsChargeTime?: boolean;
+    amortizationCalculationType?: Charge.AmortizationCalculationTypeEnum;
+    amortizationDays?: number;
+    amortizationIncomeType?: Charge.AmortizationIncomeTypeEnum;
+    amortizationPeriodType?: Charge.AmortizationPeriodTypeEnum;
+    amortized?: boolean;
     amount?: number;
     annualFee?: boolean;
+    chargeAppliesTo?: number;
     chargeCalculation?: number;
     chargePaymentMode?: number;
     chargeTimeType?: number;
@@ -46,12 +52,17 @@ export interface Charge {
     currencyCode?: string;
     deleted?: boolean;
     disbursementCharge?: boolean;
+    downPaymentCharge?: boolean;
     enableFreeWithdrawal?: boolean;
     enablePaymentType?: boolean;
+    feeFrequency?: number;
     feeInterval?: number;
+    feeOnDay?: number;
+    feeOnMonth?: number;
     feeOnMonthDay?: ChargeFeeOnMonthDay;
+    freeWithdrawalFrequency?: number;
     frequencyFreeWithdrawalCharge?: number;
-    id?: number | null;
+    id?: number;
     incomeAccountId?: number;
     loanCharge?: boolean;
     maxCap?: number;
@@ -61,6 +72,7 @@ export interface Charge {
     'new'?: boolean;
     overdueInstallment?: boolean;
     paymentType?: PaymentType;
+    paymentTypeId?: number;
     penalty?: boolean;
     percentageOfApprovedAmount?: boolean;
     percentageOfDisbursementAmount?: boolean;
@@ -68,5 +80,26 @@ export interface Charge {
     restartFrequencyEnum?: number;
     savingsCharge?: boolean;
     taxGroup?: TaxGroup;
+    taxGroupId?: number;
+    workingCapitalLoanCharge?: boolean;
 }
+export namespace Charge {
+    export const AmortizationCalculationTypeEnum = {
+        Flat: 'FLAT',
+        EffectiveRate: 'EFFECTIVE_RATE'
+    } as const;
+    export type AmortizationCalculationTypeEnum = typeof AmortizationCalculationTypeEnum[keyof typeof AmortizationCalculationTypeEnum];
+    export const AmortizationIncomeTypeEnum = {
+        Fee: 'FEE',
+        Interest: 'INTEREST'
+    } as const;
+    export type AmortizationIncomeTypeEnum = typeof AmortizationIncomeTypeEnum[keyof typeof AmortizationIncomeTypeEnum];
+    export const AmortizationPeriodTypeEnum = {
+        None: 'NONE',
+        FullLoanTerm: 'FULL_LOAN_TERM',
+        NumberOfDays: 'NUMBER_OF_DAYS'
+    } as const;
+    export type AmortizationPeriodTypeEnum = typeof AmortizationPeriodTypeEnum[keyof typeof AmortizationPeriodTypeEnum];
+}
+
 

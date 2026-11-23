@@ -24,9 +24,11 @@
  */
 
 import { ProjectedAmortizationSchedulePaymentData } from './projectedAmortizationSchedulePaymentData';
+import { StringEnumOptionData } from './stringEnumOptionData';
 
 
 export interface ProjectedAmortizationScheduleData { 
+    annualEir?: number;
     discountFeeAmount?: number;
     effectiveInterestRate?: number;
     expectedDisbursementDate?: string;
@@ -34,6 +36,8 @@ export interface ProjectedAmortizationScheduleData {
     netDisbursementAmount?: number;
     npvDayCount?: number;
     originalPaymentNumber?: number;
+    paymentAmount?: number;
+    paymentAmountCalculationStrategy?: StringEnumOptionData;
     payments?: Array<ProjectedAmortizationSchedulePaymentData>;
     periodPaymentRate?: number;
     totalPaymentVolume?: number;

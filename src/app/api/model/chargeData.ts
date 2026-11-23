@@ -24,16 +24,23 @@
  */
 
 import { PaymentTypeData } from './paymentTypeData';
+import { StringEnumOptionData } from './stringEnumOptionData';
 import { CurrencyData } from './currencyData';
 import { GLAccountData } from './gLAccountData';
 import { TaxGroupData } from './taxGroupData';
 import { EnumOptionData } from './enumOptionData';
-import { ChargeFeeOnMonthDay } from './chargeFeeOnMonthDay';
 
 
 export interface ChargeData { 
     accountMappingForChargeConfig?: string;
     active?: boolean;
+    amortizationCalculationType?: StringEnumOptionData;
+    amortizationCalculationTypeOptions?: Array<StringEnumOptionData>;
+    amortizationDays?: number;
+    amortizationIncomeType?: StringEnumOptionData;
+    amortizationIncomeTypeOptions?: Array<StringEnumOptionData>;
+    amortizationPeriodType?: StringEnumOptionData;
+    amortizationPeriodTypeOptions?: Array<StringEnumOptionData>;
     amount?: number;
     assetAccountOptions?: Array<GLAccountData>;
     chargeAppliesTo?: EnumOptionData;
@@ -52,7 +59,10 @@ export interface ChargeData {
     feeFrequency?: EnumOptionData;
     feeFrequencyOptions?: Array<EnumOptionData>;
     feeInterval?: number;
-    feeOnMonthDay?: ChargeFeeOnMonthDay;
+    /**
+     * The recurring day the fee falls due, as an ISO-8601 month-day
+     */
+    feeOnMonthDay?: string;
     freeWithdrawal?: boolean;
     freeWithdrawalChargeFrequency?: number;
     id?: number;

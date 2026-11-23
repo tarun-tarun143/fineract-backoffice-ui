@@ -25,6 +25,7 @@
 
 import { GetLoanProductsChargeOffReasonOptions } from './getLoanProductsChargeOffReasonOptions';
 import { GetLoanProductsRepaymentStartDateType } from './getLoanProductsRepaymentStartDateType';
+import { GLAccountData } from './gLAccountData';
 import { GetLoanProductsInterestTemplateType } from './getLoanProductsInterestTemplateType';
 import { GetLoanFeeToIncomeAccountMappings } from './getLoanFeeToIncomeAccountMappings';
 import { EnumOptionData } from './enumOptionData';
@@ -55,6 +56,7 @@ import { GetLoanProductsPrincipalVariationsForBorrowerCycle } from './getLoanPro
  * GetLoanProductsProductIdResponse
  */
 export interface GetLoanProductsProductIdResponse { 
+    accountingMappingOptions?: { [key: string]: Array<GLAccountData>; };
     accountingMappings?: GetLoanAccountingMappings;
     accountingRule?: GetLoanProductsAccountingRule;
     allowApprovedDisbursedAmountsOverApplied?: boolean;
@@ -102,10 +104,16 @@ export interface GetLoanProductsProductIdResponse {
     enableAccrualActivityPosting?: boolean;
     enableAutoRepaymentForDownPayment?: boolean;
     enableBuyDownFee?: boolean;
+    enableChargeAmortization?: boolean;
     enableDownPayment?: boolean;
     enableIncomeCapitalization?: boolean;
     enableInstallmentLevelDelinquency?: boolean;
+    externalId?: string;
     feeToIncomeAccountMappings?: Set<GetLoanFeeToIncomeAccountMappings>;
+    /**
+     * First due day of the month of a semi-monthly product, between 1 and 27.
+     */
+    firstRepaymentDayOfMonth?: number;
     fixedLength?: number;
     fixedPrincipalPercentagePerInstallment?: number;
     graceOnArrearsAgeing?: number;
@@ -137,6 +145,7 @@ export interface GetLoanProductsProductIdResponse {
     minNumberOfRepayments?: number;
     minPrincipal?: number;
     minimumGap?: number;
+    monthEndDueDateStrategy?: StringEnumOptionData;
     multiDisburseLoan?: boolean;
     name?: string;
     numberOfRepaymentVariationsForBorrowerCycle?: Array<number>;
@@ -153,8 +162,13 @@ export interface GetLoanProductsProductIdResponse {
     repaymentEvery?: number;
     repaymentFrequencyType?: GetLoanProductsRepaymentFrequencyType;
     repaymentStartDateType?: GetLoanProductsRepaymentStartDateType;
+    /**
+     * Second due day of the month of a semi-monthly product, between 2 and 31 and greater than the first one. A day the month lacks falls on its last day, so 31 is the last day of every month.
+     */
+    secondRepaymentDayOfMonth?: number;
     shortName?: string;
     status?: string;
+    supportedFeeRefundTypes?: Array<StringEnumOptionData>;
     supportedInterestRefundTypes?: Array<StringEnumOptionData>;
     transactionProcessingStrategyCode?: string;
     transactionProcessingStrategyName?: string;

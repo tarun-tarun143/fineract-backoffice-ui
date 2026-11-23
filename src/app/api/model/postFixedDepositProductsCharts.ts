@@ -29,7 +29,9 @@ import { PostFixedDepositProductsChartSlabs } from './postFixedDepositProductsCh
 export interface PostFixedDepositProductsCharts { 
     chartSlabs?: Set<PostFixedDepositProductsChartSlabs>;
     dateFormat?: string;
+    endDate?: string;
     fromDate?: string;
+    isPrimaryGroupingByAmount?: boolean;
     locale?: string;
 }
 

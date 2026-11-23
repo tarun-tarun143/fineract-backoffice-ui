@@ -24,6 +24,7 @@
  */
 
 import { PostProductsMarketPricePeriods } from './postProductsMarketPricePeriods';
+import { PostProductsPaymentChannelToFundSourceMappings } from './postProductsPaymentChannelToFundSourceMappings';
 import { PostProductsChargesSelected } from './postProductsChargesSelected';
 
 
@@ -38,6 +39,10 @@ export interface PostProductsTypeRequest {
     description?: string;
     digitsAfterDecimal?: number;
     inMultiplesOf?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    incomeFromFeeAccountId?: number;
     locale?: string;
     lockinPeriodFrequency?: number;
     lockinPeriodFrequencyType?: number;
@@ -48,6 +53,22 @@ export interface PostProductsTypeRequest {
     minimumactiveperiodFrequencyType?: number;
     name?: string;
     nominalShares?: number;
+    /**
+     * Optional with accountingRule=2 (cash based): routes the share reference entry to a payment type specific GL account
+     */
+    paymentChannelToFundSourceMappings?: Set<PostProductsPaymentChannelToFundSourceMappings>;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    shareEquityId?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    shareReferenceId?: number;
+    /**
+     * Required with accountingRule=2 (cash based)
+     */
+    shareSuspenseId?: number;
     sharesIssued?: number;
     shortName?: string;
     totalShares?: number;

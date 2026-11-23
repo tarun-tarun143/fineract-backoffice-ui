@@ -23,38 +23,60 @@
  * Do not edit the class manually.
  */
 
-import { GetSavingsProductsInterestCalculationDaysInYearType } from './getSavingsProductsInterestCalculationDaysInYearType';
-import { GetSavingsProductsPaymentChannelToFundSourceMappings } from './getSavingsProductsPaymentChannelToFundSourceMappings';
-import { GetSavingsProductsInterestCalculationType } from './getSavingsProductsInterestCalculationType';
 import { GetSavingsCurrency } from './getSavingsCurrency';
+import { GLAccountData } from './gLAccountData';
 import { GetSavingsProductsFeeToIncomeAccountMappings } from './getSavingsProductsFeeToIncomeAccountMappings';
 import { GetSavingsProductsInterestCompoundingPeriodType } from './getSavingsProductsInterestCompoundingPeriodType';
 import { GetSavingsProductsAccountingMappings } from './getSavingsProductsAccountingMappings';
 import { GetSavingsProductsInterestPostingPeriodType } from './getSavingsProductsInterestPostingPeriodType';
-import { GetSavingsProductsPenaltyToIncomeAccountMappings } from './getSavingsProductsPenaltyToIncomeAccountMappings';
 import { GetSavingsProductsAccountingRule } from './getSavingsProductsAccountingRule';
+import { GetSavingsProductsLockinPeriodFrequencyType } from './getSavingsProductsLockinPeriodFrequencyType';
+import { GetSavingsProductsInterestCalculationDaysInYearType } from './getSavingsProductsInterestCalculationDaysInYearType';
+import { GetSavingsProductsPaymentChannelToFundSourceMappings } from './getSavingsProductsPaymentChannelToFundSourceMappings';
+import { GetSavingsProductsInterestCalculationType } from './getSavingsProductsInterestCalculationType';
+import { GetSavingsProductsTaxGroup } from './getSavingsProductsTaxGroup';
+import { GetSavingsProductsPenaltyToIncomeAccountMappings } from './getSavingsProductsPenaltyToIncomeAccountMappings';
 
 
 /**
  * GetSavingsProductsProductIdResponse
  */
 export interface GetSavingsProductsProductIdResponse { 
+    accountingMappingOptions?: { [key: string]: Array<GLAccountData>; };
     accountingMappings?: GetSavingsProductsAccountingMappings;
     accountingRule?: GetSavingsProductsAccountingRule;
+    allowOverdraft?: boolean;
     charges?: Array<number>;
     currency?: GetSavingsCurrency;
+    daysToDormancy?: number;
+    daysToEscheat?: number;
+    daysToInactive?: number;
     description?: string;
+    enforceMinRequiredBalance?: boolean;
     feeToIncomeAccountMappings?: Set<GetSavingsProductsFeeToIncomeAccountMappings>;
     id?: number;
     interestCalculationDaysInYearType?: GetSavingsProductsInterestCalculationDaysInYearType;
     interestCalculationType?: GetSavingsProductsInterestCalculationType;
     interestCompoundingPeriodType?: GetSavingsProductsInterestCompoundingPeriodType;
     interestPostingPeriodType?: GetSavingsProductsInterestPostingPeriodType;
+    isDormancyTrackingActive?: boolean;
+    lienAllowed?: boolean;
+    lockinPeriodFrequency?: number;
+    lockinPeriodFrequencyType?: GetSavingsProductsLockinPeriodFrequencyType;
+    maxAllowedLienLimit?: number;
+    minBalanceForInterestCalculation?: number;
+    minOverdraftForInterestCalculation?: number;
+    minRequiredBalance?: number;
+    minRequiredOpeningBalance?: number;
     name?: string;
     nominalAnnualInterestRate?: number;
+    nominalAnnualInterestRateOverdraft?: number;
+    overdraftLimit?: number;
     paymentChannelToFundSourceMappings?: Set<GetSavingsProductsPaymentChannelToFundSourceMappings>;
     penaltyToIncomeAccountMappings?: Set<GetSavingsProductsPenaltyToIncomeAccountMappings>;
     shortName?: string;
+    taxGroup?: GetSavingsProductsTaxGroup;
+    withHoldTax?: boolean;
     withdrawalFeeForTransfers?: boolean;
 }
 
